@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PieChartVC.swift
 //  graphs
 //
 //  Created by Danila Ferents on 25.11.2019.
@@ -7,14 +7,40 @@
 //
 
 import UIKit
+import AAInfographics
 
-class ViewController: UIViewController {
+extension UIColor {
+	  func toHexString() -> String {
+		  var r:CGFloat = 0
+		  var g:CGFloat = 0
+		  var b:CGFloat = 0
+		  var a:CGFloat = 0
 
-	var trades: [Trade]!
-	var transactions: [Transaction]!
+		  getRed(&r, green: &g, blue: &b, alpha: &a)
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+		  let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+
+		  return String(format:"#%06x", rgb)
+	  }
+  }
+
+class PieChartVC: UIViewController {
+
+	//Variables
+	var chartView: AAChartView! //View in which Chart is drown
+
+	var chartModel: AAChartModel! //Model
+	var assetsApi = AssetsApi() //struct to handle Network connection
+
+	var trades: [Trade]! //trades from backend
+	var transactions: [Transaction]! //transactions from backend
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+		setUpChartView() //set size for view
+		view.addSubview(chartView!)
+
 		let tradesApi = TradeApi()
 		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/trades") { (trades) in
 			if let trades = trades {
@@ -22,32 +48,108 @@ class ViewController: UIViewController {
 				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
-						let (assets, strangeIds) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions)
-						print(assets, strangeIds)
-					}
+						let (assets1, strangeIds) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: Date(timeIntervalSince1970: 0), end: Date(timeIntervalSinceNow: 0))
+						print(assets1)
+						var newassets: [Any] = []
+						for (key, value) in assets1 {
+//							if value < 0 {
+//								continue
+//							}
+							newassets.append([key, value * currencies1[key]!])
+						}
+//						var assets = AssetsTimeData(assets: )
+//						assets.convertToStringAny()
+						self.chartModel = self.configurePieChartModel(data: newassets)
+						print(newassets)
+						self.chartView!.aa_drawChartWithChartModel(self.chartModel)
 				}
 			}
  		}
+		self.chartModel = self.configurePieChartModel(data: [])
+		self.chartView!.aa_drawChartWithChartModel(self.chartModel)
+		}}
+
+	private func setUpChartView() {
+		chartView = AAChartView()
+
+		let chartWidth = view.frame.size.width
+		let chartHeight = view.frame.size.height
+		chartView!.frame = CGRect(x: 0, y: 0, width: chartWidth, height: chartHeight)
+		chartView!.contentHeight = view.frame.size.height - 80
+		chartView!.scrollEnabled = false
 	}
 
+	private func configurePieChartModel(data: [Any]) -> AAChartModel {
+			let colors = (0..<data.count).map { (i) -> String in
+            let color =  UIColor(red:   .random(),
+			green: .random(),
+			blue:  .random(),
+				alpha: 1.0)
 
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction]) -> ([String: Double], [(String, String, String)]) {
+				return color.toHexString()
+        }
+
+		return AAChartModel()
+			.colorsTheme(colors)
+			.chartType(.pie)
+			.backgroundColor(AAColor.white)
+			.title("Portfolio Assets")
+			.dataLabelsEnabled(true)
+//			.backgroundColor("#4169E1")
+			.series([
+				AASeriesElement()
+				.name("$")
+				.innerSize("10%")
+//				.allowPointSelect(true)
+//				.data([
+//					["$", 5],
+//					["€", 10],
+//					["฿", 15],
+//					]
+//				)
+				.data(data)
+			])
+
+	}
+
+	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
 		var strangeIds: [(String,String, String)] = []
 		var assets: [String: Double] = [:]
 
 		trades.sort { (firsttrade, secondtrade) -> Bool in
+			if firsttrade.dateTime == secondtrade.dateTime {
+				return firsttrade.id > secondtrade.id
+			}
 			return firsttrade.dateTime < secondtrade.dateTime
 		}
 
 		transactions.sort { (firsttransaction, secondtransaction) -> Bool in
+			if firsttransaction.dateTime == secondtransaction.dateTime {
+				return firsttransaction.id > secondtransaction.id
+			}
 			return firsttransaction.dateTime < secondtransaction.dateTime
+		}
+
+		transactions = transactions.filter {
+			$0.transactionStatus == "Complete"
 		}
 
 		var tradeindex = 0, transactionindex = 0
 
 		for _ in 0..<trades.count + transactions.count {
 
+			if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
+				tradeindex += 1
+				continue
+			}
+
+			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
+				transactionindex+=1
+				continue
+			}
+
 			if transactionindex < transactions.count && tradeindex < trades.count {
+
 				if transactions[transactionindex].dateTime <= trades[tradeindex].dateTime {
 					processTransaction(transaction: transactions[transactionindex], assets: &assets, strangeIds: &strangeIds)
 					transactionindex += 1
@@ -101,6 +203,12 @@ class ViewController: UIViewController {
 		} else {
 			assets[addedCurrency] = addedQuantity
 		}
+		if let _  = assets[trade.commissionCurrency] {
+			assets[trade.commissionCurrency]! -= trade.commission
+		} else {
+			assets[trade.commissionCurrency] = -trade.commission
+		}
+		//		print(assets, trade.id)
 	}
 
 	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
@@ -122,7 +230,7 @@ class ViewController: UIViewController {
 				assets[transaction.currency] = transaction.amount
 			}
 		}
+		assets[transaction.currency]! -= transaction.commission
+		//		print(assets, transaction.id)
 	}
-
 }
-
