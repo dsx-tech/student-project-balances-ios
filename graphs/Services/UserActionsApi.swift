@@ -36,6 +36,7 @@ class TradeApi {
 			print("Error in URL making!")
 			return} //make URL from string
 		AF.request(url).responseJSON { (response) in
+
 			//handle errors
 			if let error = response.error {
 				print(error.localizedDescription)
@@ -77,33 +78,44 @@ class TradeApi {
 
 		}
 	}
-
+	/**
+	Get all transactions from backend
+	- Parameters:
+		- url: Url to make response
+		- completion: ([Transaction]?) -> Void what to make with response
+	*/
 	func getAllTransactions(url: String, completion: @escaping transactionsResponseCompletion) {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
-			return}
+			return} //make url from string
 		AF.request(url).responseJSON { (response) in
+			//handle errors
 			if let error = response.error {
 				print(error.localizedDescription)
 				completion(nil)
 			}
 
+			//getting data from response
 			guard let dataresponse = response.data else {
 				print("Error in pulling out data from response")
 				return }
+
 			let decoder = JSONDecoder()
 			let formatter = DateFormatter()
 			//			formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
 			formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 			decoder.dateDecodingStrategy = .formatted(formatter)
 			do {
+				//this is made to avoid mistakes in formatting different dates
 				var throwables = try decoder.decode([Throwable<Transaction>].self, from: dataresponse)
 				var data = throwables.compactMap { try? $0.result.get() }
 				formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
 				decoder.dateDecodingStrategy = .formatted(formatter)
 				throwables = try decoder.decode([Throwable<Transaction>].self, from: dataresponse)
+
 				let newdata = throwables.compactMap { try? $0.result.get() }
+				
 				for  i in newdata {
 					data.append(i)
 				}

@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-///
+//delete this
 class AssetsApi {
 	func getDataForPortfolioPieChart(url: String, completion: @escaping assetsResponseCompletion) {
 		guard let url = URL(string: url) else {

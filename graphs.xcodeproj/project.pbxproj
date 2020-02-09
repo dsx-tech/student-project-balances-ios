@@ -58,7 +58,7 @@
 		8345389A238C42120082DF88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		834538A1238C485D0082DF88 /* AssetsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsData.swift; sourceTree = "<group>"; };
 		834538A5238C4C180082DF88 /* PieChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartVC.swift; sourceTree = "<group>"; };
-		834538A9238C80D40082DF88 /* AssetsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsApi.swift; sourceTree = "<group>"; };
+		834538A9238C80D40082DF88 /* AssetsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsApi.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		834538AC238C81830082DF88 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		834538AE238D48100082DF88 /* GraphTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTabVC.swift; sourceTree = "<group>"; };
 		834538B0238D567D0082DF88 /* AreaChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChartVC.swift; sourceTree = "<group>"; };

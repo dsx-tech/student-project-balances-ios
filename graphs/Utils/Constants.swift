@@ -8,9 +8,17 @@
 
 import Foundation
 
+///response format for api escaping request
+/// - Returns: AssetsData?
 typealias assetsResponseCompletion = (AssetsData?) -> Void
+///response format for api escaping request
+/// - Returns: AssetsTimeData?
 typealias assetsTimeResponseCompletion = (AssetsTimeData?) -> Void
+///response format for api escaping request
+/// - Returns: [Trade]?
 typealias tradeResponseCompletion = ([Trade]?) -> Void
+///response format for api escaping request
+/// - Returns: [Transaction]?
 typealias transactionsResponseCompletion = ([Transaction]?) -> Void
 
 let currencies : [String: Double] = ["$" : 1, "€" : 1.3]

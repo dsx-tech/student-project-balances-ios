@@ -41,6 +41,7 @@ class PieChartVC: UIViewController {
 		setUpChartView() //set size for view
 		view.addSubview(chartView!)
 
+		//get all trades and transactions
 		let tradesApi = TradeApi()
 		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/trades") { (trades) in
 			if let trades = trades {
@@ -112,10 +113,23 @@ class PieChartVC: UIViewController {
 
 	}
 
+	/**counting assets between two dates from trades and transactions
+	 - Author: Danila Ferents
+	- Parameters:
+		- trades: All trades
+		- transactions: All transactions
+		- start: Start date of interval
+		- end: End date of interval
+	- Returns: Dictionary of value and count, array of strange transactions and trades
+	*/
 	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
+
+		///Array of strange Ids
 		var strangeIds: [(String,String, String)] = []
+		///Dictionary of all assets
 		var assets: [String: Double] = [:]
 
+		//sorting trades and transactions
 		trades.sort { (firsttrade, secondtrade) -> Bool in
 			if firsttrade.dateTime == secondtrade.dateTime {
 				return firsttrade.id > secondtrade.id
@@ -135,7 +149,7 @@ class PieChartVC: UIViewController {
 		}
 
 		var tradeindex = 0, transactionindex = 0
-
+		//processing all transactions, which are in interval between start and end
 		for _ in 0..<trades.count + transactions.count {
 
 			if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
@@ -169,6 +183,14 @@ class PieChartVC: UIViewController {
 		return (assets, strangeIds)
 	}
 
+	/**
+	Increase and Decrease assets, which have been traded
+	- Author: Danila Ferents
+	- Parameters:
+		- trade: Processing trade
+		- assets: Dictionary of assets(by reference)
+		- strangeIds: Array of strange ids(by reference)
+	*/
 	func processTrade(trade: Trade, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
 
 
@@ -211,6 +233,14 @@ class PieChartVC: UIViewController {
 		//		print(assets, trade.id)
 	}
 
+	/**
+	Increase  asset, which is in transaction
+	- Author: Danila Ferents
+	- Parameters:
+		- transaction: Processing transaction
+		- assets: Dictionary of assets(by reference)
+		- strangeIds: Array of strange ids(by reference)
+	*/
 	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
 
 		if transaction.transactionType == "Withdraw" {
