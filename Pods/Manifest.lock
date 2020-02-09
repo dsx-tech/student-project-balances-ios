@@ -1,0 +1,34 @@
+PODS:
+  - AAInfographics (4.0.0)
+  - Alamofire (5.0.0-rc.2)
+  - Charts (3.3.0):
+    - Charts/Core (= 3.3.0)
+  - Charts/Core (3.3.0)
+
+DEPENDENCIES:
+  - AAInfographics (from `https://github.com/AAChartModel/AAChartKit-Swift.git`)
+  - Alamofire (~> 5.0.0-rc.2)
+  - Charts
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Charts
+
+EXTERNAL SOURCES:
+  AAInfographics:
+    :git: https://github.com/AAChartModel/AAChartKit-Swift.git
+
+CHECKOUT OPTIONS:
+  AAInfographics:
+    :commit: 8fb3564af05b4489b0f278a43ad4c54782489f1b
+    :git: https://github.com/AAChartModel/AAChartKit-Swift.git
+
+SPEC CHECKSUMS:
+  AAInfographics: bbeed03caece4ee3b5e557d734967394e9bcdb11
+  Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
+  Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+
+PODFILE CHECKSUM: cc6938a2f0f8a97bebf55ef1cc1800bcdb765172
+
+COCOAPODS: 1.5.2
