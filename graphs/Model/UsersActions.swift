@@ -37,7 +37,7 @@ struct Trade: Codable {
 /// Transaction format from DSX exchange
 struct Transaction: Codable {
 	/// transaction id in csv table
-	let id: Int64
+	let id: UInt64
 	/// transaction when trade was made: "yyyy-MM-dd'T'HH:mm:ss"
     var dateTime : Date
 	/// transaction value
@@ -55,7 +55,9 @@ struct Transaction: Codable {
 }
 
 /// Quotes format from DSX exchange
-struct Quotes: Codable {
-	
+struct Quote: Codable {
+	///exchangeRate of instrument
+	let exchangeRate: Double
+	///timestamp in seconds
+	let timestamp: Int64
 }
-

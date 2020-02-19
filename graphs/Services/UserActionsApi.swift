@@ -34,6 +34,7 @@ class TradeApi {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
+			completion(nil)
 			return} //make URL from string
 		AF.request(url).responseJSON { (response) in
 
@@ -124,6 +125,60 @@ class TradeApi {
 				print(error.localizedDescription)
 				debugPrint(error)
 				//				completion(nil)
+			}
+		}
+	}
+	/**
+	Get all quotes from backend
+	- Parameters:
+		- url: Url to make response
+		- instrument: ex: btc-usd
+		- startTime: Date from which to count
+		- endTime: Date up to witch to count
+		- completion: ([Quote]?) -> Void what to make with response
+	*/
+	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping quotesResponseCompletion) {
+		let fullurl = url + instrument + "/" + String(Int(startTime.timeIntervalSince1970)) + "/" + String(Int(endTime.timeIntervalSince1970))
+		guard let url = URL(string: fullurl) else {
+			print("Error in url making!")
+			completion(nil)
+			return } //make url from string
+		AF.request(url).responseJSON { (response) in
+
+			//handle errors
+			if let error = response.error {
+				print(error.localizedDescription)
+				completion(nil)
+			}
+
+			//get data from response
+			guard let data = response.data else {
+				print("Error in pulling out data from response")
+				return
+			}
+
+			let decoder = JSONDecoder()
+
+			do {
+				let quotes = try decoder.decode([Quote].self, from: data)
+				completion(quotes)
+
+//				var throwables = try decoder.decode([Throwable<Quote>].self, from: data)
+//				var data2 = throwables.compactMap { try? $0.result.get() }
+//
+//				var throwables2 = try decoder.decode([Throwable<QuoteI>].self, from: data)
+//
+//				let newdata = throwables.compactMap { try? $0.result.get() }
+//
+//				for  i in newdata {
+//					let newdata = Quote(exchangeRate: Double(i.exchangeRate), timestamp: i.timestamp)
+//					data2.append(newdata)
+//				}
+//				completion(data2)
+			} catch {
+				print(error.localizedDescription)
+				debugPrint(error)
+				completion(nil)
 			}
 		}
 	}

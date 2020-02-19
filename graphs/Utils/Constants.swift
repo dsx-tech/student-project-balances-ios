@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 ///response format for api escaping request
 /// - Returns: AssetsData?
@@ -20,6 +21,36 @@ typealias tradeResponseCompletion = ([Trade]?) -> Void
 ///response format for api escaping request
 /// - Returns: [Transaction]?
 typealias transactionsResponseCompletion = ([Transaction]?) -> Void
+///response format for api escaping request
+/// - Returns: [Quote]?
+typealias quotesResponseCompletion = ([Quote]?) -> Void
+
+enum durationQuotes: Int {
+	case month
+	case threemonths
+	case sixmonths
+	case year
+
+	static let allvalues = ["month", "3 months", "6 month", "1 year"]
+}
+
+struct Urls {
+	static let quotesurl = "http://3.248.170.197:8888/bcv/quotes/bars/"
+}
+
+struct Identifiers {
+    static let quoteCell = "quoteCell"
+}
+
+struct Segues {
+	static let toAdd = "toStart"
+}
+
+struct AppColors {
+    static let Green = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+    static let Red = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
+	static let Default = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+}
 
 let currencies : [String: Double] = ["$" : 1, "€" : 1.3]
 let currencies1: [String: Double] = ["BTC": 7496.58,
@@ -36,4 +67,58 @@ let currencies1: [String: Double] = ["BTC": 7496.58,
 	"USDT": 1.0003,
 	"RUB": 0.016,
 	"USD": 1.0
+]
+
+let instruments = [
+  "eth-usd",
+  "ltc-usdt",
+  "bch-btc",
+  "eos-usd",
+  "eur-usd",
+  "btg-usd",
+  "btc-rub",
+  "eth-eurs",
+  "eth-usdt",
+  "usdt-eur",
+  "eth-gbp",
+  "bsv-usd",
+  "ltc-btc",
+  "btc-eurs",
+  "usd-try",
+  "btg-eur",
+  "bsv-eth",
+  "btc-eur",
+  "eos-btc",
+  "xrp-usd",
+  "bch-eur",
+  "ltc-eur",
+  "eurs-usd",
+  "btc-try",
+  "ltc-eurs",
+  "bsv-btc",
+  "ltc-try",
+  "bch-eurs",
+  "gbp-usd",
+  "btc-gbp",
+  "eur-try",
+  "btg-btc",
+  "eos-eur",
+  "usd-rub",
+  "usdt-usd",
+  "eth-btc",
+  "bsv-eur",
+  "eth-try",
+  "eos-eth",
+  "bch-usdt",
+  "xrp-eur",
+  "eth-eur",
+  "bch-usd",
+  "bch-gbp",
+  "btg-gbp",
+  "ltc-gbp",
+  "btc-usd",
+  "xrp-btc",
+  "eurs-eur",
+  "ltc-usd",
+  "btc-usdt"
 ]
