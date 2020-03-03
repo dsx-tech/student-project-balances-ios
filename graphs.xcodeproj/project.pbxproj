@@ -29,6 +29,7 @@
 		834538AD238C81830082DF88 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834538AC238C81830082DF88 /* Constants.swift */; };
 		834538AF238D48100082DF88 /* GraphTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834538AE238D48100082DF88 /* GraphTabVC.swift */; };
 		834538B1238D567D0082DF88 /* AreaChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834538B0238D567D0082DF88 /* AreaChartVC.swift */; };
+		838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */; };
 		83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */; };
 		83E4FB27239D56D20013D703 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB26239D56D20013D703 /* BalloonMarker.swift */; };
 		83E4FB29239DD0860013D703 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB28239DD0860013D703 /* DateValueFormatter.swift */; };
@@ -76,6 +77,7 @@
 		834538AC238C81830082DF88 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		834538AE238D48100082DF88 /* GraphTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTabVC.swift; sourceTree = "<group>"; };
 		834538B0238D567D0082DF88 /* AreaChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChartVC.swift; sourceTree = "<group>"; };
+		838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorrelationVC.swift; sourceTree = "<group>"; };
 		83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartVCCharts.swift; sourceTree = "<group>"; };
 		83E4FB26239D56D20013D703 /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		83E4FB28239DD0860013D703 /* DateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
@@ -201,15 +203,14 @@
 		834538A4238C4BF00082DF88 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				838E8C7F240E757100CBD811 /* Correlation */,
 				834538B0238D567D0082DF88 /* AreaChartVC.swift */,
 				834538AE238D48100082DF88 /* GraphTabVC.swift */,
 				83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */,
 				83E4FB2A239EF6D10013D703 /* StackedBarChartVC.swift */,
 				834538A5238C4C180082DF88 /* PieChartVC.swift */,
-				8314252623F9B8050086BED8 /* CorellationVC.swift */,
-				8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */,
-				8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */,
 				831D132C240588170024BC49 /* 10VC.swift */,
+				838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -229,6 +230,16 @@
 				834538AC238C81830082DF88 /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		838E8C7F240E757100CBD811 /* Correlation */ = {
+			isa = PBXGroup;
+			children = (
+				8314252623F9B8050086BED8 /* CorellationVC.swift */,
+				8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */,
+				8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */,
+			);
+			path = Correlation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +417,7 @@
 				83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */,
 				834538B1238D567D0082DF88 /* AreaChartVC.swift in Sources */,
 				834538AF238D48100082DF88 /* GraphTabVC.swift in Sources */,
+				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
 				834538A7238C78800082DF88 /* PieChartVC.swift in Sources */,
 				834538A2238C485D0082DF88 /* AssetsData.swift in Sources */,
 			);

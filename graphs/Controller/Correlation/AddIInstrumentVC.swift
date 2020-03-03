@@ -81,7 +81,7 @@ extension AddIInstrumentVC: UIPickerViewDelegate, UIPickerViewDataSource {
 
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		if pickerView == firstInstrumentPicker {
-			firstInstrument = instruments[row]
+			firstInstrument = firstinstrumentData[row]
 			basecurrency = String(firstInstrument.split(separator: "-")[1])
 			secondInstrumentPicker.reloadAllComponents()
 		} else if pickerView == periodPicker {

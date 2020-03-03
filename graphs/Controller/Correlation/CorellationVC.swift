@@ -37,8 +37,12 @@ class CorrelationVC: UIViewController {
 			vc.vc = self
 		} else if let graphVC = segue.destination as? CorrelationGraphVC {
 			if let sender = sender as? (String, IndexPath){
+
 				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
-				graphVC.secondInstrument = sender.0
+				graphVC.secondInstrument = instrumentCorrelations[sender.1.section].1.compactMap({ (instrumentCorrel) -> String? in
+					return instrumentCorrel.firstCurrency + "-" + instrumentCorrel.secondCurrency
+					})
+
 				graphVC.secondQuotes = quotes.first(where: { (element) -> Bool in
 					return element.0 == sender.0
 					})?.1
