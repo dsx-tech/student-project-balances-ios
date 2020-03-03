@@ -157,152 +157,152 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	}
 
 
-	func getAssetsDateAndAmount(trades: [Trade], transactions: [Transaction], timeInterval: TimeInterval, start: Date, end: Date, allassets: [String]) {
-		var assets: [String: Double] = [:]
-		var assetsValueAndData: [TimeInterval: [String: Double]] = [:]
-
-		var tradeindex = 0, transactionindex = 0
-
-		for _ in 0..<trades.count + transactions.count {
-
-			if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
-				tradeindex += 1
-				continue
-			}
-
-			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-				transactionindex+=1
-				continue
-			}
-
-			if transactionindex < transactions.count && tradeindex < trades.count {
-				if transactions[transactionindex].dateTime <= trades[tradeindex].dateTime {
-
-					processTransactionTime(transaction: transactions[transactionindex], assets: &assets, assetsWithTime:  &assetsValueAndData)
-					transactionindex += 1
-				} else {
-					processTradeTime(trade: trades[tradeindex], assets: &assets, assetsWithTime: &assetsValueAndData)
-					tradeindex += 1
-				}
-			} else if transactionindex >= transactions.count {
-				processTradeTime(trade: trades[tradeindex], assets: &assets, assetsWithTime: &assetsValueAndData)
-				tradeindex += 1
-			} else if tradeindex >= trades.count {
-				processTransactionTime(transaction: transactions[transactionindex], assets: &assets, assetsWithTime:  &assetsValueAndData)
-				transactionindex += 1
-			}
-		}
-
-
-
-
-//		var assetsMonthly: [String: [Double]] = [:]
-//		var monthcounter: TimeInterval = 1
-//		let sortedassetswithdata = assetsValueAndData.sorted { $0.key < $1.key}
+//	func getAssetsDateAndAmount(trades: [Trade], transactions: [Transaction], timeInterval: TimeInterval, start: Date, end: Date, allassets: [String]) {
+//		var assets: [String: Double] = [:]
+//		var assetsValueAndData: [TimeInterval: [String: Double]] = [:]
 //
-//		for asset in allassets {
-// 			assetsMonthly[asset] = []
-//		}
+//		var tradeindex = 0, transactionindex = 0
 //
-//		if sortedassetswithdata[0].key > start.timeIntervalSince1970 && sortedassetswithdata[0].key < (start.timeIntervalSince1970 + 2592000) {
-//			for (asset, value) in sortedassetswithdata[0].value {
-//				if let optional = assetsMonthly[asset] {
-//					assetsMonthly[asset]!.append(value)
+//		for _ in 0..<trades.count + transactions.count {
+//
+//			if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
+//				tradeindex += 1
+//				continue
+//			}
+//
+//			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
+//				transactionindex+=1
+//				continue
+//			}
+//
+//			if transactionindex < transactions.count && tradeindex < trades.count {
+//				if transactions[transactionindex].dateTime <= trades[tradeindex].dateTime {
+//
+//					processTransactionTime(transaction: transactions[transactionindex], assets: &assets, assetsWithTime:  &assetsValueAndData)
+//					transactionindex += 1
 //				} else {
-//					assetsMonthly[asset] = [value]
+//					processTradeTime(trade: trades[tradeindex], assets: &assets, assetsWithTime: &assetsValueAndData)
+//					tradeindex += 1
 //				}
+//			} else if transactionindex >= transactions.count {
+//				processTradeTime(trade: trades[tradeindex], assets: &assets, assetsWithTime: &assetsValueAndData)
+//				tradeindex += 1
+//			} else if tradeindex >= trades.count {
+//				processTransactionTime(transaction: transactions[transactionindex], assets: &assets, assetsWithTime:  &assetsValueAndData)
+//				transactionindex += 1
 //			}
 //		}
-////		} else {
-////			for (asset, _) in assetsMonthly {
-////					assetsMonthly[asset]!.append(0)
+//
+//
+//
+//
+////		var assetsMonthly: [String: [Double]] = [:]
+////		var monthcounter: TimeInterval = 1
+////		let sortedassetswithdata = assetsValueAndData.sorted { $0.key < $1.key}
+////
+////		for asset in allassets {
+//// 			assetsMonthly[asset] = []
+////		}
+////
+////		if sortedassetswithdata[0].key > start.timeIntervalSince1970 && sortedassetswithdata[0].key < (start.timeIntervalSince1970 + 2592000) {
+////			for (asset, value) in sortedassetswithdata[0].value {
+////				if let optional = assetsMonthly[asset] {
+////					assetsMonthly[asset]!.append(value)
+////				} else {
+////					assetsMonthly[asset] = [value]
+////				}
+////			}
+////		}
+//////		} else {
+//////			for (asset, _) in assetsMonthly {
+//////					assetsMonthly[asset]!.append(0)
+//////			}
+//////		}
+////
+////
+////		for i in 1..<sortedassetswithdata.count {
+////			if sortedassetswithdata[i].key < (monthcounter * 2592000) {
+////				continue
+////			} else if sortedassetswithdata[i - 1].key > ((monthcounter - 1) * 2592000) {
+////				monthcounter += 1
+////				for (asset, value) in sortedassetswithdata[i - 1].value {
+////					if let optional = assetsMonthly[asset] {
+////						assetsMonthly[asset]!.append(value)
+////					} else {
+////						assetsMonthly[asset] = [value]
+////					}
+////				}
+////			} else {
+////				for (asset, _) in assetsMonthly {
+////						assetsMonthly[asset]!.append(0)
+////				}
 ////			}
 ////		}
 //
+//	}
 //
-//		for i in 1..<sortedassetswithdata.count {
-//			if sortedassetswithdata[i].key < (monthcounter * 2592000) {
-//				continue
-//			} else if sortedassetswithdata[i - 1].key > ((monthcounter - 1) * 2592000) {
-//				monthcounter += 1
-//				for (asset, value) in sortedassetswithdata[i - 1].value {
-//					if let optional = assetsMonthly[asset] {
-//						assetsMonthly[asset]!.append(value)
-//					} else {
-//						assetsMonthly[asset] = [value]
-//					}
-//				}
+//	func processTradeTime(trade: Trade, assets: inout [String: Double], assetsWithTime: inout [TimeInterval: [String: Double]]){
+//
+//
+//		var deductibleQuantity: Double = 0
+//		var addedQuantity: Double = 0
+//		var deductibleCurrency: String = ""
+//		var addedCurrency: String = ""
+//
+//		if trade.tradeType == "Sell" {
+//			deductibleCurrency = trade.tradedQuantityCurrency
+//			deductibleQuantity = trade.tradedQuantity
+//			addedCurrency = trade.tradedPriceCurrency
+//			addedQuantity = trade.tradedPrice * trade.tradedQuantity
+//		} else if trade.tradeType == "Buy" {
+//			deductibleCurrency = trade.tradedPriceCurrency
+//			deductibleQuantity = trade.tradedPrice * trade.tradedQuantity
+//			addedCurrency = trade.tradedQuantityCurrency
+//			addedQuantity = trade.tradedQuantity
+//		}
+//
+//		if let currentassetQuantity = assets[deductibleCurrency] {
+//			if currentassetQuantity < deductibleQuantity {
+//				assets[deductibleCurrency]! -= deductibleQuantity
 //			} else {
-//				for (asset, _) in assetsMonthly {
-//						assetsMonthly[asset]!.append(0)
-//				}
+//				assets[deductibleCurrency] = -deductibleQuantity
+//			}
+//
+//			if let _ = assets[addedCurrency] {
+//				assets[addedCurrency]! += addedQuantity
+//			} else {
+//				assets[addedCurrency] = addedQuantity
 //			}
 //		}
-
-	}
-
-	func processTradeTime(trade: Trade, assets: inout [String: Double], assetsWithTime: inout [TimeInterval: [String: Double]]){
-
-
-		var deductibleQuantity: Double = 0
-		var addedQuantity: Double = 0
-		var deductibleCurrency: String = ""
-		var addedCurrency: String = ""
-
-		if trade.tradeType == "Sell" {
-			deductibleCurrency = trade.tradedQuantityCurrency
-			deductibleQuantity = trade.tradedQuantity
-			addedCurrency = trade.tradedPriceCurrency
-			addedQuantity = trade.tradedPrice * trade.tradedQuantity
-		} else if trade.tradeType == "Buy" {
-			deductibleCurrency = trade.tradedPriceCurrency
-			deductibleQuantity = trade.tradedPrice * trade.tradedQuantity
-			addedCurrency = trade.tradedQuantityCurrency
-			addedQuantity = trade.tradedQuantity
-		}
-
-		if let currentassetQuantity = assets[deductibleCurrency] {
-			if currentassetQuantity < deductibleQuantity {
-				assets[deductibleCurrency]! -= deductibleQuantity
-			} else {
-				assets[deductibleCurrency] = -deductibleQuantity
-			}
-
-			if let _ = assets[addedCurrency] {
-				assets[addedCurrency]! += addedQuantity
-			} else {
-				assets[addedCurrency] = addedQuantity
-			}
-		}
-
-		if let _ = assets[addedCurrency] {
-			assets[addedCurrency]! += addedQuantity
-		} else {
-			assets[addedCurrency] = addedQuantity
-		}
-
-		assetsWithTime[trade.dateTime.timeIntervalSince1970] = assets
-	}
-
-	func processTransactionTime(transaction: Transaction, assets: inout [String: Double], assetsWithTime: inout [TimeInterval: [String: Double]]) {
-
-		if transaction.transactionType == "Withdraw" {
-			if let currentassetQuantity = assets[transaction.currency] {
-				if currentassetQuantity < transaction.amount {
-				}
-				assets[transaction.currency]! -= transaction.amount
-			} else {
-				assets[transaction.currency] = -transaction.amount
-			}
-		} else if transaction.transactionType == "Deposit" {
-			if let _ = assets[transaction.currency] {
-				assets[transaction.currency]! += transaction.amount
-			} else {
-				assets[transaction.currency] = transaction.amount
-			}
-		}
-		assetsWithTime[transaction.dateTime.timeIntervalSince1970] = assets
-	}
+//
+//		if let _ = assets[addedCurrency] {
+//			assets[addedCurrency]! += addedQuantity
+//		} else {
+//			assets[addedCurrency] = addedQuantity
+//		}
+//
+//		assetsWithTime[trade.dateTime.timeIntervalSince1970] = assets
+//	}
+//
+//	func processTransactionTime(transaction: Transaction, assets: inout [String: Double], assetsWithTime: inout [TimeInterval: [String: Double]]) {
+//
+//		if transaction.transactionType == "Withdraw" {
+//			if let currentassetQuantity = assets[transaction.currency] {
+//				if currentassetQuantity < transaction.amount {
+//				}
+//				assets[transaction.currency]! -= transaction.amount
+//			} else {
+//				assets[transaction.currency] = -transaction.amount
+//			}
+//		} else if transaction.transactionType == "Deposit" {
+//			if let _ = assets[transaction.currency] {
+//				assets[transaction.currency]! += transaction.amount
+//			} else {
+//				assets[transaction.currency] = transaction.amount
+//			}
+//		}
+//		assetsWithTime[transaction.dateTime.timeIntervalSince1970] = assets
+//	}
 
 	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
 		var strangeIds: [(String,String, String)] = []

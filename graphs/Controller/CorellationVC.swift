@@ -11,7 +11,9 @@ import UIKit
 class CorrelationVC: UIViewController {
 	
 	//Variables
-	var instrumentCorrelations: [instrumentCorrelation] = []
+	var instrumentCorrelations: [(String, [instrumentCorrelation])] = []
+	var quotes: [(String, [Quote])] = []
+
 	@IBOutlet weak var quotestable: UITableView!
 	
 	override func viewDidLoad() {
@@ -33,6 +35,18 @@ class CorrelationVC: UIViewController {
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let vc = segue.destination as? AddIInstrumentVC {
 			vc.vc = self
+		} else if let graphVC = segue.destination as? CorrelationGraphVC {
+			if let sender = sender as? (String, IndexPath){
+				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
+				graphVC.secondInstrument = sender.0
+				graphVC.secondQuotes = quotes.first(where: { (element) -> Bool in
+					return element.0 == sender.0
+					})?.1
+				graphVC.firstQuotes = quotes.first(where: { (element) -> Bool in
+					return element.0 == instrumentCorrelations[sender.1.section].0
+					})?.1
+			}
+			graphVC.vc = self
 		}
 	}
 	
@@ -77,9 +91,18 @@ class CorrelationVC: UIViewController {
 					return
 				}
 				//				let correlation = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
-				
+				self.quotes.append((firstinstrument, firstQuotes))
+				self.quotes.append((secondinstrument, secondQuotes))
+
 				let correl = instrumentCorrelation(firstCurrency: String(secondinstrument.split(separator: "-").first ?? ""), secondCurrency: String(secondinstrument.split(separator: "-")[1]), correlation: self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes), timePeriod: "months: \(dateComponents.month!)")
-				self.instrumentCorrelations.append(correl)
+//				self.instrumentCorrelations.append(correl)
+				if var firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
+					return element.0 == firstinstrument
+				}) {
+					self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
+				} else {
+					self.instrumentCorrelations.append((firstinstrument, [correl]))
+				}
 				print(self.instrumentCorrelations)
 				self.quotestable.reloadData()
 			}
@@ -130,7 +153,7 @@ class CorrelationVC: UIViewController {
 			sumsecond = sumsecond + pow(secondquotes[i].exchangeRate - secondaverage, 2)
 		}
 		
-		let denominator = pow(sumfirst + sumsecond, 0.5)
+		let denominator = pow(sumfirst * sumsecond, 0.5)
 
 		let correl = cov/denominator
 		if correl.isNaN {
@@ -141,25 +164,33 @@ class CorrelationVC: UIViewController {
 	}
 }
 extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDeleteDelegate {
-	func deleteCell(instrument: String) {
+
+
+	func processGraph(secondInstrument: String, indexPath: IndexPath) {
+		performSegue(withIdentifier: Segues.toGraph, sender: (secondInstrument, indexPath))
+	}
+
+	func deleteCell(instrument1: String, instrument2: String) {
 		instrumentCorrelations.removeAll { (instrumentCorrel) -> Bool in
-			return instrumentCorrel.instrument == instrument
+			return instrumentCorrel.0 == instrument1
 		}
 		quotestable.reloadData()
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return instrumentCorrelations.count
+		return instrumentCorrelations[section].1.count
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
+		return instrumentCorrelations.count
 	}
-	
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return instrumentCorrelations[section].0
+	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.quoteCell, for: indexPath) as? quoteCell  {
 			cell.delegate = self
-			cell.configureCell(instrumentcor: instrumentCorrelations[indexPath.row])
+			cell.configureCell(instrumentcor: instrumentCorrelations[indexPath.section].1[indexPath.row], maininstrument: instrumentCorrelations[indexPath.section].0, indexPath: indexPath)
 			return cell
 		}
 		return UITableViewCell()

@@ -12,6 +12,8 @@
 		8314252E23FACCC30086BED8 /* quoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8314252C23FACCC30086BED8 /* quoteCell.xib */; };
 		8314253023FB11350086BED8 /* instrumentCorrelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314252F23FB11350086BED8 /* instrumentCorrelation.swift */; };
 		8314253823FC6E530086BED8 /* AddIInstrumentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */; };
+		8314253A23FD5F020086BED8 /* CorrelationGraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */; };
+		831D132D240588170024BC49 /* 10VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D132C240588170024BC49 /* 10VC.swift */; };
 		8336265123928A030077A815 /* UsersActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265023928A030077A815 /* UsersActions.swift */; };
 		8336265323928A700077A815 /* UserActionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265223928A700077A815 /* UserActionsApi.swift */; };
 		8336265B239456ED0077A815 /* graphsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265A239456ED0077A815 /* graphsTests.swift */; };
@@ -53,6 +55,8 @@
 		8314252C23FACCC30086BED8 /* quoteCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = quoteCell.xib; sourceTree = "<group>"; };
 		8314252F23FB11350086BED8 /* instrumentCorrelation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instrumentCorrelation.swift; sourceTree = "<group>"; };
 		8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIInstrumentVC.swift; sourceTree = "<group>"; };
+		8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationGraphVC.swift; sourceTree = "<group>"; };
+		831D132C240588170024BC49 /* 10VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 10VC.swift; sourceTree = "<group>"; };
 		8336265023928A030077A815 /* UsersActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersActions.swift; sourceTree = "<group>"; };
 		8336265223928A700077A815 /* UserActionsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActionsApi.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		83362658239456ED0077A815 /* graphsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = graphsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,13 +201,15 @@
 		834538A4238C4BF00082DF88 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				834538A5238C4C180082DF88 /* PieChartVC.swift */,
-				83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */,
 				834538B0238D567D0082DF88 /* AreaChartVC.swift */,
 				834538AE238D48100082DF88 /* GraphTabVC.swift */,
+				83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */,
 				83E4FB2A239EF6D10013D703 /* StackedBarChartVC.swift */,
+				834538A5238C4C180082DF88 /* PieChartVC.swift */,
 				8314252623F9B8050086BED8 /* CorellationVC.swift */,
 				8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */,
+				8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */,
+				831D132C240588170024BC49 /* 10VC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -381,7 +387,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8314253A23FD5F020086BED8 /* CorrelationGraphVC.swift in Sources */,
 				83E4FB29239DD0860013D703 /* DateValueFormatter.swift in Sources */,
+				831D132D240588170024BC49 /* 10VC.swift in Sources */,
 				83453891238C42100082DF88 /* ViewController.swift in Sources */,
 				8345388D238C42100082DF88 /* AppDelegate.swift in Sources */,
 				8314252723F9B8050086BED8 /* CorellationVC.swift in Sources */,

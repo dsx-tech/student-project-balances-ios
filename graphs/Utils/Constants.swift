@@ -44,6 +44,7 @@ struct Identifiers {
 
 struct Segues {
 	static let toAdd = "toStart"
+	static let toGraph = "toGraph"
 }
 
 struct AppColors {
@@ -67,6 +68,24 @@ let currencies1: [String: Double] = ["BTC": 7496.58,
 	"USDT": 1.0003,
 	"RUB": 0.016,
 	"USD": 1.0
+]
+
+let allcurrencies = [
+	"usd",
+	"bsv",
+	"bch",
+	"eurs",
+	"eos",
+	"btc",
+	"xrp",
+	"btg",
+	"gbp",
+	"eth",
+	"ltc",
+	"try",
+	"rub",
+	"eur",
+	"usdt"
 ]
 
 let instruments = [

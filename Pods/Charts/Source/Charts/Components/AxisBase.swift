@@ -150,7 +150,6 @@ open class AxisBase: ComponentBase
         {
             return ""
         }
-        
         return valueFormatter?.stringForValue(entries[index], axis: self) ?? ""
     }
     

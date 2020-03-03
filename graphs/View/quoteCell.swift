@@ -15,7 +15,8 @@ extension Double {
 }
 
 protocol quoteCellDeleteDelegate {
-	func deleteCell(instrument: String)
+	func deleteCell(instrument1: String, instrument2: String)
+	func processGraph(secondInstrument: String, indexPath: IndexPath)
 }
 
 class quoteCell: UITableViewCell {
@@ -30,6 +31,8 @@ class quoteCell: UITableViewCell {
 
 	var delegate: quoteCellDeleteDelegate!
 	var instrument: instrumentCorrelation!
+	var maininstrument: String!
+	var indexPath: IndexPath!
 //	var id: String!
 
     override func awakeFromNib() {
@@ -37,7 +40,7 @@ class quoteCell: UITableViewCell {
     }
 
 	@IBAction func toGraph(_ sender: Any) {
-		
+		delegate.processGraph(secondInstrument: instrumentLbl.text!, indexPath: self.indexPath)
 	}
 	override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -46,12 +49,14 @@ class quoteCell: UITableViewCell {
     }
 	
 	@IBAction func deleteCell(_ sender: Any) {
-		delegate.deleteCell(instrument: instrument.instrument)
+		delegate.deleteCell(instrument1: maininstrument, instrument2: instrument.instrument)
 	}
 
-	func configureCell(instrumentcor: instrumentCorrelation) {
+	func configureCell(instrumentcor: instrumentCorrelation, maininstrument: String, indexPath: IndexPath) {
 
 		self.instrument = instrumentcor
+		self.maininstrument = maininstrument
+		self.indexPath = indexPath
 
 		//put values in outlets
 		let doubleFormat = ".3"
