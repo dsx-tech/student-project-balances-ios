@@ -31,10 +31,6 @@
 		834538B1238D567D0082DF88 /* AreaChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834538B0238D567D0082DF88 /* AreaChartVC.swift */; };
 <<<<<<< Updated upstream
 =======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 		83791685241A9F9B008C4B1E /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83791684241A9F9B008C4B1E /* LoginStoryboard.storyboard */; };
 		83791687241AA608008C4B1E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791686241AA608008C4B1E /* LoginVC.swift */; };
 		83791689241AAA9C008C4B1E /* RoundedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791688241AAA9B008C4B1E /* RoundedViews.swift */; };
@@ -42,13 +38,8 @@
 		8379168F241AAD35008C4B1E /* ForgotPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */; };
 		83791691241AAE7D008C4B1E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791690241AAE7D008C4B1E /* Extensions.swift */; };
 		838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */; };
-<<<<<<< Updated upstream
-=======
 >>>>>>> Stashed changes
-=======
 		838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */; };
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
->>>>>>> Stashed changes
 		83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */; };
 		83E4FB27239D56D20013D703 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB26239D56D20013D703 /* BalloonMarker.swift */; };
 		83E4FB29239DD0860013D703 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB28239DD0860013D703 /* DateValueFormatter.swift */; };
@@ -97,10 +88,6 @@
 		834538B0238D567D0082DF88 /* AreaChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaChartVC.swift; sourceTree = "<group>"; };
 <<<<<<< Updated upstream
 =======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 		83791684241A9F9B008C4B1E /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		83791686241AA608008C4B1E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		83791688241AAA9B008C4B1E /* RoundedViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedViews.swift; sourceTree = "<group>"; };
@@ -108,13 +95,8 @@
 		8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordVC.xib; sourceTree = "<group>"; };
 		83791690241AAE7D008C4B1E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorrelationVC.swift; sourceTree = "<group>"; };
-<<<<<<< Updated upstream
-=======
 >>>>>>> Stashed changes
-=======
 		838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorrelationVC.swift; sourceTree = "<group>"; };
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
->>>>>>> Stashed changes
 		83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartVCCharts.swift; sourceTree = "<group>"; };
 		83E4FB26239D56D20013D703 /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		83E4FB28239DD0860013D703 /* DateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
@@ -243,19 +225,11 @@
 			isa = PBXGroup;
 			children = (
 <<<<<<< Updated upstream
-				8379168A241AABA3008C4B1E /* Login */,
-				838E8C7F240E757100CBD811 /* Correlation */,
-=======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 =======
 				8379168A241AABA3008C4B1E /* Login */,
 				838E8C7F240E757100CBD811 /* Correlation */,
 >>>>>>> Stashed changes
-=======
 				838E8C7F240E757100CBD811 /* Correlation */,
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
->>>>>>> Stashed changes
 				834538B0238D567D0082DF88 /* AreaChartVC.swift */,
 				834538AE238D48100082DF88 /* GraphTabVC.swift */,
 				83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */,
@@ -287,10 +261,6 @@
 		};
 <<<<<<< Updated upstream
 =======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 		83791683241A9F5D008C4B1E /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,10 +289,16 @@
 			path = graphs/XIBs;
 			sourceTree = SOURCE_ROOT;
 		};
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
+		838E8C7F240E757100CBD811 /* Correlation */ = {
+			isa = PBXGroup;
+			children = (
+				8314252623F9B8050086BED8 /* CorellationVC.swift */,
+				8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */,
+				8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */,
+			);
+			path = Correlation;
+			sourceTree = "<group>";
+		};
 >>>>>>> Stashed changes
 		838E8C7F240E757100CBD811 /* Correlation */ = {
 			isa = PBXGroup;
@@ -334,13 +310,6 @@
 			path = Correlation;
 			sourceTree = "<group>";
 		};
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
->>>>>>> Stashed changes
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -517,19 +486,11 @@
 				8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */,
 				834538AF238D48100082DF88 /* GraphTabVC.swift in Sources */,
 <<<<<<< Updated upstream
-				83791691241AAE7D008C4B1E /* Extensions.swift in Sources */,
-				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
-=======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 =======
 				83791691241AAE7D008C4B1E /* Extensions.swift in Sources */,
 				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
 >>>>>>> Stashed changes
-=======
 				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
->>>>>>> 4a1fab7... Save 10, 9, 7 graphs
->>>>>>> Stashed changes
 				834538A7238C78800082DF88 /* PieChartVC.swift in Sources */,
 				834538A2238C485D0082DF88 /* AssetsData.swift in Sources */,
 				83791687241AA608008C4B1E /* LoginVC.swift in Sources */,
