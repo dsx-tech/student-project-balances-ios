@@ -51,6 +51,7 @@ struct AppColors {
     static let Green = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
     static let Red = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
 	static let Default = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+	static let Blue = #colorLiteral(red: 0.2914361954, green: 0.3395442367, blue: 0.4364506006, alpha: 1)
 }
 
 let currencies : [String: Double] = ["$" : 1, "€" : 1.3]

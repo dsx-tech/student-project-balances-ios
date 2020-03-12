@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6DE6080593E23B0E085297D46B285849"
+               BlueprintIdentifier = "FEF0E90CE53BB283F803BE7AF9986A4B"
                BlueprintName = "AAInfographics"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "AAInfographics.framework">
+               BuildableName = "libAAInfographics.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
