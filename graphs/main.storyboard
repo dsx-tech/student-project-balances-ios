@@ -23,6 +23,7 @@
                         <segue destination="7hS-yG-ciu" kind="relationship" relationship="viewControllers" id="MSW-if-TOh"/>
                         <segue destination="Eqw-Ul-acK" kind="relationship" relationship="viewControllers" id="uX7-Z2-0QH"/>
                         <segue destination="Wmn-76-0cv" kind="relationship" relationship="viewControllers" id="Bxa-Hg-LJT"/>
+                        <segue destination="uc2-g0-7ip" kind="relationship" relationship="viewControllers" id="5rJ-cr-pIw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jMm-5l-l1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -70,7 +71,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TZw-2S-tiw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2034" y="-1004"/>
+            <point key="canvasLocation" x="-2034" y="-1166"/>
         </scene>
         <!--Correlation GraphVC-->
         <scene sceneID="8hB-to-ha8">
@@ -101,7 +102,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yVk-SQ-xsz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1855" y="2492"/>
+            <point key="canvasLocation" x="-1855" y="2543"/>
         </scene>
         <!--Stacked Bar ChartVC-->
         <scene sceneID="Ws8-5X-mgf">
@@ -197,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qP7-rb-ASf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3044" y="1773"/>
+            <point key="canvasLocation" x="-2034" y="1773"/>
         </scene>
         <!--AddI InstrumentVC-->
         <scene sceneID="QtG-Wb-j76">
@@ -312,7 +313,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIi-M8-3L3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="3un-hi-W1S" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1855" y="1774"/>
+            <point key="canvasLocation" x="-1015" y="1773"/>
         </scene>
         <!--Pie ChartVC-->
         <scene sceneID="idm-l5-wba">
@@ -329,6 +330,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fM7-Gz-0jL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2034" y="385"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="tJ1-EZ-2tK">
+            <objects>
+                <viewController id="uc2-g0-7ip" customClass="ActiveCorrelationVC" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tAw-BU-MRz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wsP-Rn-igW" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="12" width="375" height="606"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wsP-Rn-igW" firstAttribute="top" secondItem="D9Q-hY-wME" secondAttribute="top" constant="12" id="703-au-4Yr"/>
+                            <constraint firstItem="D9Q-hY-wME" firstAttribute="bottom" secondItem="wsP-Rn-igW" secondAttribute="bottom" id="Ni1-TR-aiR"/>
+                            <constraint firstItem="wsP-Rn-igW" firstAttribute="leading" secondItem="D9Q-hY-wME" secondAttribute="leading" id="lbB-vK-Emc"/>
+                            <constraint firstItem="D9Q-hY-wME" firstAttribute="trailing" secondItem="wsP-Rn-igW" secondAttribute="trailing" id="lcJ-UM-EbL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="D9Q-hY-wME"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="TAM-tP-2ck"/>
+                    <connections>
+                        <outlet property="chartView" destination="wsP-Rn-igW" id="QpU-ec-TeW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bhb-wW-d8f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3359" y="1342"/>
         </scene>
         <!--Item-->
         <scene sceneID="UzM-1Z-PPu">
