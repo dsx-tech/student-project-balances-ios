@@ -19,16 +19,18 @@ class AreaChartVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpAreaChartView()
-		view.addSubview(chartView!)
+		if let chartView = chartView {
+			view.addSubview(chartView)
+		}
 		let url = ""
 		timeassetApi.getDataForTimeAssetChart(url: url) { (assets) in
 			if let assets = assets {
 				self.chartModel = self.configureAreaChartModel(data: assets.convertToArray())
-				self.chartView!.aa_drawChartWithChartModel(self.chartModel)
+				self.chartView?.aa_drawChartWithChartModel(self.chartModel)
 			}
 		}
 		self.chartModel = self.configureAreaChartModel(data: [])
-		self.chartView!.aa_drawChartWithChartModel(self.chartModel)
+		self.chartView?.aa_drawChartWithChartModel(self.chartModel)
     }
 
 	func setUpAreaChartView() {
@@ -37,14 +39,14 @@ class AreaChartVC: UIViewController {
 		let charWidth = view.frame.size.width
 		let charHeight = view.frame.size.height
 
-		chartView!.frame = CGRect(x: 0, y: 60, width: charWidth, height: charHeight)
+		chartView?.frame = CGRect(x: 0, y: 60, width: charWidth, height: charHeight)
 		chartView.contentHeight = charHeight - 80
-		chartView!.scrollEnabled = false
+		chartView?.scrollEnabled = false
 	}
 
 	func configureAreaChartModel(data: [Any]) -> AAChartModel {
 		let stopsArr = [
-			[0.0, "#febc0f"],//颜色字符串设置支持十六进制类型和 rgba 类型
+			[0.0, "#febc0f"],
 			[0.5, "#FF14d4"],
 			[1.0, "#0bf8f5"]
 		]

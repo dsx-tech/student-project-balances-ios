@@ -11,16 +11,16 @@ import AAInfographics
 
 extension UIColor {
 	  func toHexString() -> String {
-		  var r:CGFloat = 0
-		  var g:CGFloat = 0
-		  var b:CGFloat = 0
-		  var a:CGFloat = 0
+		  var r: CGFloat = 0
+		  var g: CGFloat = 0
+		  var b: CGFloat = 0
+		  var a: CGFloat = 0
 
 		  getRed(&r, green: &g, blue: &b, alpha: &a)
 
-		  let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+		  let rgb: Int = (Int)(r * 255) << 16 | (Int)(g * 255) << 8 | (Int)(b * 255) << 0
 
-		  return String(format:"#%06x", rgb)
+		  return String(format: "#%06x", rgb)
 	  }
   }
 //1
@@ -39,7 +39,7 @@ class PieChartVC: UIViewController {
         super.viewDidLoad()
 
 		setUpChartView() //set size for view
-		view.addSubview(chartView!)
+		view.addSubview(chartView)
 
 		//get all trades and transactions
 		let tradesApi = TradeApi()
@@ -49,25 +49,30 @@ class PieChartVC: UIViewController {
 				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
-						let (assets1, strangeIds) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: Date(timeIntervalSince1970: 0), end: Date(timeIntervalSinceNow: 0))
+						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades,
+																				   transactions: &self.transactions,
+																				   start: Date(timeIntervalSince1970: 0),
+																				   end: Date(timeIntervalSinceNow: 0))
 						print(assets1)
 						var newassets: [Any] = []
 						for (key, value) in assets1 {
 //							if value < 0 {
 //								continue
 //							}
-							newassets.append([key, value * currencies1[key]!])
+							if let currency = currencies1[key] {
+								newassets.append([key, value * currency])
+							}
 						}
 //						var assets = AssetsTimeData(assets: )
 //						assets.convertToStringAny()
 						self.chartModel = self.configurePieChartModel(data: newassets)
 						print(newassets)
-						self.chartView!.aa_drawChartWithChartModel(self.chartModel)
+						self.chartView?.aa_drawChartWithChartModel(self.chartModel)
 				}
 			}
  		}
 		self.chartModel = self.configurePieChartModel(data: [])
-		self.chartView!.aa_drawChartWithChartModel(self.chartModel)
+		self.chartView?.aa_drawChartWithChartModel(self.chartModel)
 		}}
 
 	private func setUpChartView() {
@@ -75,16 +80,16 @@ class PieChartVC: UIViewController {
 
 		let chartWidth = view.frame.size.width
 		let chartHeight = view.frame.size.height
-		chartView!.frame = CGRect(x: 0, y: 0, width: chartWidth, height: chartHeight)
-		chartView!.contentHeight = view.frame.size.height - 80
-		chartView!.scrollEnabled = false
+		chartView?.frame = CGRect(x: 0, y: 0, width: chartWidth, height: chartHeight)
+		chartView?.contentHeight = view.frame.size.height - 80
+		chartView?.scrollEnabled = false
 	}
 
 	private func configurePieChartModel(data: [Any]) -> AAChartModel {
-			let colors = (0..<data.count).map { (i) -> String in
-            let color =  UIColor(red:   .random(),
+			let colors = (0..<data.count).map { _ -> String in
+            let color = UIColor(red: .random(),
 			green: .random(),
-			blue:  .random(),
+			blue: .random(),
 				alpha: 1.0)
 
 				return color.toHexString()
@@ -122,10 +127,14 @@ class PieChartVC: UIViewController {
 		- end: End date of interval
 	- Returns: Dictionary of value and count, array of strange transactions and trades
 	*/
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
+	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
+										transactions: inout [Transaction],
+										start: Date,
+										end: Date)
+		-> ([String: Double], [(String, String, String)]) {
 
 		///Array of strange Ids
-		var strangeIds: [(String,String, String)] = []
+		var strangeIds: [(String, String, String)] = []
 		///Dictionary of all assets
 		var assets: [String: Double] = [:]
 
@@ -158,7 +167,7 @@ class PieChartVC: UIViewController {
 			}
 
 			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-				transactionindex+=1
+				transactionindex += 1
 				continue
 			}
 
@@ -191,8 +200,7 @@ class PieChartVC: UIViewController {
 		- assets: Dictionary of assets(by reference)
 		- strangeIds: Array of strange ids(by reference)
 	*/
-	func processTrade(trade: Trade, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
-
+	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		var deductibleQuantity: Double = 0
 		var addedQuantity: Double = 0
@@ -213,20 +221,20 @@ class PieChartVC: UIViewController {
 
 		if let currentassetQuantity = assets[deductibleCurrency] {
 			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency)) }
-			assets[deductibleCurrency]! -= deductibleQuantity
+				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
+			assets[deductibleCurrency]? -= deductibleQuantity
 		} else {
 			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency))
+			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
 		}
 
-		if let _ = assets[addedCurrency] {
-			assets[addedCurrency]! += addedQuantity
+		if assets[addedCurrency] != nil {
+			assets[addedCurrency]? += addedQuantity
 		} else {
 			assets[addedCurrency] = addedQuantity
 		}
-		if let _  = assets[trade.commissionCurrency] {
-			assets[trade.commissionCurrency]! -= trade.commission
+		if assets[trade.commissionCurrency] != nil {
+			assets[trade.commissionCurrency]? -= trade.commission
 		} else {
 			assets[trade.commissionCurrency] = -trade.commission
 		}
@@ -241,26 +249,26 @@ class PieChartVC: UIViewController {
 		- assets: Dictionary of assets(by reference)
 		- strangeIds: Array of strange ids(by reference)
 	*/
-	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
+	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		if transaction.transactionType == "Withdraw" {
 			if let currentassetQuantity = assets[transaction.currency] {
 				if currentassetQuantity < transaction.amount {
 					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 				}
-				assets[transaction.currency]! -= transaction.amount
+				assets[transaction.currency]? -= transaction.amount
 			} else {
 				assets[transaction.currency] = -transaction.amount
 				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 			}
 		} else if transaction.transactionType == "Deposit" {
-			if let _ = assets[transaction.currency] {
-				assets[transaction.currency]! += transaction.amount
+			if assets[transaction.currency] != nil {
+				assets[transaction.currency]? += transaction.amount
 			} else {
 				assets[transaction.currency] = transaction.amount
 			}
 		}
-		assets[transaction.currency]! -= transaction.commission
+		assets[transaction.currency]? -= transaction.commission
 		//		print(assets, transaction.id)
 	}
 }

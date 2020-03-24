@@ -9,4 +9,5 @@ use_modular_headers!
   pod 'AAInfographics', :git => 'https://github.com/AAChartModel/AAChartKit-Swift.git'
   pod 'Alamofire' , '~> 5.0.0-rc.2'
   pod 'Charts'
+  pod 'SwiftLint'
 end

@@ -21,7 +21,7 @@ class AddIInstrumentVC: UIViewController {
 	var secondInstrument: String!
 	var firstinstrumentData = instruments
 	var secondinstrumentData = instruments
-	var period: durationQuotes!
+	var period: DurationQuotes!
 	var vc: CorrelationVC!
 	var basecurrency = "usd"
 
@@ -40,10 +40,13 @@ class AddIInstrumentVC: UIViewController {
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
 		let start = formatter.date(from: "2019-01-01T00:59:59")
-		datePicker.setDate(start!, animated: true)
+		datePicker.setDate(start ?? Date(), animated: true)
     }
 	@IBAction func savePicked(_ sender: Any) {
-		vc.callculatecorrelation(firstinstrument: firstInstrument ?? instruments[0], secondinstrument: secondInstrument ?? instruments[0], startDate: datePicker.date, duration: period ?? .month)
+		vc.callculatecorrelation(firstinstrument: firstInstrument ?? instruments[0],
+								 secondinstrument: secondInstrument ?? instruments[0],
+								 startDate: datePicker.date,
+								 duration: period ?? .month)
 		self.dismiss(animated: true, completion: nil)
 	}
 }
@@ -54,27 +57,27 @@ extension AddIInstrumentVC: UIPickerViewDelegate, UIPickerViewDataSource {
 	}
 
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		if pickerView == firstInstrumentPicker  {
+		if pickerView == firstInstrumentPicker {
 			return firstinstrumentData.count
 		} else if pickerView == secondInstrumentPicker {
 			return secondinstrumentData.filter({ (instrument) -> Bool in
 				return instrument.hasSuffix(basecurrency)
 			}).count
 		} else if pickerView == periodPicker {
-			return durationQuotes.allvalues.count
+			return DurationQuotes.allvalues.count
 		}
 		return 0
 	}
 
 	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-		if pickerView == firstInstrumentPicker  {
+		if pickerView == firstInstrumentPicker {
 			return firstinstrumentData[row]
 		} else if pickerView == secondInstrumentPicker {
 			return secondinstrumentData.filter({ (instrument) -> Bool in
 				return instrument.hasSuffix(basecurrency)
 			})[row]
 		} else if pickerView == periodPicker {
-			return durationQuotes.allvalues[row]
+			return DurationQuotes.allvalues[row]
 		}
 		return ""
 	}
@@ -103,4 +106,3 @@ extension AddIInstrumentVC: UIPickerViewDelegate, UIPickerViewDataSource {
 	}
 
 }
-

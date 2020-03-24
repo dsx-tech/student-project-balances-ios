@@ -11,21 +11,23 @@ import UIKit
 
 ///response format for api escaping request
 /// - Returns: AssetsData?
-typealias assetsResponseCompletion = (AssetsData?) -> Void
+typealias AssetsResponseCompletion = (AssetsData?) -> Void
 ///response format for api escaping request
 /// - Returns: AssetsTimeData?
-typealias assetsTimeResponseCompletion = (AssetsTimeData?) -> Void
+typealias AssetsTimeResponseCompletion = (AssetsTimeData?) -> Void
 ///response format for api escaping request
 /// - Returns: [Trade]?
-typealias tradeResponseCompletion = ([Trade]?) -> Void
+typealias TradeResponseCompletion = ([Trade]?) -> Void
 ///response format for api escaping request
 /// - Returns: [Transaction]?
-typealias transactionsResponseCompletion = ([Transaction]?) -> Void
+typealias TransactionsResponseCompletion = ([Transaction]?) -> Void
 ///response format for api escaping request
 /// - Returns: [Quote]?
-typealias quotesResponseCompletion = ([Quote]?) -> Void
-
-enum durationQuotes: Int {
+typealias QuotesResponseCompletion = ([Quote]?) -> Void
+///response format for login api escaping request
+/// - Returns: [LoginResponse]?
+typealias AuthLoginResponseCompletion = (LoginResponse?) -> Void
+enum DurationQuotes: Int {
 	case month
 	case threemonths
 	case sixmonths
@@ -36,6 +38,7 @@ enum durationQuotes: Int {
 
 struct Urls {
 	static let quotesurl = "http://3.248.170.197:8888/bcv/quotes/bars/"
+	static let loginUrl = "http://3.248.170.197:9999/bcv/auth/register"
 }
 
 struct Identifiers {
@@ -54,7 +57,7 @@ struct AppColors {
 	static let Blue = #colorLiteral(red: 0.2914361954, green: 0.3395442367, blue: 0.4364506006, alpha: 1)
 }
 
-let currencies : [String: Double] = ["$" : 1, "€" : 1.3]
+let currencies: [String: Double] = ["$": 1, "€": 1.3]
 let currencies1: [String: Double] = ["BTC": 7496.58,
 	"ETH": 150.2,
 	"BSV": 96.59,

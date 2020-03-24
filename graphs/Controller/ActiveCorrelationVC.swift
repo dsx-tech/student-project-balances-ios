@@ -27,7 +27,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-		guard let start = formatter.date(from: "2018-01-01T00:00:01") else {return}
+		guard let start = formatter.date(from: "2018-01-01T00:00:01") else { return }
 
 		chartView.chartDescription?.enabled = false
 		chartView.dragEnabled = true
@@ -52,7 +52,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 		xAxis.valueFormatter = DateValueFormatter()
 		chartView.rightAxis.enabled = false
 
-		let marker = BalloonMarker(color: UIColor(white: 180/255, alpha: 1),
+		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
 								   font: .systemFont(ofSize: 12),
 								   textColor: .white,
 								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
@@ -66,14 +66,13 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 
 	func setDataCount(data: [(String, [(Double, Double)])]) {
 
-		var datasets:[LineChartDataSet] = []
+		var datasets: [LineChartDataSet] = []
 
 		data.forEach { (instrument, normallisedquotesWithDates) in
 			let values = (0..<normallisedquotesWithDates.count).map { (i) -> ChartDataEntry in
-				return ChartDataEntry(x: normallisedquotesWithDates[i].0 , y: normallisedquotesWithDates[i].1)
+				return ChartDataEntry(x: normallisedquotesWithDates[i].0, y: normallisedquotesWithDates[i].1)
 			}
 
-			
 			let set1 = LineChartDataSet(entries: values, label: instrument)
 			set1.drawIconsEnabled = false
 
@@ -91,7 +90,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 
 			let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
 								  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
-			let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+			guard let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil) else { return }
 
 			set1.fillAlpha = 1
 			set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
@@ -103,7 +102,6 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 		chartView.data = data
 	}
 
-
 	/**
 	visualise correlation from start date for duration between two instruments
 	- Author: Danila Ferents
@@ -114,10 +112,10 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	- duration: quotesDuration enum
 	- Returns: corellation value
 	*/
-	func correlationBetween(firstinstrument: String, secondinstrument: String, startDate: Date, duration: durationQuotes) {
+	func correlationBetween(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
 
 		//number of months to count corellation, which we take from duration parameter
-		var dateComponents =  DateComponents()
+		var dateComponents = DateComponents()
 		switch duration {
 
 		case .month:
@@ -128,8 +126,6 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 			dateComponents.month = 6
 		case .year:
 			dateComponents.month = 12
-		@unknown default:
-			dateComponents.month = 0
 		}
 
 		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
@@ -160,7 +156,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	- transactions: quotes of second instrument
 	- Returns:
 	*/
-	func correlationQuotes(firstquotes: [Quote], secondquotes: [Quote]) -> ([(Double, Double)], [(Double, Double)])  {
+	func correlationQuotes(firstquotes: [Quote], secondquotes: [Quote]) -> ([(Double, Double)], [(Double, Double)]) {
 		let maxfirstinstrument = firstquotes.max { (quote1, quote2) -> Bool in
 			return quote1.exchangeRate < quote2.exchangeRate
 		}?.exchangeRate
@@ -184,4 +180,3 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 		return (newquotesfirstinstrument, secondquotesfirstinstrument)
 	}
 }
-

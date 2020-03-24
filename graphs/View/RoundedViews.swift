@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //Classes of a round objects
-class RoundedButton : UIButton {
+class RoundedButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 10  //Make corners angled

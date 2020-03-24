@@ -12,7 +12,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	var window: UIWindow?
 
-
 	func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 //		guard let windowScene = (scene as? UIWindowScene) else { return }
 //		window = UIWindow(frame: UIScreen.main.bounds)
@@ -21,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //		let firstVC = PieChartVC()
 //		window?.rootViewController = firstVC
 //		window?.makeKeyAndVisible()
-		guard let _ = (scene as? UIWindowScene) else { return }
+//		guard let _ = (scene as? UIWindowScene) else { return }
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {
@@ -52,6 +51,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// to restore the scene back to its current state.
 	}
 
-
 }
-

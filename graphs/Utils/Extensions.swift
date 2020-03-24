@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-//variable to make cod more readable
+//variable to make code more readable
 extension String {
-    var isNotEmpty : Bool{
+    var isNotEmpty: Bool {
         return !isEmpty
     }
 }

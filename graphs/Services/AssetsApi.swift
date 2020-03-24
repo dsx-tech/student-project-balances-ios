@@ -11,7 +11,7 @@ import Alamofire
 
 //delete this
 class AssetsApi {
-	func getDataForPortfolioPieChart(url: String, completion: @escaping assetsResponseCompletion) {
+	func getDataForPortfolioPieChart(url: String, completion: @escaping AssetsResponseCompletion) {
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
 			return}
@@ -38,7 +38,7 @@ class AssetsApi {
 }
 
 class AssetsValueApi {
-	func getDataForTimeAssetChart(url: String, completion: @escaping assetsTimeResponseCompletion) {
+	func getDataForTimeAssetChart(url: String, completion: @escaping AssetsTimeResponseCompletion) {
 			guard let url = URL(string: url) else {
 			print("Error in URL making!")
 				return}
@@ -63,5 +63,3 @@ class AssetsValueApi {
 			}
 		}
 	}
-
-

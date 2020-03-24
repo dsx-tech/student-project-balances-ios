@@ -4,16 +4,19 @@ PODS:
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
+  - SwiftLint (0.35.0)
 
 DEPENDENCIES:
   - AAInfographics (from `https://github.com/AAChartModel/AAChartKit-Swift.git`)
   - Alamofire (~> 5.0.0-rc.2)
   - Charts
+  - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Charts
+    - SwiftLint
 
 EXTERNAL SOURCES:
   AAInfographics:
@@ -28,7 +31,8 @@ SPEC CHECKSUMS:
   AAInfographics: bbeed03caece4ee3b5e557d734967394e9bcdb11
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+  SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: f7ea33c37a57b9ca5ad99bbf1e649d1e684496ac
+PODFILE CHECKSUM: 07d171371a9733d8264a3b66d317bda83e2fb8f9
 
 COCOAPODS: 1.5.2

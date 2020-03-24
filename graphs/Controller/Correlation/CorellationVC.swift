@@ -11,7 +11,7 @@ import UIKit
 class CorrelationVC: UIViewController {
 	
 	//Variables
-	var instrumentCorrelations: [(String, [instrumentCorrelation])] = []
+	var instrumentCorrelations: [(String, [InstrumentCorrelation])] = []
 	var quotes: [(String, [Quote])] = []
 
 	@IBOutlet weak var quotestable: UITableView!
@@ -20,14 +20,13 @@ class CorrelationVC: UIViewController {
 		super.viewDidLoad()
 		
 		quotestable.delegate = self
-		//здесь была ошибка про инициализацию через register спросить потом 
 		quotestable.register(UINib(nibName: "quoteCell", bundle: nil), forCellReuseIdentifier: Identifiers.quoteCell)
 		quotestable.dataSource = self
 		let formatter = DateFormatter()
 		
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 		
-		guard let start = formatter.date(from: "2019-01-01T00:00:01") else {return}
+		guard let start = formatter.date(from: "2019-01-01T00:00:01") else { return }
 		
 		callculatecorrelation(firstinstrument: "eur-usd", secondinstrument: "btc-usd", startDate: start, duration: .month)
 	}
@@ -36,7 +35,7 @@ class CorrelationVC: UIViewController {
 		if let vc = segue.destination as? AddIInstrumentVC {
 			vc.vc = self
 		} else if let graphVC = segue.destination as? CorrelationGraphVC {
-			if let sender = sender as? (String, IndexPath){
+			if let sender = sender as? (String, IndexPath) {
 
 				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
 				graphVC.secondInstrument = instrumentCorrelations[sender.1.section].1.compactMap({ (instrumentCorrel) -> String? in
@@ -64,10 +63,10 @@ class CorrelationVC: UIViewController {
 	- duration: quotesDuration enum
 	- Returns: corellation value
 	*/
-	func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: durationQuotes) {
+	func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
 		
 		//number of months to count corellation, which we take from duration parameter
-		var dateComponents =  DateComponents()
+		var dateComponents = DateComponents()
 		switch duration {
 			
 		case .month:
@@ -78,8 +77,6 @@ class CorrelationVC: UIViewController {
 			dateComponents.month = 6
 		case .year:
 			dateComponents.month = 12
-		@unknown default:
-			dateComponents.month = 0
 		}
 		
 		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
@@ -98,9 +95,12 @@ class CorrelationVC: UIViewController {
 				self.quotes.append((firstinstrument, firstQuotes))
 				self.quotes.append((secondinstrument, secondQuotes))
 
-				let correl = instrumentCorrelation(firstCurrency: String(secondinstrument.split(separator: "-").first ?? ""), secondCurrency: String(secondinstrument.split(separator: "-")[1]), correlation: self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes), timePeriod: "months: \(dateComponents.month!)")
+				let correl = InstrumentCorrelation(firstCurrency: String(secondinstrument.split(separator: "-").first ?? ""),
+												   secondCurrency: String(secondinstrument.split(separator: "-")[1]),
+												   correlation: self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes),
+												   timePeriod: "months: \(dateComponents.month ?? 0)")
 //				self.instrumentCorrelations.append(correl)
-				if var firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
+				if let firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
 					return element.0 == firstinstrument
 				}) {
 					self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
@@ -140,26 +140,26 @@ class CorrelationVC: UIViewController {
 			sizequotes = secondquotes.count
 		}
 		
-		firstaverage = firstaverage / Double(sizequotes)
-		secondaverage = secondaverage / Double(sizequotes)
+		firstaverage /= Double(sizequotes)
+		secondaverage /= Double(sizequotes)
 		
 		for i in 0..<sizequotes {
-			cov = cov + (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
+			cov += (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
 		}
 		
 		var sumfirst = 0.0
 		for i in 0..<sizequotes {
-			sumfirst = sumfirst + pow(firstquotes[i].exchangeRate - firstaverage, 2)
+			sumfirst += pow(firstquotes[i].exchangeRate - firstaverage, 2)
 		}
 		
 		var sumsecond = 0.0
 		for i in 0..<sizequotes {
-			sumsecond = sumsecond + pow(secondquotes[i].exchangeRate - secondaverage, 2)
+			sumsecond += pow(secondquotes[i].exchangeRate - secondaverage, 2)
 		}
 		
 		let denominator = pow(sumfirst * sumsecond, 0.5)
 
-		let correl = cov/denominator
+		let correl = cov / denominator
 		if correl.isNaN {
 			return 0.0
 		} else {
@@ -168,7 +168,6 @@ class CorrelationVC: UIViewController {
 	}
 }
 extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDeleteDelegate {
-
 
 	func processGraph(secondInstrument: String, indexPath: IndexPath) {
 		performSegue(withIdentifier: Segues.toGraph, sender: (secondInstrument, indexPath))
@@ -192,9 +191,11 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDe
 		return instrumentCorrelations[section].0
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.quoteCell, for: indexPath) as? quoteCell  {
+		if let cell = tableView.dequeueReusableCell(withIdentifier: Identifiers.quoteCell, for: indexPath) as? QuoteCell {
 			cell.delegate = self
-			cell.configureCell(instrumentcor: instrumentCorrelations[indexPath.section].1[indexPath.row], maininstrument: instrumentCorrelations[indexPath.section].0, indexPath: indexPath)
+			cell.configureCell(instrumentcor: instrumentCorrelations[indexPath.section].1[indexPath.row],
+							   maininstrument: instrumentCorrelations[indexPath.section].0,
+							   indexPath: indexPath)
 			return cell
 		}
 		return UITableViewCell()
@@ -202,7 +203,8 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDe
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var height = tableView.frame.height
-		height = height/4
-		return CGFloat(exactly: height)!
+		height /= 4
+		guard let float = CGFloat(exactly: height) else { return CGFloat() }
+		return float
 	}
 }

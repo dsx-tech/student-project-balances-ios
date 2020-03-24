@@ -14,7 +14,7 @@ struct Throwable<T: Decodable>: Decodable {
 
     init(from decoder: Decoder) throws {
         do {
-            let decoded = try T.init(from: decoder)
+            let decoded = try T(from: decoder)
             result = .success(decoded)
         } catch let error {
             result = .failure(error)
@@ -30,7 +30,7 @@ class TradeApi {
 		- url: Url to make response
 		- completion: ([Trade]?) -> Void what to make with response
 	*/
-	func getAllTrades(url: String, completion: @escaping tradeResponseCompletion) {
+	func getAllTrades(url: String, completion: @escaping TradeResponseCompletion) {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
@@ -85,7 +85,7 @@ class TradeApi {
 		- url: Url to make response
 		- completion: ([Transaction]?) -> Void what to make with response
 	*/
-	func getAllTransactions(url: String, completion: @escaping transactionsResponseCompletion) {
+	func getAllTransactions(url: String, completion: @escaping TransactionsResponseCompletion) {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
@@ -137,7 +137,7 @@ class TradeApi {
 		- endTime: Date up to witch to count
 		- completion: ([Quote]?) -> Void what to make with response
 	*/
-	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping quotesResponseCompletion) {
+	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping QuotesResponseCompletion) {
 		let fullurl = url + instrument + "/" + String(Int(startTime.timeIntervalSince1970)) + "/" + String(Int(endTime.timeIntervalSince1970))
 		guard let url = URL(string: fullurl) else {
 			print("Error in url making!")

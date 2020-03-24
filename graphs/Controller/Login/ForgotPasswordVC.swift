@@ -1,9 +1,9 @@
 //
 //  ForgotPasswordVC.swift
-//  wagon
+//  graphs
 //
-//  Created by Danila Ferents on 24/04/2019.
-//  Copyright © 2019 Danila Ferents. All rights reserved.
+//  Created by Danila Ferents on 12.03.20.
+//  Copyright © 2020 Danila Ferents. All rights reserved.
 //
 
 import UIKit
