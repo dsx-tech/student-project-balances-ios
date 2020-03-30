@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import KeychainAccess
 
 struct Throwable<T: Decodable>: Decodable {
     let result: Result<T, Error>
@@ -36,7 +37,16 @@ class TradeApi {
 			print("Error in URL making!")
 			completion(nil)
 			return} //make URL from string
-		AF.request(url).responseJSON { (response) in
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token") as? String
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+		  "Authorization": "Token_" + newtoken
+		]
+
+		AF.request(url, headers: headers).responseJSON { (response) in
 
 			//handle errors
 			if let error = response.error {
@@ -90,7 +100,17 @@ class TradeApi {
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
 			return} //make url from string
-		AF.request(url).responseJSON { (response) in
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token") as? String
+
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+		  "Authorization": "Token_" + newtoken
+		]
+
+		AF.request(url, headers: headers).responseJSON { (response) in
 			//handle errors
 			if let error = response.error {
 				print(error.localizedDescription)

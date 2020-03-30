@@ -1,4 +1,4 @@
-framework module AAInfographics {
+module AAInfographics {
   umbrella header "AAInfographics-umbrella.h"
 
   export *

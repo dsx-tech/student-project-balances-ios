@@ -7,18 +7,18 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class LoginVC: UIViewController {
 	
 	//Outlets
-	@IBOutlet weak var emailTxt: UITextField!
-	@IBOutlet weak var passwordTxt: UITextField!
 	@IBOutlet weak var usernameTxt: UITextField!
+	@IBOutlet weak var passwordTxt: UITextField!
 
 	@IBOutlet weak var loginBtn: RoundedButton!
 	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	//Variables
-	var login: LoginResponse!
+	var login: AuthResponse!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,24 +34,38 @@ class LoginVC: UIViewController {
 		present(vc, animated: true, completion: nil)
 	}
 	@IBAction func loginBtnClicked(_ sender: Any) {
-		guard let email = emailTxt.text,
-			email.isNotEmpty,
-			let password = passwordTxt.text, password.isNotEmpty,
-			let username = usernameTxt.text, username.isNotEmpty else {
+		guard let username = usernameTxt.text,
+			username.isNotEmpty,
+			let password = passwordTxt.text, password.isNotEmpty else {
 			simpleAlert(title: "Error.", msg: "Please fill out all fields.")
 			return
 		}
 		activityIndicator.startAnimating()
+
 		let authApi = AuthApi()
-		authApi.authLogin(url: Urls.loginUrl, email: email, password: password, username: username) { [weak self] (response) in
-			guard let login = response, self = self else {
+		let keychain = Keychain(service: "swagger")
+
+		authApi.authLogin(url: Urls.loginUrl, username: username, password: password) { [weak self] (response) in
+			guard let login = response, let self = self else {
 				print("Error in getting response!")
 				return }
-			
+			self.login = login
+			keychain["token"] = login.token
+
+			let targetStoryboardName = "main"
+			let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
+			if let targetVC = targetStoryboard.instantiateInitialViewController() as? UITabBarController {
+				if let selectedVC = targetVC.selectedViewController as? LineChartVCCharts {
+					selectedVC.login = self.login
+				}
+				self.present(targetVC, animated: true, completion: nil)
+			}
 		}
+		
 	}
 	
 	@IBAction func guestClicked(_ sender: Any) {
+		//make demo
 	}
 
 }

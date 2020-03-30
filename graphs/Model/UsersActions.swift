@@ -63,7 +63,7 @@ struct Quote: Codable {
 }
 
 ///Struct to get username and token from server
-struct LoginResponse: Codable {
+struct AuthResponse: Codable {
 	let username: String
 	let token: String
 }

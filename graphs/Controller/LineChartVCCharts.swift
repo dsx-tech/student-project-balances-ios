@@ -15,6 +15,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	@IBOutlet weak var chartTitle: UILabel!
 	var trades: [Trade]!
 	var transactions: [Transaction]!
+	var login: AuthResponse!
 
 //	enum year: Int {
 //		case December = 31
@@ -24,6 +25,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+//		print(login)
 		chartTitle.text = "Assets"
 		chartView.delegate = self
 
@@ -63,10 +65,10 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 //		chartView.animate(xAxisDuration: 3.0)
 
 		let tradesApi = TradeApi()
-		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/trades") { (trades) in
+		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/portfolios/18/trades") { (trades) in
 			if let trades = trades {
 				self.trades = trades
-				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
+				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/portfolios/18/transactions") { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
 

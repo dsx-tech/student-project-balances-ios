@@ -26,7 +26,7 @@ typealias TransactionsResponseCompletion = ([Transaction]?) -> Void
 typealias QuotesResponseCompletion = ([Quote]?) -> Void
 ///response format for login api escaping request
 /// - Returns: [LoginResponse]?
-typealias AuthLoginResponseCompletion = (LoginResponse?) -> Void
+typealias AuthResponseCompletion = (AuthResponse?) -> Void
 enum DurationQuotes: Int {
 	case month
 	case threemonths
@@ -38,7 +38,8 @@ enum DurationQuotes: Int {
 
 struct Urls {
 	static let quotesurl = "http://3.248.170.197:8888/bcv/quotes/bars/"
-	static let loginUrl = "http://3.248.170.197:9999/bcv/auth/register"
+	static let loginUrl = "http://3.248.170.197:9999/bcv/auth/login"
+	static let registerUrl = "http://3.248.170.197:9999/bcv/auth/register"
 }
 
 struct Identifiers {
@@ -55,6 +56,11 @@ struct AppColors {
     static let Red = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
 	static let Default = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 	static let Blue = #colorLiteral(red: 0.2914361954, green: 0.3395442367, blue: 0.4364506006, alpha: 1)
+}
+
+struct ImageIdtf {
+    static let greenCheck = "green_check"
+    static let redCheck = "red_check"
 }
 
 let currencies: [String: Double] = ["$": 1, "€": 1.3]

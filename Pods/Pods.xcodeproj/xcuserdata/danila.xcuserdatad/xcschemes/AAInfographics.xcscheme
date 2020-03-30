@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1130"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FEF0E90CE53BB283F803BE7AF9986A4B"
+               BlueprintIdentifier = "81AB6AA06BE8625CF139234A31B027FE"
                BuildableName = "libAAInfographics.a"
                BlueprintName = "AAInfographics"
                ReferencedContainer = "container:Pods.xcodeproj">
