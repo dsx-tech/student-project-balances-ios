@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class _0VC: UIViewController, ChartViewDelegate {
+class VC10: UIViewController, ChartViewDelegate {
 
 	//Outlets
 	@IBOutlet weak var chartView: HorizontalBarChartView!
@@ -70,9 +70,9 @@ class _0VC: UIViewController, ChartViewDelegate {
 
 			let end = formatter.date(from: "2015-01-31T23:59:59")
 			let start = formatter.date(from: "2014-01-01T00:59:59")
-			let balances = self.getDatafromTransactions(transactions: &self.transactions, interval: .month, start: start!, end: end!)
+			let balances = self.getDatafromTransactions(transactions: &self.transactions, interval: .month, start: start ?? Date(), end: end ?? Date())
 			xAxis.labelCount = balances.count
-			xAxis.valueFormatter = DateValueFormatter10(start: start!)
+			xAxis.valueFormatter = DateValueFormatter10(start: start ?? Date())
 			self.setChartData(dateDepositWithdraw: balances)
 		}
     }
@@ -87,7 +87,7 @@ class _0VC: UIViewController, ChartViewDelegate {
 		var i = 0.0
 		for (_, value) in dateDepositWithdraw {
 			yVals.append(BarChartDataEntry(x: i, yValues: [-value.0, value.1]))
-			i = i + 10
+			i += 10
 		}
 		yVals.sort { (entry1, entry2) -> Bool in
 			return entry1.x < entry2.x
@@ -98,8 +98,8 @@ class _0VC: UIViewController, ChartViewDelegate {
 		set.valueFormatter = DefaultValueFormatter(formatter: customFormatter)
 		set.valueFont = .systemFont(ofSize: 7)
 		set.axisDependency = .right
-		set.colors = [UIColor(red: 67/255, green: 67/255, blue: 72/255, alpha: 1),
-					  UIColor(red: 124/255, green: 181/255, blue: 236/255, alpha: 1)
+		set.colors = [UIColor(red: 67 / 255, green: 67 / 255, blue: 72 / 255, alpha: 1),
+					  UIColor(red: 124 / 255, green: 181 / 255, blue: 236 / 255, alpha: 1)
 		]
 		set.stackLabels = ["Deposit", "Withdraw"]
 
@@ -118,12 +118,12 @@ class _0VC: UIViewController, ChartViewDelegate {
 	}
 
 	///get data for chart from transactions
-	func getDatafromTransactions(transactions: inout [Transaction], interval: Calendar.Component, start: Date, end: Date)-> [Date: (Double, Double)] {
+	func getDatafromTransactions(transactions: inout [Transaction], interval: Calendar.Component, start: Date, end: Date) -> [Date: (Double, Double)] {
 
 		//dictionary with dates from start to end with interval where value is (input, outcome)
 		var dateWithdrawDeposit: [Date: (Double, Double)] = [:]
 		//number of intervals
-		let numberOfComponents = Calendar.current.dateComponents([interval], from: start, to: end).value(for: interval)!
+		guard let numberOfComponents = Calendar.current.dateComponents([interval], from: start, to: end).value(for: interval) else { return [:] }
 
 		//make new date from start with interval granularity
 		var components = DateComponents()
@@ -133,7 +133,7 @@ class _0VC: UIViewController, ChartViewDelegate {
 		case .month:
 			components = Calendar.current.dateComponents([.year, .month], from: start)
 		case .day:
-			components = Calendar.current.dateComponents([.year,.month, .day], from: start)
+			components = Calendar.current.dateComponents([.year, .month, .day], from: start)
 		default: break
 		}
 //		print(start)
@@ -144,15 +144,15 @@ class _0VC: UIViewController, ChartViewDelegate {
 		}
 //		print(newstart)
 		//add xAxis components (Data from start to end with interval)
-		var dateComponents =  DateComponents()
+		var dateComponents = DateComponents()
 
 		for i in 0...numberOfComponents {
 
 			dateComponents.setValue(i, for: interval)
 
-			let newdate = Calendar.current.date(byAdding: dateComponents, to: newstart)!
+			let newdate = Calendar.current.date(byAdding: dateComponents, to: newstart) ?? Date()
 
-			dateWithdrawDeposit[newdate] = (0,0)
+			dateWithdrawDeposit[newdate] = (0, 0)
 		}
 
 		transactions.sort { (firsttransaction, secondtransaction) -> Bool in
@@ -184,7 +184,7 @@ class _0VC: UIViewController, ChartViewDelegate {
 		case .month:
 			components = Calendar.current.dateComponents([.year, .month], from: transaction.dateTime)
 		case .day:
-			components = Calendar.current.dateComponents([.year,.month, .day], from: transaction.dateTime)
+			components = Calendar.current.dateComponents([.year, .month, .day], from: transaction.dateTime)
 		default: break
 		}
 
@@ -196,23 +196,29 @@ class _0VC: UIViewController, ChartViewDelegate {
 //		print(transactiondatewithgranularity)
 		if transaction.transactionType == "Deposit" {
 			if let currentdepositbalance = dateWithdrawDeposit[transactiondatewithgranularity] {
-				dateWithdrawDeposit.updateValue((currentdepositbalance.0 + transaction.amount * currencies1[transaction.currency]!, 0), forKey: transactiondatewithgranularity)
+				guard let currency = currencies1[transaction.currency] else { return }
+				dateWithdrawDeposit.updateValue((currentdepositbalance.0 + transaction.amount * currency, 0), forKey: transactiondatewithgranularity)
 			} else {
 				print(transactiondatewithgranularity)
 				print(transaction.dateTime)
-				dateWithdrawDeposit.updateValue((transaction.amount * currencies1[transaction.currency]!, 0), forKey: transactiondatewithgranularity)
+				guard let currency = currencies1[transaction.currency] else { return }
+				dateWithdrawDeposit.updateValue((transaction.amount * currency, 0), forKey: transactiondatewithgranularity)
 			}
 		} else if transaction.transactionType == "Withdraw" {
 			if let currentwithdrawbalance = dateWithdrawDeposit[transactiondatewithgranularity] {
-				dateWithdrawDeposit.updateValue((0, currentwithdrawbalance.1 + transaction.amount * currencies1[transaction.currency]!), forKey: transactiondatewithgranularity)
+				guard let currency = currencies1[transaction.currency] else { return }
+				dateWithdrawDeposit.updateValue((0,
+												 currentwithdrawbalance.1 + transaction.amount * currency),
+												forKey: transactiondatewithgranularity)
 			} else {
-				dateWithdrawDeposit.updateValue((0, transaction.amount * currencies1[transaction.currency]!), forKey: transactiondatewithgranularity)
+				guard let currency = currencies1[transaction.currency] else { return }
+				dateWithdrawDeposit.updateValue((0, transaction.amount * currency), forKey: transactiondatewithgranularity)
 			}
 		}
 	}
 }
 
-extension _0VC: IAxisValueFormatter {
+extension VC10: IAxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return String(format: "%03.0f", value)
     }

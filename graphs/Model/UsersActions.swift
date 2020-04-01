@@ -39,19 +39,19 @@ struct Transaction: Codable {
 	/// transaction id in csv table
 	let id: UInt64
 	/// transaction when trade was made: "yyyy-MM-dd'T'HH:mm:ss"
-    var dateTime : Date
+    var dateTime: Date
 	/// transaction value
-	let amount : Double
+	let amount: Double
 	/// transaction currency name
-    let currency : String
+    let currency: String
 	/// transaction id from DSX exchange
-    let transactionValueId : String
+    let transactionValueId: String
 	/// status: Failed | Complete | Rejected
     let transactionStatus: String
 	/// type: Withdraw | Deposit
-    let transactionType : String
+    let transactionType: String
 	/// comission value
-    let commission : Double
+    let commission: Double
 }
 
 /// Quotes format from DSX exchange
@@ -60,4 +60,10 @@ struct Quote: Codable {
 	let exchangeRate: Double
 	///timestamp in seconds
 	let timestamp: Int64
+}
+
+///Struct to get username and token from server
+struct AuthResponse: Codable {
+	let username: String
+	let token: String
 }

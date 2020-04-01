@@ -15,7 +15,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	@IBOutlet weak var chartTitle: UILabel!
 	var trades: [Trade]!
 	var transactions: [Transaction]!
-
+	var login: AuthResponse!
 
 //	enum year: Int {
 //		case December = 31
@@ -25,6 +25,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+//		print(login)
 		chartTitle.text = "Assets"
 		chartView.delegate = self
 
@@ -51,7 +52,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 		xAxis.valueFormatter = DateValueFormatter()
 		chartView.rightAxis.enabled = false
 
-		let marker = BalloonMarker(color: UIColor(white: 180/255, alpha: 1),
+		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
 								   font: .systemFont(ofSize: 12),
 								   textColor: .white,
 								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
@@ -64,10 +65,10 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 //		chartView.animate(xAxisDuration: 3.0)
 
 		let tradesApi = TradeApi()
-		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/trades") { (trades) in
+		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/portfolios/18/trades") { (trades) in
 			if let trades = trades {
 				self.trades = trades
-				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
+				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/portfolios/18/transactions") { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
 
@@ -75,56 +76,68 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 						//			formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
 						formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-						var end1 = formatter.date(from: "2019-12-31T23:59:59")
-						var start1 = formatter.date(from: "2019-01-01T00:00:01")
+						let optend1 = formatter.date(from: "2019-12-31T23:59:59")
+						let optstart1 = formatter.date(from: "2019-01-01T00:00:01")
 
-//						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: Date(timeIntervalSince1970: 0), end: end!)
+//						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades,
+						//transactions: &self.transactions,
+						//start: Date(timeIntervalSince1970: 0),
+						//end: end!)
 
 //						print(assets1)
-						var end = formatter.date(from: "2019-12-09T23:59:59")
-						var start = formatter.date(from: "2014-01-01T00:00:01")
+						let optend = formatter.date(from: "2019-12-09T23:59:59")
+						let optstart = formatter.date(from: "2014-01-01T00:00:01")
 
-						let numberOfMinths = Calendar.current.dateComponents([.month], from: start!, to: end!).month!
+						guard let start = optstart, let end = optend, let start1 = optstart1, let end1 = optend1 else { return }
+
+						guard let numberOfMinths = Calendar.current.dateComponents([.month], from: start, to: end).month else { return }
 //						print(numberOfMinths)
-						var dateComponents =  DateComponents()
-						var assetsMonthly: [String: ([Double],[Double])] = [:]
+						var dateComponents = DateComponents()
+						var assetsMonthly: [String: ([Double], [Double])] = [:]
 
 						for i in 0..<numberOfMinths {
 							dateComponents.month = i
-							let newdate = Calendar.current.date(byAdding: dateComponents, to: start!)!
-							let (assets, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: start!, end: newdate)
+							guard let newdate = Calendar.current.date(byAdding: dateComponents, to: start) else { return }
+							let (assets, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: start, end: newdate)
 							for (key, value) in assets {
-								if let _ = assetsMonthly[key] {
-									if newdate < start1! || newdate > end1! {
+								if assetsMonthly[key] !=  nil {
+									if newdate < start1 || newdate > end1 {
 										continue
 									}
-									assetsMonthly[key]!.0.append(value)
-									assetsMonthly[key]!.1.append(newdate.timeIntervalSince1970)
+									assetsMonthly[key]?.0.append(value)
+									assetsMonthly[key]?.1.append(newdate.timeIntervalSince1970)
 								} else {
-									if newdate < start1! || newdate > end1! {
+									if newdate < start1 || newdate > end1 {
 										continue
 									}
-									assetsMonthly[key] = ([value],[newdate.timeIntervalSince1970])
+									assetsMonthly[key] = ([value], [newdate.timeIntervalSince1970])
 								}
 							}
 						}
 						self.setDataCount(data: assetsMonthly)
 
-//						self.getAssetsDateAndAmount(trades: trades, transactions: transactions, timeInterval: 30, start: Date(timeIntervalSince1970: 0), end: Date(timeIntervalSinceNow: 0), allassets: newassets)
+//						self.getAssetsDateAndAmount(trades: trades, transactions: transactions,
+						//timeInterval: 30,
+						//start: Date(timeIntervalSince1970: 0),
+							//end: Date(timeIntervalSinceNow: 0),
+						//allassets: newassets)
 					}
 				}
 			}
 		}
 	}
 
+	func setDataCount(data: [String: ([Double], [Double])]) {
 
-	func setDataCount(data: [String: ([Double],[Double])]) {
-
-		var datasets:[LineChartDataSet] = []
+		var datasets: [LineChartDataSet] = []
 
 //		for (asset, values) in data {
-			let values = (0..<data["USD"]!.0.count).map { (i) -> ChartDataEntry in
-				return ChartDataEntry(x: data["USD"]!.1[i], y: data["USD"]!.0[i])
+		guard let newdata = data["USD"] else { return }
+			let values = (0..<newdata.0.count).map { (i) -> ChartDataEntry in
+				let x = newdata.1[i]
+				let y = newdata.0[i]
+				let entry = ChartDataEntry(x: x, y: y)
+				return entry
 			}
 
 			let set1 = LineChartDataSet(entries: values, label: "USD")
@@ -144,7 +157,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 			let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
 								  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
-			let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+			guard let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil) else { return }
 
 			set1.fillAlpha = 1
 			set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
@@ -155,7 +168,6 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 		chartView.data = data
 	}
-
 
 //	func getAssetsDateAndAmount(trades: [Trade], transactions: [Transaction], timeInterval: TimeInterval, start: Date, end: Date, allassets: [String]) {
 //		var assets: [String: Double] = [:]
@@ -304,8 +316,11 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 //		assetsWithTime[transaction.dateTime.timeIntervalSince1970] = assets
 //	}
 
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
-		var strangeIds: [(String,String, String)] = []
+	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
+											transactions: inout [Transaction],
+											start: Date,
+											end: Date) -> ([String: Double], [(String, String, String)]) {
+		var strangeIds: [(String, String, String)] = []
 		var assets: [String: Double] = [:]
 
 		trades.sort { (firsttrade, secondtrade) -> Bool in
@@ -336,7 +351,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 			}
 
 			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-				transactionindex+=1
+				transactionindex += 1 
 				continue
 			}
 
@@ -361,8 +376,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 		return (assets, strangeIds)
 	}
 
-	func processTrade(trade: Trade, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
-
+	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		var deductibleQuantity: Double = 0
 		var addedQuantity: Double = 0
@@ -383,46 +397,46 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 		if let currentassetQuantity = assets[deductibleCurrency] {
 			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency)) }
-			assets[deductibleCurrency]! -= deductibleQuantity
+				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
+			assets[deductibleCurrency]? -= deductibleQuantity
 		} else {
 			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency))
+			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
 		}
 
-		if let _ = assets[addedCurrency] {
-			assets[addedCurrency]! += addedQuantity
+		if assets[addedCurrency] != nil {
+			assets[addedCurrency]? += addedQuantity
 		} else {
 			assets[addedCurrency] = addedQuantity
 		}
-		if let _  = assets[trade.commissionCurrency] {
-			assets[trade.commissionCurrency]! -= trade.commission
+		if assets[trade.commissionCurrency] != nil {
+			assets[trade.commissionCurrency]? -= trade.commission
 		} else {
 			assets[trade.commissionCurrency] = -trade.commission
 		}
 //		print(assets, trade.id)
 	}
 
-	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
+	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		if transaction.transactionType == "Withdraw" {
 			if let currentassetQuantity = assets[transaction.currency] {
 				if currentassetQuantity < transaction.amount {
 					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 				}
-				assets[transaction.currency]! -= transaction.amount
+				assets[transaction.currency]? -= transaction.amount
 			} else {
 				assets[transaction.currency] = -transaction.amount
 				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 			}
 		} else if transaction.transactionType == "Deposit" {
-			if let _ = assets[transaction.currency] {
-				assets[transaction.currency]! += transaction.amount
+			if assets[transaction.currency] != nil {
+				assets[transaction.currency]? += transaction.amount
 			} else {
 				assets[transaction.currency] = transaction.amount
 			}
 		}
-		assets[transaction.currency]! -= transaction.commission
+		assets[transaction.currency]? -= transaction.commission
 //		print(assets, transaction.id)
 	}
 }

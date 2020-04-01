@@ -29,8 +29,7 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-		guard let start = formatter.date(from: "2018-01-01T00:00:01") else {return}
-		
+		guard let start = formatter.date(from: "2018-01-01T00:00:01") else { return }
 
 		chartView.chartDescription?.enabled = false
 		chartView.dragEnabled = true
@@ -55,7 +54,7 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		xAxis.valueFormatter = DateValueFormatter()
 		chartView.rightAxis.enabled = false
 
-		let marker = BalloonMarker(color: UIColor(white: 180/255, alpha: 1),
+		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
 								   font: .systemFont(ofSize: 12),
 								   textColor: .white,
 								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
@@ -69,16 +68,16 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		}
     }
     
-	func setDataCount(data: [String: ([Double],[Double])]) {
+	func setDataCount(data: [String: ([Double], [Double])]) {
 
-			var datasets:[LineChartDataSet] = []
+			var datasets: [LineChartDataSet] = []
 
-		data.forEach { (instrument, corellationWithDates) in
+		data.forEach { (_, corellationWithDates) in
 			let values = (0..<corellationWithDates.0.count).map { (i) -> ChartDataEntry in
 				return ChartDataEntry(x: corellationWithDates.0[i], y: corellationWithDates.1[i])
 					}
 
-			let set1 = LineChartDataSet(entries: values, label: data.first!.key)
+			let set1 = LineChartDataSet(entries: values, label: data.first?.key)
 					set1.drawIconsEnabled = false
 
 					set1.lineDashLengths = [5, 2.5]
@@ -95,7 +94,7 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 
 					let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
 										  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
-					let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil)!
+			guard let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil) else { return }
 
 					set1.fillAlpha = 1
 					set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
@@ -107,7 +106,6 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 			chartView.data = data
 		}
 
-
 		/**
 		callculationg correlation from start date for duration between two instruments
 		- Author: Danila Ferents
@@ -118,10 +116,10 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		- duration: quotesDuration enum
 		- Returns: corellation value
 		*/
-		func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: durationQuotes) {
+		func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
 
 			//number of months to count corellation, which we take from duration parameter
-			var dateComponents =  DateComponents()
+			var dateComponents = DateComponents()
 			switch duration {
 
 			case .month:
@@ -132,8 +130,6 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 				dateComponents.month = 6
 			case .year:
 				dateComponents.month = 12
-			@unknown default:
-				dateComponents.month = 0
 			}
 
 			guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
@@ -155,18 +151,18 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 
 						for i in 0..<numberOfMinths {
 							dateComponents.month = i
-							let newdate = Calendar.current.date(byAdding: dateComponents, to: startDate)!
+							let newdate = Calendar.current.date(byAdding: dateComponents, to: startDate) ?? Date()
 							let correl = self.correlationQuotes(firstquotes: firstQuotes.filter({ (quote) -> Bool in
 								return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
 							}), secondquotes: secondQuotes.filter({ (quote) -> Bool in
 								return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
 							}))
 
-							if let _ = self.correlations[secondinstrument] {
-								self.correlations[secondinstrument]!.0.append(newdate.timeIntervalSince1970)
-								self.correlations[secondinstrument]!.1.append(correl)
+							if self.correlations[secondinstrument] != nil {
+								self.correlations[secondinstrument]?.0.append(newdate.timeIntervalSince1970)
+								self.correlations[secondinstrument]?.1.append(correl)
 							} else {
-								self.correlations[secondinstrument] = ([newdate.timeIntervalSince1970],[correl])
+								self.correlations[secondinstrument] = ([newdate.timeIntervalSince1970], [correl])
 							}
 
 						}
@@ -203,26 +199,26 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 				sizequotes = secondquotes.count
 			}
 
-			firstaverage = firstaverage / Double(sizequotes)
-			secondaverage = secondaverage / Double(sizequotes)
+			firstaverage /= Double(sizequotes)
+			secondaverage /= Double(sizequotes)
 
 			for i in 0..<sizequotes {
-				cov = cov + (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
+				cov += (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
 			}
 
 			var sumfirst = 0.0
 			for i in 0..<sizequotes {
-				sumfirst = sumfirst + pow(firstquotes[i].exchangeRate - firstaverage, 2)
+				sumfirst += pow(firstquotes[i].exchangeRate - firstaverage, 2)
 			}
 
 			var sumsecond = 0.0
 			for i in 0..<sizequotes {
-				sumsecond = sumsecond + pow(secondquotes[i].exchangeRate - secondaverage, 2)
+				sumsecond += pow(secondquotes[i].exchangeRate - secondaverage, 2)
 			}
 
 			let denominator = pow(sumfirst * sumsecond, 0.5)
 
-			let correl = cov/denominator
+			let correl = cov / denominator
 			if correl.isNaN {
 				return 0.0
 			} else {

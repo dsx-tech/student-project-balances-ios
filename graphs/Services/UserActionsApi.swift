@@ -8,13 +8,14 @@
 
 import Foundation
 import Alamofire
+import KeychainAccess
 
 struct Throwable<T: Decodable>: Decodable {
     let result: Result<T, Error>
 
     init(from decoder: Decoder) throws {
         do {
-            let decoded = try T.init(from: decoder)
+            let decoded = try T(from: decoder)
             result = .success(decoded)
         } catch let error {
             result = .failure(error)
@@ -30,13 +31,22 @@ class TradeApi {
 		- url: Url to make response
 		- completion: ([Trade]?) -> Void what to make with response
 	*/
-	func getAllTrades(url: String, completion: @escaping tradeResponseCompletion) {
+	func getAllTrades(url: String, completion: @escaping TradeResponseCompletion) {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
 			completion(nil)
 			return} //make URL from string
-		AF.request(url).responseJSON { (response) in
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token") as? String
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+		  "Authorization": "Token_" + newtoken
+		]
+
+		AF.request(url, headers: headers).responseJSON { (response) in
 
 			//handle errors
 			if let error = response.error {
@@ -85,12 +95,22 @@ class TradeApi {
 		- url: Url to make response
 		- completion: ([Transaction]?) -> Void what to make with response
 	*/
-	func getAllTransactions(url: String, completion: @escaping transactionsResponseCompletion) {
+	func getAllTransactions(url: String, completion: @escaping TransactionsResponseCompletion) {
 
 		guard let url = URL(string: url) else {
 			print("Error in URL making!")
 			return} //make url from string
-		AF.request(url).responseJSON { (response) in
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token") as? String
+
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+		  "Authorization": "Token_" + newtoken
+		]
+
+		AF.request(url, headers: headers).responseJSON { (response) in
 			//handle errors
 			if let error = response.error {
 				print(error.localizedDescription)
@@ -137,7 +157,7 @@ class TradeApi {
 		- endTime: Date up to witch to count
 		- completion: ([Quote]?) -> Void what to make with response
 	*/
-	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping quotesResponseCompletion) {
+	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping QuotesResponseCompletion) {
 		let fullurl = url + instrument + "/" + String(Int(startTime.timeIntervalSince1970)) + "/" + String(Int(endTime.timeIntervalSince1970))
 		guard let url = URL(string: fullurl) else {
 			print("Error in url making!")

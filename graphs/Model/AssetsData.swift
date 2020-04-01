@@ -64,5 +64,3 @@ struct AssetsTimeData: Codable {
 		return [time, numbers]
 	}
 }
-
-

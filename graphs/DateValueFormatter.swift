@@ -26,8 +26,8 @@ public class DateValueFormatter10: NSObject, IAxisValueFormatter {
     public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
 		var dateComponents = DateComponents()
 		let start = self.start
-		dateComponents.month = Int(value)/10
-		let newdate = Calendar.current.date(byAdding: dateComponents, to: start)!
+		dateComponents.month = Int(value) / 10
+		guard let newdate = Calendar.current.date(byAdding: dateComponents, to: start) else { return "" }
         return dateFormatter.string(from: newdate)
     }
 }
@@ -43,9 +43,9 @@ public class DateValueFormatterNew: NSObject, IAxisValueFormatter {
 		let formatter = DateFormatter()
 		var dateComponents = DateComponents()
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-		let start = formatter.date(from: "2019-01-01T00:00:01")
+		guard let start = formatter.date(from: "2019-01-01T00:00:01") else { return "" }
 		dateComponents.month = Int(value)
-		let newdate = Calendar.current.date(byAdding: dateComponents, to: start!)!
+		guard let newdate = Calendar.current.date(byAdding: dateComponents, to: start) else { return "" }
         return dateFormatter.string(from: newdate)
     }
 }

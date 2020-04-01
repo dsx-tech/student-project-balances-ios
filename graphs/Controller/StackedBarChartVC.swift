@@ -33,8 +33,6 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 		return formatter
 	}()
 
-
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -84,32 +82,39 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 						//			formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
 						formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-						var end = formatter.date(from: "2020-01-31T23:59:59")
-						var start = formatter.date(from: "2014-11-01T00:59:59")
+						let optend = formatter.date(from: "2020-01-31T23:59:59")
+						let optstart = formatter.date(from: "2014-11-01T00:59:59")
 
-						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: Date(timeIntervalSince1970: 0), end: end!)
+						guard var start = optstart, var end = optend else { return }
+
+						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades,
+																				   transactions: &self.transactions,
+																				   start: Date(timeIntervalSince1970: 0),
+																				   end: end)
 
 						print(assets1)
-						end = formatter.date(from: "2019-12-09T23:59:59")
-						start = formatter.date(from: "2019-01-01T00:00:01")
-						let numberOfMinths = Calendar.current.dateComponents([.month], from: start!, to: end!).month!
+						end = formatter.date(from: "2019-12-09T23:59:59") ?? Date()
+						start = formatter.date(from: "2019-01-01T00:00:01") ?? Date()
+						guard let numberOfMinths = Calendar.current.dateComponents([.month], from: start, to: end).month else { return }
 						//						print(numberOfMinths)
-						var dateComponents =  DateComponents()
+						var dateComponents = DateComponents()
 						var assetsMonthly: [(Date, [Double])] = []
 						var labels: [String] = []
 
 						for i in 0..<numberOfMinths {
 							dateComponents.month = i
-							let newdate = Calendar.current.date(byAdding: dateComponents, to: start!)!
-							let (assets, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: start!, end: newdate)
-							let sortedassets = assets.sorted { $0.key < $1.key}
+							guard let newdate = Calendar.current.date(byAdding: dateComponents, to: start) else { return }
+							let (assets, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: start, end: newdate)
+							let sortedassets = assets.sorted { $0.key < $1.key }
 							var assetsNames: [String] = []
 							var assetsValues: [Double] = []
 							for (key, value) in sortedassets {
 								assetsNames.append(key)
-								assetsValues.append(value * currencies1[key]!)
+								if let currency = currencies1[key] {
+									assetsValues.append(value * currency)
+								}
 							}
-							if (i == numberOfMinths - 1) {
+							if i == (numberOfMinths - 1) {
 								labels = assetsNames
 							}
 							assetsMonthly.append((newdate, assetsValues))
@@ -135,10 +140,10 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 
         let set = BarChartDataSet(entries: yVals, label: "")
         set.drawIconsEnabled = false
-		let colors = (0..<labels.count).map { (i) -> UIColor in
-            return UIColor(red:   .random(),
+		let colors = (0..<labels.count).map { (_) -> UIColor in
+            return UIColor(red: .random(),
 			green: .random(),
-			blue:  .random(),
+			blue: .random(),
 			alpha: 1.0)
         }
 		set.colors = colors
@@ -154,8 +159,11 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 		chartView.animate(xAxisDuration: 1.0)
 	}
 
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction], start: Date, end: Date) -> ([String: Double], [(String, String, String)]) {
-		var strangeIds: [(String,String, String)] = []
+	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
+											transactions: inout [Transaction],
+											start: Date,
+											end: Date) -> ([String: Double], [(String, String, String)]) {
+		var strangeIds: [(String, String, String)] = []
 		var assets: [String: Double] = [:]
 
 		trades.sort { (firsttrade, secondtrade) -> Bool in
@@ -186,7 +194,7 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 			}
 
 			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-				transactionindex+=1
+				transactionindex += 1
 				continue
 			}
 
@@ -211,8 +219,7 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 		return (assets, strangeIds)
 	}
 
-	func processTrade(trade: Trade, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
-
+	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		var deductibleQuantity: Double = 0
 		var addedQuantity: Double = 0
@@ -233,46 +240,46 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 
 		if let currentassetQuantity = assets[deductibleCurrency] {
 			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency)) }
-			assets[deductibleCurrency]! -= deductibleQuantity
+				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
+			assets[deductibleCurrency]? -= deductibleQuantity
 		} else {
 			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency))
+			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
 		}
 
-		if let _ = assets[addedCurrency] {
-			assets[addedCurrency]! += addedQuantity
+		if assets[addedCurrency] != nil {
+			assets[addedCurrency]? += addedQuantity
 		} else {
 			assets[addedCurrency] = addedQuantity
 		}
-		if let _  = assets[trade.commissionCurrency] {
-			assets[trade.commissionCurrency]! -= trade.commission
+		if assets[trade.commissionCurrency] != nil {
+			assets[trade.commissionCurrency]? -= trade.commission
 		} else {
 			assets[trade.commissionCurrency] = -trade.commission
 		}
 		//		print(assets, trade.id)
 	}
 
-	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
+	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		if transaction.transactionType == "Withdraw" {
 			if let currentassetQuantity = assets[transaction.currency] {
 				if currentassetQuantity < transaction.amount {
 					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 				}
-				assets[transaction.currency]! -= transaction.amount
+				assets[transaction.currency]? -= transaction.amount
 			} else {
 				assets[transaction.currency] = -transaction.amount
 				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 			}
 		} else if transaction.transactionType == "Deposit" {
-			if let _ = assets[transaction.currency] {
-				assets[transaction.currency]! += transaction.amount
+			if assets[transaction.currency] != nil {
+				assets[transaction.currency]? += transaction.amount
 			} else {
 				assets[transaction.currency] = transaction.amount
 			}
 		}
-		assets[transaction.currency]! -= transaction.commission
+		assets[transaction.currency]? -= transaction.commission
 		//		print(assets, transaction.id)
 	}
 }

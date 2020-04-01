@@ -30,9 +30,8 @@ class ViewController: UIViewController {
  		}
 	}
 
-
 	func getAssetsFromTradesAndTransactions(trades: inout [Trade], transactions: inout [Transaction]) -> ([String: Double], [(String, String, String)]) {
-		var strangeIds: [(String,String, String)] = []
+		var strangeIds: [(String, String, String)] = []
 		var assets: [String: Double] = [:]
 
 		trades.sort { (firsttrade, secondtrade) -> Bool in
@@ -67,8 +66,7 @@ class ViewController: UIViewController {
 		return (assets, strangeIds)
 	}
 
-	func processTrade(trade: Trade, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
-
+	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		var deductibleQuantity: Double = 0
 		var addedQuantity: Double = 0
@@ -89,35 +87,35 @@ class ViewController: UIViewController {
 
 		if let currentassetQuantity = assets[deductibleCurrency] {
 			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency)) }
-			assets[deductibleCurrency]! -= deductibleQuantity
+				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
+			assets[deductibleCurrency]? -= deductibleQuantity
 		} else {
 			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId , deductibleCurrency))
+			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
 		}
 
-		if let _ = assets[addedCurrency] {
-			assets[addedCurrency]! += addedQuantity
+		if assets[addedCurrency] != nil {
+			assets[addedCurrency]? += addedQuantity
 		} else {
 			assets[addedCurrency] = addedQuantity
 		}
 	}
 
-	func processTransaction(transaction: Transaction, assets: inout [String: Double],strangeIds: inout [(String, String, String)]) {
+	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
 
 		if transaction.transactionType == "Withdraw" {
 			if let currentassetQuantity = assets[transaction.currency] {
 				if currentassetQuantity < transaction.amount {
 					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 				}
-				assets[transaction.currency]! -= transaction.amount
+				assets[transaction.currency]? -= transaction.amount
 			} else {
 				assets[transaction.currency] = -transaction.amount
 				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
 			}
 		} else if transaction.transactionType == "Deposit" {
-			if let _ = assets[transaction.currency] {
-				assets[transaction.currency]! += transaction.amount
+			if assets[transaction.currency] != nil {
+				assets[transaction.currency]? += transaction.amount
 			} else {
 				assets[transaction.currency] = transaction.amount
 			}
@@ -125,4 +123,3 @@ class ViewController: UIViewController {
 	}
 
 }
-
