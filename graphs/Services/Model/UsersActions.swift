@@ -12,26 +12,26 @@ import Foundation
 struct Trade: Codable {
 	/// id of the trade in csv table
 	let id: Int64
-	/// type of the trade: Buy/ Sell
-	let tradeType: String
-	/// trade id from dsxexchange
-	let tradeValueId: String
 	/// time when trade was made: "yyyy-MM-dd'T'HH:mm:ss"
 	let dateTime: Date
 	/// trade instrument, example: USDBTC
 	let instrument: String
-	/// traded currency quote
-	let tradedPrice: Double
-	/// traded currency quote name
-	let tradedPriceCurrency: String
+	/// type of the trade: Buy/ Sell
+	let tradeType: String
 	/// traded currency value
 	let tradedQuantity: Double
 	/// traded currency name
 	let tradedQuantityCurrency: String
+	/// traded currency quote
+	let tradedPrice: Double
+	/// traded currency quote name
+	let tradedPriceCurrency: String
 	/// comission value
 	let commission: Double
 	/// comission currency name
 	let commissionCurrency: String
+	/// trade id from dsxexchange
+	let tradeValueId: String
 }
 
 /// Transaction format from DSX exchange

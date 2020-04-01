@@ -30,7 +30,7 @@ class PieChartVC: UIViewController {
 	var chartView: AAChartView! //View in which Chart is drown
 
 	var chartModel: AAChartModel! //Model
-	var assetsApi = AssetsApi() //struct to handle Network connection
+//	var assetsApi = AssetsApi() //struct to handle Network connection
 
 	var trades: [Trade]! //trades from backend
 	var transactions: [Transaction]! //transactions from backend

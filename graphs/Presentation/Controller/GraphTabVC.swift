@@ -16,9 +16,9 @@ class GraphTabVC: UITabBarController {
 		let pieChartVC = PieChartVC()
 		pieChartVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "pie"), selectedImage: UIImage(named: "pieopen"))
 
-		let areaChartVC = AreaChartVC()
-		areaChartVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "spline"), selectedImage: UIImage(named: "splineopen"))
-		let tabBarList = [pieChartVC, areaChartVC]
-		viewControllers = tabBarList
+//		let areaChartVC = AreaChartVC()
+//		areaChartVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "spline"), selectedImage: UIImage(named: "splineopen"))
+//		let tabBarList = [pieChartVC, areaChartVC]
+//		viewControllers = tabBarList
     }
 }

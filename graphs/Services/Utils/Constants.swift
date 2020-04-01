@@ -26,7 +26,7 @@ typealias TransactionsResponseCompletion = ([Transaction]?) -> Void
 typealias QuotesResponseCompletion = ([Quote]?) -> Void
 ///response format for login api escaping request
 /// - Returns: [LoginResponse]?
-typealias AuthResponseCompletion = (AuthResponse?) -> Void
+typealias AuthResponseCompletion = (AuthResponse?, Bool) -> Void
 enum DurationQuotes: Int {
 	case month
 	case threemonths
