@@ -27,13 +27,19 @@ typealias QuotesResponseCompletion = ([Quote]?) -> Void
 ///response format for login api escaping request
 /// - Returns: [LoginResponse]?
 typealias AuthResponseCompletion = (AuthResponse?, Bool) -> Void
+
 enum DurationQuotes: Int {
 	case month
 	case threemonths
 	case sixmonths
 	case year
-
 	static let allvalues = ["month", "3 months", "6 month", "1 year"]
+}
+
+enum DurationAssets: Int {
+	case day
+	case month
+	case year
 }
 
 struct Urls {

@@ -59,6 +59,9 @@
 		83BFE9942434E22B006CA7B6 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB28239DD0860013D703 /* DateValueFormatter.swift */; };
 		83BFE9952434E22D006CA7B6 /* UserActionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265223928A700077A815 /* UserActionsApi.swift */; };
 		83BFE9962434E22F006CA7B6 /* AuthApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309BAD9242A911900E2E86C /* AuthApi.swift */; };
+		83BFE99824361115006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFE99724361115006CA7B6 /*  IncomeAssetAndPortfolio.swift */; };
+		83BFE99A24365A04006CA7B6 /* IncomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFE99924365A04006CA7B6 /* IncomeTests.swift */; };
+		83BFE99B24365A50006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFE99724361115006CA7B6 /*  IncomeAssetAndPortfolio.swift */; };
 		83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */; };
 		83E4FB27239D56D20013D703 /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB26239D56D20013D703 /* BalloonMarker.swift */; };
 		83E4FB29239DD0860013D703 /* DateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4FB28239DD0860013D703 /* DateValueFormatter.swift */; };
@@ -113,6 +116,8 @@
 		838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorrelationVC.swift; sourceTree = "<group>"; };
 		83BFE9792433AC3D006CA7B6 /* ActiveCostApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCostApi.swift; sourceTree = "<group>"; };
 		83BFE97E2434DFA5006CA7B6 /* getAssetsForActiveCost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getAssetsForActiveCost.swift; sourceTree = "<group>"; };
+		83BFE99724361115006CA7B6 /*  IncomeAssetAndPortfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " IncomeAssetAndPortfolio.swift"; sourceTree = "<group>"; };
+		83BFE99924365A04006CA7B6 /* IncomeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeTests.swift; sourceTree = "<group>"; };
 		83E4FB24239D49EC0013D703 /* LineChartVCCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartVCCharts.swift; sourceTree = "<group>"; };
 		83E4FB26239D56D20013D703 /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		83E4FB28239DD0860013D703 /* DateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValueFormatter.swift; sourceTree = "<group>"; };
@@ -209,6 +214,7 @@
 		83362659239456ED0077A815 /* graphsTests */ = {
 			isa = PBXGroup;
 			children = (
+				83BFE99924365A04006CA7B6 /* IncomeTests.swift */,
 				83BFE97E2434DFA5006CA7B6 /* getAssetsForActiveCost.swift */,
 				8336265C239456ED0077A815 /* Info.plist */,
 			);
@@ -343,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				83BFE9792433AC3D006CA7B6 /* ActiveCostApi.swift */,
+				83BFE99724361115006CA7B6 /*  IncomeAssetAndPortfolio.swift */,
 			);
 			path = GraphsApi;
 			sourceTree = "<group>";
@@ -536,6 +543,7 @@
 				83BFE9832434E084006CA7B6 /* UsersActions.swift in Sources */,
 				83BFE98C2434E201006CA7B6 /* LineChartVCCharts.swift in Sources */,
 				83BFE98B2434E1FF006CA7B6 /* GraphTabVC.swift in Sources */,
+				83BFE99B24365A50006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */,
 				83BFE98E2434E206006CA7B6 /* PieChartVC.swift in Sources */,
 				83BFE98A2434E1FD006CA7B6 /* AreaChartVC.swift in Sources */,
 				83BFE97F2434DFA5006CA7B6 /* getAssetsForActiveCost.swift in Sources */,
@@ -543,6 +551,7 @@
 				83BFE9822434E082006CA7B6 /* InstrumentCorrelation.swift in Sources */,
 				83BFE9862434E0A8006CA7B6 /* RegisterVC.swift in Sources */,
 				83BFE9892434E0BA006CA7B6 /* Extensions.swift in Sources */,
+				83BFE99A24365A04006CA7B6 /* IncomeTests.swift in Sources */,
 				83BFE9962434E22F006CA7B6 /* AuthApi.swift in Sources */,
 				83BFE9812434E05D006CA7B6 /* ActiveCostApi.swift in Sources */,
 				83BFE9922434E216006CA7B6 /* QuoteCell.swift in Sources */,
@@ -584,6 +593,7 @@
 				834538B1238D567D0082DF88 /* AreaChartVC.swift in Sources */,
 				8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */,
 				834538AF238D48100082DF88 /* GraphTabVC.swift in Sources */,
+				83BFE99824361115006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */,
 				83791691241AAE7D008C4B1E /* Extensions.swift in Sources */,
 				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
 				83BFE97A2433AC3D006CA7B6 /* ActiveCostApi.swift in Sources */,

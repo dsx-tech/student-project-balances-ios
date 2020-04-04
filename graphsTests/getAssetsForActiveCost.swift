@@ -182,6 +182,10 @@ class GetAssetsForActiveCost: XCTestCase {
 			let formatter = DateFormatter()
 			formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
+//			mutableListOf(Rate(BigDecimal( "8098"),1583798400), Rate(BigDecimal( "7627"),1583884800),
+//			Rate(BigDecimal( "7268"),1583971200), Rate(BigDecimal( "7311"),1584057600), Rate(BigDecimal( "6903"),1583798400),
+//			Rate(BigDecimal( "7109"),1583884800))
+
 			let result = ["EOS": 1.495 ,
 						  "BTC": 0.000377,
 						  "LTC": -0.07535,
@@ -271,6 +275,8 @@ class GetAssetsForActiveCost: XCTestCase {
 								commissionCurrency: "eur",
 								tradeValueId: "4"))
 
+			var transactions: [Transaction] = []
+
 			transactions.append(Transaction(id: 0,
 											dateTime: formatter.date(from: "2020-03-17T01:00:00") ?? Date(),
 											amount: 0.027,
@@ -279,8 +285,7 @@ class GetAssetsForActiveCost: XCTestCase {
 											transactionStatus: "Complete",
 											transactionType: "Deposit",
 											commission: 0.002))
-            Transaction(1, "Deposit","2020-03-16T20:30:00", "btc", BigDecimal("0.001"),
-                BigDecimal("0.0001"), "Complete", 15),
+
 			transactions.append(Transaction(id: 1,
 											dateTime: formatter.date(from: "2020-03-16T20:30:00") ?? Date(),
 											amount: 0.001,
@@ -288,87 +293,89 @@ class GetAssetsForActiveCost: XCTestCase {
 											transactionValueId: "15",
 											transactionStatus: "Complete",
 											transactionType: "Deposit",
+											commission: 0.0001))
+
+			transactions.append(Transaction(id: 2,
+											dateTime: formatter.date(from: "2020-03-12T19:30:00") ?? Date(),
+											amount: 10.96,
+											currency: "usd",
+											transactionValueId: "0",
+											transactionStatus: "Complete",
+											transactionType: "Withdraw",
 											commission: 0.001))
-            Transaction(2, "Withdraw","2020-03-12T19:30:00", "usd", BigDecimal("10.96"),
-                BigDecimal("0.001"), "Complete", 10),
+
+			transactions.append(Transaction(id: 3,
+											dateTime: formatter.date(from: "2020-03-12T18:30:00") ?? Date(),
+											amount: 0.0003,
+											currency: "btc",
+											transactionValueId: "9",
+											transactionStatus: "Complete",
+											transactionType: "Withdraw",
+											commission: 0.0001))
+
 			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
+											dateTime: formatter.date(from: "2020-03-12T18:29:00") ?? Date(),
+											amount: 0.0002,
+											currency: "BTC",
+											transactionValueId: "8",
+											transactionStatus: "Failed",
+											transactionType: "Withdraw",
+											commission: 0.0001))
+
+			transactions.append(Transaction(id: 5,
+											dateTime: formatter.date(from: "2020-03-10T18:30:00") ?? Date(),
+											amount: 0.002,
+											currency: "btc",
+											transactionValueId: "6",
+											transactionStatus: "Complete",
+											transactionType: "Deposit",
+											commission: 0.00035))
+
+			transactions.append(Transaction(id: 6,
+											dateTime: formatter.date(from: "2020-01-24T19:29:00") ?? Date(),
+											amount: 10.96,
+											currency: "BTC",
+											transactionValueId: "3",
+											transactionStatus: "Failed",
+											transactionType: "Withdraw",
+											commission: 0.00035))
+
+			transactions.append(Transaction(id: 7,
+											dateTime: formatter.date(from: "2020-01-24T19:28:00") ?? Date(),
+											amount: 10.96,
+											currency: "BTC",
+											transactionValueId: "2",
+											transactionStatus: "Complete",
+											transactionType: "Deposit",
+											commission: 0.00035))
+
+			transactions.append(Transaction(id: 8,
+											dateTime: formatter.date(from: "2020-01-24T18:01:00") ?? Date(),
 											amount: 0.001,
 											currency: "BTC",
+											transactionValueId: "1",
+											transactionStatus: "Complete",
+											transactionType: "Deposit",
+											commission: 0.0001))
+
+			transactions.append(Transaction(id: 9,
+											dateTime: formatter.date(from: "2020-01-24T18:00:00") ?? Date(),
+											amount: 0.001,
+											currency: "btc",
 											transactionValueId: "0",
 											transactionStatus: "Failed",
 											transactionType: "Deposit",
 											commission: 0.00035))
-            Transaction(3, "Withdraw","2020-03-12T18:30:00", "btc", BigDecimal("0.0003"),
-                BigDecimal("0.0001"), "Complete", 9),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(4, "Withdraw","2020-03-12T18:29:00", "btc", BigDecimal("0.0002"),
-                BigDecimal("0.0001"), "Failed", 8),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(5, "Withdraw","2020-03-10T18:30:00", "btc", BigDecimal("0.002"),
-                BigDecimal("0.00035"), "Complete", 6),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(6, "Withdraw","2020-01-24T19:29:00", "usd", BigDecimal("10.96"),
-                BigDecimal("0.00035"), "Failed", 3),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(7, "Withdraw","2020-01-24T19:28:00", "usd", BigDecimal("10.96"),
-                BigDecimal("0.00035"), "Complete", 2),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(8, "Deposit","2020-01-24T18:01:00", "btc", BigDecimal("0.001"),
-                BigDecimal("0.0001"), "Complete", 1),
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
-            Transaction(9, "Deposit","2020-01-24T18:00:00", "btc", BigDecimal("0.001"),
-                BigDecimal("0.0001"), "Failed", 0))
-			transactions.append(Transaction(id: 4,
-											dateTime: formatter.date(from: "2019-11-24T18:00:00") ?? Date(),
-											amount: 0.001,
-											currency: "BTC",
-											transactionValueId: "0",
-											transactionStatus: "Failed",
-											transactionType: "Deposit",
-											commission: 0.00035))
+
+//		let assets = self.api.getAssetsForActiveCost(trades: &trades, transactions: &transactions, start: Date(timeIntervalSince1970: 1583798400),
+//		end: Date(timeIntervalSince1970: 1584230400))
+
+//		print(assets.0)
+//		result.forEach { (key, value) in
+//			let digits = String(result[key] ?? 0).count - String(Int(result[key] ?? 0)).count
+//			XCTAssertEqual(assets.0[key] ?? 0.0, value, accuracy: pow(0.1, Double(digits)))
+//		}
+
 	}
 
 }

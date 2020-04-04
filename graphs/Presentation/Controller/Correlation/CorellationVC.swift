@@ -13,6 +13,7 @@ class CorrelationVC: UIViewController {
 	//Variables
 	var instrumentCorrelations: [(String, [InstrumentCorrelation])] = []
 	var quotes: [(String, [Quote])] = []
+	let quotesApi = TradeApi()
 
 	@IBOutlet weak var quotestable: UITableView!
 	
@@ -68,7 +69,6 @@ class CorrelationVC: UIViewController {
 		//number of months to count corellation, which we take from duration parameter
 		var dateComponents = DateComponents()
 		switch duration {
-			
 		case .month:
 			dateComponents.month = 1
 		case .threemonths:
@@ -83,10 +83,9 @@ class CorrelationVC: UIViewController {
 			print("Error in converting end date.")
 			return
 		}
-		//get quotes for first instrument
-		let quotesApi = TradeApi()
+
 		quotesApi.getQuotesinPeriod(url: Urls.quotesurl, instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-			quotesApi.getQuotesinPeriod(url: Urls.quotesurl, instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
+			self.quotesApi.getQuotesinPeriod(url: Urls.quotesurl, instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
 				guard let firstQuotes = firstinstrumentquotes, let secondQuotes = secondinstrumentquotes else {
 					print("Error in getting quotes for  instrument")
 					return
