@@ -65,10 +65,10 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 //		chartView.animate(xAxisDuration: 3.0)
 
-		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/portfolios/175/trades") { (trades) in
+		tradesApi.getAllTrades(completion: { (trades) in
 			if let trades = trades {
 				self.trades = trades
-				self.tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/portfolios/175/transactions") { (transactions) in
+				self.tradesApi.getAllTransactions(completion: { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
 
@@ -122,9 +122,9 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 							//end: Date(timeIntervalSinceNow: 0),
 						//allassets: newassets)
 					}
-				}
+				})
 			}
-		}
+		})
 	}
 
 	func setDataCount(data: [String: ([Double], [Double])]) {

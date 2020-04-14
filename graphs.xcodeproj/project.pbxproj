@@ -16,6 +16,9 @@
 		8314253023FB11350086BED8 /* InstrumentCorrelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314252F23FB11350086BED8 /* InstrumentCorrelation.swift */; };
 		8314253823FC6E530086BED8 /* AddIInstrumentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */; };
 		8314253A23FD5F020086BED8 /* CorrelationGraphVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */; };
+		831BC317243B75BF007C7D64 /* TransactionApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831BC316243B75BF007C7D64 /* TransactionApi.swift */; };
+		831BC329243B7E3E007C7D64 /* TransactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831BC328243B7E3E007C7D64 /* TransactionTests.swift */; };
+		831BC32A243B7E99007C7D64 /* TransactionApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831BC316243B75BF007C7D64 /* TransactionApi.swift */; };
 		831D132D240588170024BC49 /* 10VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831D132C240588170024BC49 /* 10VC.swift */; };
 		8336265123928A030077A815 /* UsersActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265023928A030077A815 /* UsersActions.swift */; };
 		8336265323928A700077A815 /* UserActionsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8336265223928A700077A815 /* UserActionsApi.swift */; };
@@ -34,6 +37,13 @@
 		8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8379168B241AABC8008C4B1E /* ForgotPasswordVC.swift */; };
 		8379168F241AAD35008C4B1E /* ForgotPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */; };
 		83791691241AAE7D008C4B1E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791690241AAE7D008C4B1E /* Extensions.swift */; };
+		8389E26C244263F600B14A68 /* PortfoliosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26B244263F600B14A68 /* PortfoliosController.swift */; };
+		8389E26E24426FF200B14A68 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26D24426FF200B14A68 /* HeaderView.swift */; };
+		8389E271244285BC00B14A68 /* PortfolioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26F244285BC00B14A68 /* PortfolioCell.swift */; };
+		8389E272244285BC00B14A68 /* PortfolioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8389E270244285BC00B14A68 /* PortfolioCell.xib */; };
+		8389E274244341CB00B14A68 /* PortfolioApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E273244341CB00B14A68 /* PortfolioApi.swift */; };
+		8389E2762443429D00B14A68 /* AddFileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E2752443429D00B14A68 /* AddFileController.swift */; };
+		8389E2782443542500B14A68 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E2772443542500B14A68 /* Portfolio.swift */; };
 		838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */; };
 		83BFE97A2433AC3D006CA7B6 /* ActiveCostApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFE9792433AC3D006CA7B6 /* ActiveCostApi.swift */; };
 		83BFE97F2434DFA5006CA7B6 /* getAssetsForActiveCost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFE97E2434DFA5006CA7B6 /* getAssetsForActiveCost.swift */; };
@@ -91,6 +101,10 @@
 		8314252F23FB11350086BED8 /* InstrumentCorrelation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstrumentCorrelation.swift; sourceTree = "<group>"; };
 		8314253723FC6E530086BED8 /* AddIInstrumentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddIInstrumentVC.swift; sourceTree = "<group>"; };
 		8314253923FD5F020086BED8 /* CorrelationGraphVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrelationGraphVC.swift; sourceTree = "<group>"; };
+		831BC316243B75BF007C7D64 /* TransactionApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionApi.swift; sourceTree = "<group>"; };
+		831BC320243B7D7E007C7D64 /* TransactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
+		831BC322243B7D7E007C7D64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		831BC328243B7E3E007C7D64 /* TransactionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTests.swift; sourceTree = "<group>"; };
 		831D132C240588170024BC49 /* 10VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 10VC.swift; sourceTree = "<group>"; };
 		8336265023928A030077A815 /* UsersActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersActions.swift; sourceTree = "<group>"; };
 		8336265223928A700077A815 /* UserActionsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActionsApi.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -113,6 +127,13 @@
 		8379168B241AABC8008C4B1E /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordVC.xib; sourceTree = "<group>"; };
 		83791690241AAE7D008C4B1E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8389E26B244263F600B14A68 /* PortfoliosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfoliosController.swift; sourceTree = "<group>"; };
+		8389E26D24426FF200B14A68 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		8389E26F244285BC00B14A68 /* PortfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCell.swift; sourceTree = "<group>"; };
+		8389E270244285BC00B14A68 /* PortfolioCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PortfolioCell.xib; sourceTree = "<group>"; };
+		8389E273244341CB00B14A68 /* PortfolioApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioApi.swift; sourceTree = "<group>"; };
+		8389E2752443429D00B14A68 /* AddFileController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFileController.swift; sourceTree = "<group>"; };
+		8389E2772443542500B14A68 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCorrelationVC.swift; sourceTree = "<group>"; };
 		83BFE9792433AC3D006CA7B6 /* ActiveCostApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCostApi.swift; sourceTree = "<group>"; };
 		83BFE97E2434DFA5006CA7B6 /* getAssetsForActiveCost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getAssetsForActiveCost.swift; sourceTree = "<group>"; };
@@ -173,8 +194,18 @@
 			isa = PBXGroup;
 			children = (
 				8314252C23FACCC30086BED8 /* quoteCell.xib */,
+				8389E270244285BC00B14A68 /* PortfolioCell.xib */,
 			);
 			path = Nib;
+			sourceTree = "<group>";
+		};
+		831BC31F243B7D7E007C7D64 /* TransactionTests */ = {
+			isa = PBXGroup;
+			children = (
+				831BC320243B7D7E007C7D64 /* TransactionTests.swift */,
+				831BC322243B7D7E007C7D64 /* Info.plist */,
+			);
+			path = TransactionTests;
 			sourceTree = "<group>";
 		};
 		833212D32431FB30006F1C06 /* Presentation */ = {
@@ -197,6 +228,7 @@
 				83E4FB28239DD0860013D703 /* DateValueFormatter.swift */,
 				8336265223928A700077A815 /* UserActionsApi.swift */,
 				8309BAD9242A911900E2E86C /* AuthApi.swift */,
+				8389E273244341CB00B14A68 /* PortfolioApi.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -214,8 +246,9 @@
 		83362659239456ED0077A815 /* graphsTests */ = {
 			isa = PBXGroup;
 			children = (
-				83BFE99924365A04006CA7B6 /* IncomeTests.swift */,
 				83BFE97E2434DFA5006CA7B6 /* getAssetsForActiveCost.swift */,
+				83BFE99924365A04006CA7B6 /* IncomeTests.swift */,
+				831BC328243B7E3E007C7D64 /* TransactionTests.swift */,
 				8336265C239456ED0077A815 /* Info.plist */,
 			);
 			path = graphsTests;
@@ -226,6 +259,7 @@
 			children = (
 				8345388B238C42100082DF88 /* graphs */,
 				83362659239456ED0077A815 /* graphsTests */,
+				831BC31F243B7D7E007C7D64 /* TransactionTests */,
 				8345388A238C42100082DF88 /* Products */,
 				0EB89CC4EE7AC38DE7FEB115 /* Pods */,
 				44719E3F5D5E546E650D6884 /* Frameworks */,
@@ -257,6 +291,7 @@
 				834538A1238C485D0082DF88 /* AssetsData.swift */,
 				8336265023928A030077A815 /* UsersActions.swift */,
 				8314252F23FB11350086BED8 /* InstrumentCorrelation.swift */,
+				8389E2772443542500B14A68 /* Portfolio.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -264,9 +299,11 @@
 		834538A3238C4BE60082DF88 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8389E26F244285BC00B14A68 /* PortfolioCell.swift */,
 				83791688241AAA9B008C4B1E /* RoundedViews.swift */,
 				8314252B23FACCC30086BED8 /* QuoteCell.swift */,
 				83E4FB26239D56D20013D703 /* BalloonMarker.swift */,
+				8389E26D24426FF200B14A68 /* HeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,6 +311,7 @@
 		834538A4238C4BF00082DF88 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8389E268244262E500B14A68 /* Portfolio */,
 				8379168A241AABA3008C4B1E /* Login */,
 				838E8C7F240E757100CBD811 /* Correlation */,
 				834538B0238D567D0082DF88 /* AreaChartVC.swift */,
@@ -335,6 +373,15 @@
 			path = graphs/Presentation/XIBs;
 			sourceTree = SOURCE_ROOT;
 		};
+		8389E268244262E500B14A68 /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				8389E26B244263F600B14A68 /* PortfoliosController.swift */,
+				8389E2752443429D00B14A68 /* AddFileController.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
 		838E8C7F240E757100CBD811 /* Correlation */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +397,7 @@
 			children = (
 				83BFE9792433AC3D006CA7B6 /* ActiveCostApi.swift */,
 				83BFE99724361115006CA7B6 /*  IncomeAssetAndPortfolio.swift */,
+				831BC316243B75BF007C7D64 /* TransactionApi.swift */,
 			);
 			path = GraphsApi;
 			sourceTree = "<group>";
@@ -402,7 +450,7 @@
 		83453881238C42100082DF88 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Danila Ferents";
 				TargetAttributes = {
@@ -453,6 +501,7 @@
 				83E4FB2D239F32850013D703 /* main.storyboard in Resources */,
 				8379168F241AAD35008C4B1E /* ForgotPasswordVC.xib in Resources */,
 				83453896238C42120082DF88 /* Assets.xcassets in Resources */,
+				8389E272244285BC00B14A68 /* PortfolioCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +593,7 @@
 				83BFE98C2434E201006CA7B6 /* LineChartVCCharts.swift in Sources */,
 				83BFE98B2434E1FF006CA7B6 /* GraphTabVC.swift in Sources */,
 				83BFE99B24365A50006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */,
+				831BC329243B7E3E007C7D64 /* TransactionTests.swift in Sources */,
 				83BFE98E2434E206006CA7B6 /* PieChartVC.swift in Sources */,
 				83BFE98A2434E1FD006CA7B6 /* AreaChartVC.swift in Sources */,
 				83BFE97F2434DFA5006CA7B6 /* getAssetsForActiveCost.swift in Sources */,
@@ -560,6 +610,7 @@
 				83BFE9912434E214006CA7B6 /* RoundedViews.swift in Sources */,
 				83BFE9942434E22B006CA7B6 /* DateValueFormatter.swift in Sources */,
 				83BFE98D2434E203006CA7B6 /* StackedBarChartVC.swift in Sources */,
+				831BC32A243B7E99007C7D64 /* TransactionApi.swift in Sources */,
 				83BFE9842434E087006CA7B6 /* AssetsData.swift in Sources */,
 				83BFE9882434E0B8006CA7B6 /* Constants.swift in Sources */,
 				83BFE98F2434E208006CA7B6 /* 10VC.swift in Sources */,
@@ -575,6 +626,8 @@
 				8309BADA242A911900E2E86C /* AuthApi.swift in Sources */,
 				8314253A23FD5F020086BED8 /* CorrelationGraphVC.swift in Sources */,
 				83E4FB29239DD0860013D703 /* DateValueFormatter.swift in Sources */,
+				8389E2762443429D00B14A68 /* AddFileController.swift in Sources */,
+				8389E26C244263F600B14A68 /* PortfoliosController.swift in Sources */,
 				831D132D240588170024BC49 /* 10VC.swift in Sources */,
 				8345388D238C42100082DF88 /* AppDelegate.swift in Sources */,
 				8314252723F9B8050086BED8 /* CorellationVC.swift in Sources */,
@@ -583,6 +636,7 @@
 				8314253023FB11350086BED8 /* InstrumentCorrelation.swift in Sources */,
 				83E4FB2B239EF6D10013D703 /* StackedBarChartVC.swift in Sources */,
 				8345388F238C42100082DF88 /* SceneDelegate.swift in Sources */,
+				8389E271244285BC00B14A68 /* PortfolioCell.swift in Sources */,
 				83791689241AAA9C008C4B1E /* RoundedViews.swift in Sources */,
 				8314252D23FACCC30086BED8 /* QuoteCell.swift in Sources */,
 				8336265323928A700077A815 /* UserActionsApi.swift in Sources */,
@@ -590,16 +644,20 @@
 				8314253823FC6E530086BED8 /* AddIInstrumentVC.swift in Sources */,
 				834538AD238C81830082DF88 /* Constants.swift in Sources */,
 				83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */,
+				8389E26E24426FF200B14A68 /* HeaderView.swift in Sources */,
 				834538B1238D567D0082DF88 /* AreaChartVC.swift in Sources */,
 				8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */,
+				8389E2782443542500B14A68 /* Portfolio.swift in Sources */,
 				834538AF238D48100082DF88 /* GraphTabVC.swift in Sources */,
 				83BFE99824361115006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */,
+				831BC317243B75BF007C7D64 /* TransactionApi.swift in Sources */,
 				83791691241AAE7D008C4B1E /* Extensions.swift in Sources */,
 				838E8C7E240E753800CBD811 /* ActiveCorrelationVC.swift in Sources */,
 				83BFE97A2433AC3D006CA7B6 /* ActiveCostApi.swift in Sources */,
 				834538A7238C78800082DF88 /* PieChartVC.swift in Sources */,
 				834538A2238C485D0082DF88 /* AssetsData.swift in Sources */,
 				83791687241AA608008C4B1E /* LoginVC.swift in Sources */,
+				8389E274244341CB00B14A68 /* PortfolioApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,27 +60,35 @@ class RegisterVC: UIViewController {
 			let username = usernameTxt.text, username.isNotEmpty,
 			let password = passwordTxt.text, password.isNotEmpty else {
 				simpleAlert(title: "Error.", msg: "Please fill out all fields.")
-				activIndicator.stopAnimating()
+				stopIndicator()
 				return
 		}
 
-		activIndicator.startAnimating()
+		startIndicator()
 
 		guard let confirmPass = confirmPassTxt.text, confirmPass == password else {
 			simpleAlert(title: "Error.", msg: "Passwords do not match.")
-			self.activIndicator.stopAnimating()
+			stopIndicator()
 			return
 		}
 
 		let keychain = Keychain(service: "swagger")
 
 		AuthApi.sharedManager.createUser(email: email, password: password, username: username) { [weak self] (response, result)  in
-			DispatchQueue.main.async {
-				if result {
-					guard let auth = response, let self = self else {
-						print("Error in getting response!")
-						return }
 
+			DispatchQueue.main.async {
+
+				guard let self = self else {
+					print("No instance more!")
+					return
+				}
+
+				if result {
+					guard let auth = response else {
+						print("Error in getting response!")
+						self.stopIndicator()
+						return
+					}
 					self.auth = auth
 					keychain["token"] = auth.token
 
@@ -93,9 +101,20 @@ class RegisterVC: UIViewController {
 						self.present(targetVC, animated: true, completion: nil)
 					}
 				} else {
-					self?.simpleAlert(title: "Error", msg: "Something went wrong. Please try again.")
+					self.simpleAlert(title: "Error", msg: "Something went wrong. Please try again.")
 				}
+				self.stopIndicator()
 			}
 		}
+	}
+
+	func startIndicator() {
+		self.activIndicator.isHidden = false
+		self.activIndicator.startAnimating()
+	}
+
+	func stopIndicator() {
+		self.activIndicator.stopAnimating()
+		self.activIndicator.isHidden = true
 	}
 }

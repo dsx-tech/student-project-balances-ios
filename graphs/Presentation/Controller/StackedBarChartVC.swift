@@ -71,10 +71,10 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 		//        chartView.legend = l
 
 		let tradesApi = TradeApi()
-		tradesApi.getAllTrades(url: "http://3.248.170.197:9999/bcv/trades") { (trades) in
+		tradesApi.getAllTrades(completion: { (trades) in
 			if let trades = trades {
 				self.trades = trades
-				tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
+				tradesApi.getAllTransactions(completion: { (transactions) in
 					if let transactions = transactions {
 						self.transactions = transactions
 
@@ -122,9 +122,9 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 						self.setData(data: assetsMonthly, labels: labels)
 //						self.setChartData(count: 7, range: 9)
 					}
-				}
+				})
 			}
-		}
+		})
 	}
 
 	func setData(data: [(Date, [Double])], labels: [String]) {

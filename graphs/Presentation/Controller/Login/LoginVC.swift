@@ -22,7 +22,6 @@ class LoginVC: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		activityIndicator.isHidden = true
 		//add recogniser to hide keyboard
 		let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
 		view.addGestureRecognizer(tap)
@@ -40,36 +39,53 @@ class LoginVC: UIViewController {
 				simpleAlert(title: "Error.", msg: "Please fill out all fields.")
 				return
 		}
-		activityIndicator.startAnimating()
+
+		startIndicator()
 
 		let keychain = Keychain(service: "swagger")
 
 		AuthApi.sharedManager.authLogin(username: username, password: password) { [weak self] (response, result)  in
-
+			
 			DispatchQueue.main.async {
+
+				guard let self = self else {
+					print("No instance more! ")
+					return }
+
+				guard let login = response else {
+					self.simpleAlert(title: "Error", msg: "Invalid password or Url!")
+					self.stopIndicator()
+					return
+				}
+
 				if result {
-					guard let login = response, let self = self else {
-						print("Error in getting response!")
-						return }
 					self.login = login
 					keychain["token"] = login.token
 
 					let targetStoryboardName = "main"
 					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
-					if let targetVC = targetStoryboard.instantiateInitialViewController() as? UITabBarController {
-						if let selectedVC = targetVC.selectedViewController as? LineChartVCCharts {
-							selectedVC.login = self.login
-						}
+					if let targetVC = targetStoryboard.instantiateInitialViewController() {
 						self.present(targetVC, animated: true, completion: nil)
 					}
 				} else {
-					self?.simpleAlert(title: "Error", msg: "Something went wrong!")
+					self.simpleAlert(title: "Error", msg: "Something went wrong!")
 				}
+				self.stopIndicator()
 			}
 		}
 		
 	}
-	
+
+	func startIndicator() {
+		self.activityIndicator.isHidden = false
+		self.activityIndicator.startAnimating()
+	}
+
+	func stopIndicator() {
+		self.activityIndicator.stopAnimating()
+		self.activityIndicator.isHidden = true
+	}
+
 	@IBAction func guestClicked(_ sender: Any) {
 		//make demo
 	}

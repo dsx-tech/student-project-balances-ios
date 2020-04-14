@@ -138,8 +138,8 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 			}
 			//get quotes for first instrument
 			let quotesApi = TradeApi()
-			quotesApi.getQuotesinPeriod(url: Urls.quotesurl, instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-				quotesApi.getQuotesinPeriod(url: Urls.quotesurl, instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
+			quotesApi.getQuotesinPeriod(instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
+				quotesApi.getQuotesinPeriod(instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
 					guard let firstQuotes = firstinstrumentquotes, let secondQuotes = secondinstrumentquotes else {
 						print("Error in getting quotes for  instrument")
 						return

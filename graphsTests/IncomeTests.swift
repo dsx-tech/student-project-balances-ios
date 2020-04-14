@@ -239,9 +239,9 @@ class IncomeTests: XCTestCase {
 																				  end: Date(timeIntervalSince1970: 1574899200))
 //		print(Date(timeIntervalSince1970: 1574208000))
 //		print(Date(timeIntervalSince1970: 1574899200))
-		assets.forEach { (int, val) in
-			print(Date(timeIntervalSince1970: int), val)
-		}
+//		assets.forEach { (int, val) in
+//			print(Date(timeIntervalSince1970: int), val)
+//		}
 //		quotes.forEach { (quote) in
 //			print(Date(timeIntervalSince1970: TimeInterval(quote.timestamp)), quote.exchangeRate)
 //		}

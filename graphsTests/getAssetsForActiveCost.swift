@@ -186,11 +186,11 @@ class GetAssetsForActiveCost: XCTestCase {
 //			Rate(BigDecimal( "7268"),1583971200), Rate(BigDecimal( "7311"),1584057600), Rate(BigDecimal( "6903"),1583798400),
 //			Rate(BigDecimal( "7109"),1583884800))
 
-			let result = ["EOS": 1.495 ,
-						  "BTC": 0.000377,
-						  "LTC": -0.07535,
-						  "USD": -11.44935,
-						  "EUR": 0.1974001]
+//			let result = ["EOS": 1.495,
+//						  "BTC": 0.000377,
+//						  "LTC": -0.07535,
+//						  "USD": -11.44935,
+//						  "EUR": 0.1974001]
 
 			trades.append(Trade(id: 0,
 								dateTime: formatter.date(from: "2020-03-16T00:00:00") ?? Date(),

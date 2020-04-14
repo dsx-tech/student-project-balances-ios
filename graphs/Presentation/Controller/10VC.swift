@@ -16,6 +16,7 @@ class VC10: UIViewController, ChartViewDelegate {
 
 	//Variables
 	var transactions: [Transaction]!
+	let tradesApi = TradeApi()
 
     lazy var customFormatter: NumberFormatter = {
 		let formatter = NumberFormatter()
@@ -58,8 +59,7 @@ class VC10: UIViewController, ChartViewDelegate {
         l.formToTextSpace = 8
         l.xEntrySpace = 6
 
-		let tradesApi = TradeApi()
-		tradesApi.getAllTransactions(url: "http://3.248.170.197:9999/bcv/transactions") { (transactions) in
+		tradesApi.getAllTransactions(completion: { (transactions) in
 			if let transactions = transactions {
 				self.transactions = transactions
 			}
@@ -74,7 +74,7 @@ class VC10: UIViewController, ChartViewDelegate {
 			xAxis.labelCount = balances.count
 			xAxis.valueFormatter = DateValueFormatter10(start: start ?? Date())
 			self.setChartData(dateDepositWithdraw: balances)
-		}
+		})
     }
 
 	func setChartData(dateDepositWithdraw: [Date: (Double, Double)]) {

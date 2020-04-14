@@ -31,6 +31,9 @@ class TradeApi {
 
 	var trades: [Trade]!
 	var transactions: [Transaction]!
+	var quotes: [Quote]!
+	let url = "http://3.248.170.197:9999/bcv/"
+	let urlQuotes = "http://3.248.170.197:8888/bcv/quotes/dailyBars/"
 
 	/**
 	Get all Trades from backend
@@ -39,23 +42,20 @@ class TradeApi {
 	- url: Url to make response
 	- completion: ([Trade]?) -> Void what to make with response
 	*/
-	func getAllTrades(url: String, completion: @escaping TradeResponseCompletion) {
+	func getAllTrades(completion: @escaping TradeResponseCompletion) {
 
-		guard let url = URL(string: url) else {
+		let (token, id) = self.getTokenAndId()
+
+		guard let url = URL(string: self.url + "portfolios/" + id + "/trades") else {
 			print("Error in URL making!")
 			completion(nil)
 			return} //make URL from string
 
-		let keychain = Keychain(service: "swagger")
-		let token = try? keychain.get("token")
-
-		guard let newtoken = token else { return }
-
 		let headers: HTTPHeaders = [
-			"Authorization": "Token_" + newtoken
+			"Authorization": "Token_" + token
 		]
 
-		AF.request(url, headers: headers).validate().responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
+		AF.request(url, headers: headers).validate(statusCode: 200..<500).responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -111,22 +111,19 @@ class TradeApi {
 	- url: Url to make response
 	- completion: ([Transaction]?) -> Void what to make with response
 	*/
-	func getAllTransactions(url: String, completion: @escaping TransactionsResponseCompletion) {
+	func getAllTransactions(completion: @escaping TransactionsResponseCompletion) {
 
-		guard let url = URL(string: url) else {
+		let (token, id) = self.getTokenAndId()
+
+		guard let url = URL(string: self.url + "portfolios/" + id + "/transactions") else {
 			print("Error in URL making!")
 			return} //make url from string
 
-		let keychain = Keychain(service: "swagger")
-		let token = try? keychain.get("token")
-
-		guard let newtoken = token else { return }
-
 		let headers: HTTPHeaders = [
-			"Authorization": "Token_" + newtoken
+			"Authorization": "Token_" + token
 		]
 
-		AF.request(url, headers: headers).validate().responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
+		AF.request(url, headers: headers).validate(statusCode: 200..<500).responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -135,12 +132,6 @@ class TradeApi {
 			}
 			switch response.result {
 			case .success:
-
-				//handle errors
-				if let error = response.error {
-					print(error.localizedDescription)
-					completion(nil)
-				}
 
 				//getting data from response
 				guard let dataresponse = response.data else {
@@ -185,16 +176,16 @@ class TradeApi {
 	- endTime: Date up to witch to count
 	- completion: ([Quote]?) -> Void what to make with response
 	*/
-	func getQuotesinPeriod(url: String, instrument: String, startTime: Date, endTime: Date, completion: @escaping QuotesResponseCompletion) {
+	func getQuotesinPeriod(instrument: String, startTime: Date, endTime: Date, completion: @escaping QuotesResponseCompletion) {
 
-		let fullurl = url + instrument + "/" + String(Int(startTime.timeIntervalSince1970)) + "/" + String(Int(endTime.timeIntervalSince1970))
+		let fullurl = self.urlQuotes + instrument + "/" + String(startTime.timeIntervalSince1970) + "/" + String(endTime.timeIntervalSince1970)
 
 		guard let url = URL(string: fullurl) else {
 			print("Error in url making!")
 			completion(nil)
 			return } //make url from string
 
-		AF.request(url).responseJSON { [weak self] (response) in
+		AF.request(url).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -202,56 +193,56 @@ class TradeApi {
 				return
 			}
 
-			//handle errors
-			if let error = response.error {
-				print(error.localizedDescription)
-				completion(nil)
+			switch response.result {
+			case .success:
+				//get data from response
+				guard let data = response.data else {
+					print("Error in pulling out data from response")
+					return
+				}
+
+				let decoder = JSONDecoder()
+
+				do {
+					let quotes = try decoder.decode([Quote].self, from: data)
+					completion(quotes)
+				} catch {
+					print(error.localizedDescription)
+					debugPrint(error)
+					completion(nil)
+				}
+			case .failure(let error):
+				self.handleErrors(error: error)
 			}
 
-			//get data from response
-			guard let data = response.data else {
-				print("Error in pulling out data from response")
-				return
-			}
-
-			let decoder = JSONDecoder()
-
-			do {
-				let quotes = try decoder.decode([Quote].self, from: data)
-				completion(quotes)
-
-				//				var throwables = try decoder.decode([Throwable<Quote>].self, from: data)
-				//				var data2 = throwables.compactMap { try? $0.result.get() }
-				//
-				//				var throwables2 = try decoder.decode([Throwable<QuoteI>].self, from: data)
-				//
-				//				let newdata = throwables.compactMap { try? $0.result.get() }
-				//
-				//				for  i in newdata {
-				//					let newdata = Quote(exchangeRate: Double(i.exchangeRate), timestamp: i.timestamp)
-				//					data2.append(newdata)
-				//				}
-				//				completion(data2)
-			} catch {
-				print(error.localizedDescription)
-				debugPrint(error)
-				completion(nil)
-			}
 		}
+	}
+
+	func getTokenAndId() -> (String, String) {
+
+		let keychain = Keychain(service: "swagger")
+
+		let token = try? keychain.get("token")
+		let idString = try? keychain.get("id")
+//		let id = Int(idString ?? "0")
+		guard let newtoken = token, let newid = idString else {
+			print("Error in getting data from keychain")
+			return ("", "0")
+		}
+
+		return(newtoken, newid)
 	}
 }
 
 extension TradeApi {
 
-	func getAllTradesAndTransactions(id: String, completion: @escaping  ([Trade?], [Transaction?]) -> Void) {
+	func getAllTradesAndTransactions(completion: @escaping  ([Trade]?, [Transaction]?) -> Void) {
 
 		//to get trades and transactions concurrently and return in one completion
 		let apiGroup = DispatchGroup()
-		let urltrades = "http://3.248.170.197:9999/bcv/portfolios" + id + "/trades"
-		let urltransactions = "http://3.248.170.197:9999/bcv/portfolios" + id + "/transactions"
 		
 		apiGroup.enter()
-		getAllTrades(url: urltrades) { [weak self] (trades) in
+		getAllTrades(completion: { [weak self] (trades) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -259,11 +250,11 @@ extension TradeApi {
 			}
 			self.trades = trades
 			apiGroup.leave()
-		}
+		})
 
 		apiGroup.enter()
 
-		getAllTransactions(url: urltransactions) { [weak self] (transactions) in
+		getAllTransactions(completion: { [weak self] (transactions) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -271,7 +262,7 @@ extension TradeApi {
 			}
 			self.transactions = transactions
 			apiGroup.leave()
-		}
+		})
 
 		apiGroup.notify(queue: TradeApi.concurrentQueue) { [weak self] in
 
@@ -281,6 +272,57 @@ extension TradeApi {
 			}
 
 			completion(self.trades, self.transactions)
+		}
+	}
+
+	func getAllTradesTransactionsAndQuotes(instrument: String,
+										   startTime: Date,
+										   endTime: Date,
+										   completion: @escaping  ([Trade]?, [Transaction]?, [Quote]?) -> Void) {
+
+		//to get trades and transactions and quotes concurrently and return in one completion
+		let apiGroup = DispatchGroup()
+
+		apiGroup.enter()
+		getAllTrades(completion: { [weak self] (trades) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			self.trades = trades
+			apiGroup.leave()
+		})
+
+		apiGroup.enter()
+
+		getAllTransactions(completion: { [weak self] (transactions) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			self.transactions = transactions
+			apiGroup.leave()
+		})
+
+		getQuotesinPeriod(instrument: instrument, startTime: startTime, endTime: endTime) { [weak self] (quotes) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			self.quotes = quotes
+			apiGroup.leave()
+		}
+
+		apiGroup.notify(queue: TradeApi.concurrentQueue) { [weak self] in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			completion(self.trades, self.transactions, self.quotes)
 		}
 	}
 

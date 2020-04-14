@@ -43,6 +43,7 @@ enum DurationAssets: Int {
 }
 
 struct Urls {
+	static let portfolioUrl = "http://3.248.170.197:9999/bcv/portfolios"
 	static let quotesurl = "http://3.248.170.197:8888/bcv/quotes/bars/"
 	static let loginUrl = "http://3.248.170.197:9999/bcv/auth/login"
 	static let registerUrl = "http://3.248.170.197:9999/bcv/auth/register"
@@ -50,6 +51,7 @@ struct Urls {
 
 struct Identifiers {
     static let quoteCell = "quoteCell"
+	static let portfolioCell = "portfolio"
 }
 
 struct Segues {

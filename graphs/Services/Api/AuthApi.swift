@@ -45,7 +45,7 @@ class AuthApi {
 		AF.request(url,
 				   method: .post,
 				   parameters: params,
-				   encoding: JSONEncoding.default).validate().responseJSON(queue: AuthApi.self.serialQueue) { [weak self ] (response) in
+				   encoding: JSONEncoding.default).validate(statusCode: 200..<500).responseJSON(queue: AuthApi.self.serialQueue) { [weak self ] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -73,7 +73,6 @@ class AuthApi {
 				}
 			case .failure(let error):
 				self.handleErrors(error: error, completion: completion)
-				completion(nil, false)
 			}
 		}
 	}
@@ -104,7 +103,7 @@ class AuthApi {
 		AF.request(url,
 				   method: .post,
 				   parameters: params,
-				   encoding: JSONEncoding.default).validate().responseJSON(queue: AuthApi.self.serialQueue) { [weak self] (response) in
+				   encoding: JSONEncoding.default).validate(statusCode: 200..<500).responseJSON(queue: AuthApi.self.serialQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
