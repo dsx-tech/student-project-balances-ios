@@ -49,44 +49,16 @@ class PieChartVC: UIViewController {
 			if let trades = trades, let transactions = transactions {
 				self.trades = trades
 				self.transactions = transactions
+
+				let assets = ActiveCostAndPieApi.sharedManager.getAssetsForPie(trades: &self.trades, transactions: &self.transactions)
+
+				self.chartModel = self.configurePieChartModel(data: assets)
+				print(assets)
+				DispatchQueue.main.async {
+					self.chartView?.aa_drawChartWithChartModel(self.chartModel)
+				}
 			}
 		}
-
-		tradesApi.getAllTrades(completion: { (trades) in
-			if let trades = trades {
-				self.trades = trades
-				self.tradesApi.getAllTransactions(completion: { (transactions) in
-					if let transactions = transactions {
-						self.transactions = transactions
-						let (assets1, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades,
-																				   transactions: &self.transactions,
-																				   start: Date(timeIntervalSince1970: 0),
-																				   end: Date(timeIntervalSinceNow: 0))
-						print(assets1)
-						var newassets: [Any] = []
-						for (key, value) in assets1 {
-							//							if value < 0 {
-							//								continue
-							//							}
-							if let currency = currencies1[key] {
-								newassets.append([key, value * currency])
-							}
-						}
-						//						var assets = AssetsTimeData(assets: )
-						//						assets.convertToStringAny()
-						self.chartModel = self.configurePieChartModel(data: newassets)
-						print(newassets)
-						DispatchQueue.main.async {
-							self.chartView?.aa_drawChartWithChartModel(self.chartModel)
-						}
-					}
-				})
-			}
-			self.chartModel = self.configurePieChartModel(data: [])
-			DispatchQueue.main.async {
-				self.chartView?.aa_drawChartWithChartModel(self.chartModel)
-			}
-		})
 	}
 
 	private func setUpChartView() {
@@ -100,6 +72,7 @@ class PieChartVC: UIViewController {
 	}
 
 	private func configurePieChartModel(data: [Any]) -> AAChartModel {
+
 		let colors = (0..<data.count).map { _ -> String in
 			let color = UIColor(red: .random(),
 								green: .random(),
@@ -115,174 +88,12 @@ class PieChartVC: UIViewController {
 			.backgroundColor(AAColor.white)
 			.title("Portfolio Assets")
 			.dataLabelsEnabled(true)
-			//			.backgroundColor("#4169E1")
 			.series([
 				AASeriesElement()
 					.name("$")
 					.innerSize("10%")
-					//				.allowPointSelect(true)
-					//				.data([
-					//					["$", 5],
-					//					["€", 10],
-					//					["฿", 15],
-					//					]
-					//				)
 					.data(data)
 			])
 
-	}
-
-	/**counting assets between two dates from trades and transactions
-	- Author: Danila Ferents
-	- Parameters:
-	- trades: All trades
-	- transactions: All transactions
-	- start: Start date of interval
-	- end: End date of interval
-	- Returns: Dictionary of value and count, array of strange transactions and trades
-	*/
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
-											transactions: inout [Transaction],
-											start: Date,
-											end: Date)
-		-> ([String: Double], [(String, String, String)]) {
-
-			///Array of strange Ids
-			var strangeIds: [(String, String, String)] = []
-			///Dictionary of all assets
-			var assets: [String: Double] = [:]
-
-			//sorting trades and transactions
-			trades.sort { (firsttrade, secondtrade) -> Bool in
-				if firsttrade.dateTime == secondtrade.dateTime {
-					return firsttrade.id > secondtrade.id
-				}
-				return firsttrade.dateTime < secondtrade.dateTime
-			}
-
-			transactions.sort { (firsttransaction, secondtransaction) -> Bool in
-				if firsttransaction.dateTime == secondtransaction.dateTime {
-					return firsttransaction.id > secondtransaction.id
-				}
-				return firsttransaction.dateTime < secondtransaction.dateTime
-			}
-
-			transactions = transactions.filter {
-				$0.transactionStatus == "Complete"
-			}
-
-			var tradeindex = 0, transactionindex = 0
-			//processing all transactions, which are in interval between start and end
-			for _ in 0..<trades.count + transactions.count {
-
-				if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
-					tradeindex += 1
-					continue
-				}
-
-				if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-					transactionindex += 1
-					continue
-				}
-
-				if transactionindex < transactions.count && tradeindex < trades.count {
-
-					if transactions[transactionindex].dateTime <= trades[tradeindex].dateTime {
-						processTransaction(transaction: transactions[transactionindex], assets: &assets, strangeIds: &strangeIds)
-						transactionindex += 1
-					} else {
-						processTrade(trade: trades[tradeindex], assets: &assets, strangeIds: &strangeIds)
-						tradeindex += 1
-					}
-				} else if transactionindex >= transactions.count {
-					processTrade(trade: trades[tradeindex], assets: &assets, strangeIds: &strangeIds)
-					tradeindex += 1
-				} else if tradeindex >= trades.count {
-					processTransaction(transaction: transactions[transactionindex], assets: &assets, strangeIds: &strangeIds)
-					transactionindex += 1
-				}
-
-			}
-			return (assets, strangeIds)
-	}
-
-	/**
-	Increase and Decrease assets, which have been traded
-	- Author: Danila Ferents
-	- Parameters:
-	- trade: Processing trade
-	- assets: Dictionary of assets(by reference)
-	- strangeIds: Array of strange ids(by reference)
-	*/
-	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
-
-		var deductibleQuantity: Double = 0
-		var addedQuantity: Double = 0
-		var deductibleCurrency: String = ""
-		var addedCurrency: String = ""
-
-		if trade.tradeType == "Sell" {
-			deductibleCurrency = trade.tradedQuantityCurrency
-			deductibleQuantity = trade.tradedQuantity
-			addedCurrency = trade.tradedPriceCurrency
-			addedQuantity = trade.tradedPrice * trade.tradedQuantity
-		} else if trade.tradeType == "Buy" {
-			deductibleCurrency = trade.tradedPriceCurrency
-			deductibleQuantity = trade.tradedPrice * trade.tradedQuantity
-			addedCurrency = trade.tradedQuantityCurrency
-			addedQuantity = trade.tradedQuantity
-		}
-
-		if let currentassetQuantity = assets[deductibleCurrency] {
-			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
-			assets[deductibleCurrency]? -= deductibleQuantity
-		} else {
-			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
-		}
-
-		if assets[addedCurrency] != nil {
-			assets[addedCurrency]? += addedQuantity
-		} else {
-			assets[addedCurrency] = addedQuantity
-		}
-		if assets[trade.commissionCurrency] != nil {
-			assets[trade.commissionCurrency]? -= trade.commission
-		} else {
-			assets[trade.commissionCurrency] = -trade.commission
-		}
-		//		print(assets, trade.id)
-	}
-
-	/**
-	Increase  asset, which is in transaction
-	- Author: Danila Ferents
-	- Parameters:
-	- transaction: Processing transaction
-	- assets: Dictionary of assets(by reference)
-	- strangeIds: Array of strange ids(by reference)
-	*/
-	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
-
-		if transaction.transactionType == "Withdraw" {
-			if let currentassetQuantity = assets[transaction.currency] {
-				if currentassetQuantity < transaction.amount {
-					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
-				}
-				assets[transaction.currency]? -= transaction.amount
-			} else {
-				assets[transaction.currency] = -transaction.amount
-				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
-			}
-		} else if transaction.transactionType == "Deposit" {
-			if assets[transaction.currency] != nil {
-				assets[transaction.currency]? += transaction.amount
-			} else {
-				assets[transaction.currency] = transaction.amount
-			}
-		}
-		assets[transaction.currency]? -= transaction.commission
-		//		print(assets, transaction.id)
 	}
 }
