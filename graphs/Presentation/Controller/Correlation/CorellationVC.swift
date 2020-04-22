@@ -12,7 +12,7 @@ class CorrelationVC: UIViewController {
 	
 	//Variables
 	var instrumentCorrelations: [(String, [InstrumentCorrelation])] = []
-	var quotes: [(String, [Quote])] = []
+	var quotes: [(String, [QuotePeriod])] = []
 	let quotesApi = TradeApi()
 
 	@IBOutlet weak var quotestable: UITableView!
@@ -84,9 +84,12 @@ class CorrelationVC: UIViewController {
 			return
 		}
 
-		quotesApi.getQuotesinPeriod(instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-			self.quotesApi.getQuotesinPeriod(instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-				guard let firstQuotes = firstinstrumentquotes, let secondQuotes = secondinstrumentquotes else {
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
+			self.quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
+				guard let firstQuotesArray = firstinstrumentquotes,
+					let secondQuotesArray = secondinstrumentquotes,
+					let firstQuotes = firstQuotesArray[firstinstrument],
+					let secondQuotes = secondQuotesArray[secondinstrument] else {
 					print("Error in getting quotes for  instrument")
 					return
 				}
@@ -122,7 +125,7 @@ class CorrelationVC: UIViewController {
 	- transactions: quotes of second instrument
 	- Returns: Double
 	*/
-	func correlationQuotes(firstquotes: [Quote], secondquotes: [Quote]) -> Double {
+	func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> Double {
 		var firstaverage = firstquotes.reduce(0) { (result, quote) -> Double in
 			return result + quote.exchangeRate
 		}

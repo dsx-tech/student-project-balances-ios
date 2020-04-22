@@ -94,10 +94,8 @@ class RegisterVC: UIViewController {
 
 					let targetStoryboardName = "main"
 					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
-					if let targetVC = targetStoryboard.instantiateInitialViewController() as? UITabBarController {
-						if let selectedVC = targetVC.selectedViewController as? LineChartVCCharts {
-							selectedVC.login = self.auth
-						}
+					if let targetVC = targetStoryboard.instantiateInitialViewController() {
+						targetVC.modalPresentationStyle = .fullScreen
 						self.present(targetVC, animated: true, completion: nil)
 					}
 				} else {

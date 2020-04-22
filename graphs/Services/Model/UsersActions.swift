@@ -55,13 +55,16 @@ struct Transaction: Codable {
 }
 
 /// Quotes format from DSX exchange
-struct Quote: Codable {
+struct QuotePeriod: Codable {
 	///exchangeRate of instrument
 	let exchangeRate: Double
 	///timestamp in seconds
 	let timestamp: Int64
 }
 
+struct Quote: Codable {
+	let exchangeRate: Double
+}
 ///Struct to get username and token from server
 struct AuthResponse: Codable {
 	let username: String

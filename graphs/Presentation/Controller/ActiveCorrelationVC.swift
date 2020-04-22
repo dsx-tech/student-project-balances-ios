@@ -15,8 +15,8 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	@IBOutlet weak var chartView: LineChartView!
 
 	//Variables
-	var firstQuotes: [Quote]!
-	var secondQuotes: [Quote]!
+	var firstQuotes: [QuotePeriod]!
+	var secondQuotes: [QuotePeriod]!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -134,9 +134,12 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 		}
 		//get quotes for first instrument
 		let quotesApi = TradeApi()
-		quotesApi.getQuotesinPeriod(instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-			quotesApi.getQuotesinPeriod(instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-				guard let firstQuotes = firstinstrumentquotes, let secondQuotes = secondinstrumentquotes else {
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
+			quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
+				guard let firstQuotesArray = firstinstrumentquotes,
+					let secondQuotesArray = secondinstrumentquotes,
+					let firstQuotes = firstQuotesArray[firstinstrument],
+					let secondQuotes = secondQuotesArray[secondinstrument] else {
 					print("Error in getting quotes for  instrument")
 					return
 				}
@@ -156,7 +159,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	- transactions: quotes of second instrument
 	- Returns:
 	*/
-	func correlationQuotes(firstquotes: [Quote], secondquotes: [Quote]) -> ([(Double, Double)], [(Double, Double)]) {
+	func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> ([(Double, Double)], [(Double, Double)]) {
 		let maxfirstinstrument = firstquotes.max { (quote1, quote2) -> Bool in
 			return quote1.exchangeRate < quote2.exchangeRate
 		}?.exchangeRate

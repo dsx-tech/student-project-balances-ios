@@ -65,6 +65,7 @@ class LoginVC: UIViewController {
 					let targetStoryboardName = "main"
 					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
 					if let targetVC = targetStoryboard.instantiateInitialViewController() {
+						targetVC.modalPresentationStyle = .fullScreen
 						self.present(targetVC, animated: true, completion: nil)
 					}
 				} else {

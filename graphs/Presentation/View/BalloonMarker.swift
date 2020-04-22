@@ -169,7 +169,11 @@ open class BalloonMarker: MarkerImage
     }
     
     open override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
-        setLabel(String(entry.y))
+		let formatter = NumberFormatter()
+		formatter.numberStyle = .none
+		formatter.maximumFractionDigits = 3
+		let value = NSNumber(value: entry.y)
+		setLabel(formatter.string(from: value) ?? "")
     }
     
     open func setLabel(_ newLabel: String) {

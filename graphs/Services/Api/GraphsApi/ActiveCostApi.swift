@@ -7,8 +7,15 @@
 //
 
 import Foundation
+import KeychainAccess
 
 class ActiveCostAndPieApi {
+
+	// Make class Singleton
+	static let sharedManager = ActiveCostAndPieApi()
+
+	private init() {
+	}
 
 	func getAssetsForActiveCost(trades: inout [Trade], transactions: inout  [Transaction], start: String, end: String) -> [String: ([Double], [Double])] {
 
@@ -50,18 +57,35 @@ class ActiveCostAndPieApi {
 		return assetsMonthly
 	}
 
-	func getAssetsForPie(trades: inout [Trade], transactions: inout  [Transaction]) -> [Any] {
+	func getAssetsForPie(trades: inout [Trade], transactions: inout  [Transaction]) -> ([String: Double], [String]) {
 
 		let (assets, _) = getAssetsFromTradesAndTransactions(trades: &trades,
 																  transactions: &transactions,
 																  start: Date(timeIntervalSince1970: 0),
 																  end: Date(timeIntervalSinceNow: 0))
+		var currencies: [String] = []
 
-		var newassets: [Any] = []
+		for (key, _) in assets {
+			currencies.append(key)
+		}
+		return (assets, currencies)
+	}
+
+	func getAssetsForPieWithQuotes(assets: [String: Double], quotes: [String: [Quote]]) -> [(String, Double)] {
+
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
+
+		guard let newbasecurrency = baseCurrency else { return [] }
+
+		var newassets: [(String, Double)] = []
 
 		for (key, value) in assets {
-			if let currency = currencies1[key] {
-				newassets.append([key, value * currency])
+			if let currencyarray = quotes[key + "-" + newbasecurrency], let currency = currencyarray.first {
+				newassets.append((key, value * currency.exchangeRate))
+			} else if let currency = currencies1[key] {
+				print("Why here!")
+				newassets.append((key, value * currency))
 			}
 		}
 

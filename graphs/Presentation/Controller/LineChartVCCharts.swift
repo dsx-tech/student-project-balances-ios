@@ -15,55 +15,12 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	@IBOutlet weak var chartTitle: UILabel!
 	var trades: [Trade]!
 	var transactions: [Transaction]!
-	var login: AuthResponse!
 	let tradesApi = TradeApi()
-
-//	enum year: Int {
-//		case December = 31
-//		case Januar = 31
-//		case
-//	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-//		print(login)
-		chartTitle.text = "Assets"
-		chartView.delegate = self
 
-		chartView.chartDescription?.enabled = false
-		chartView.dragEnabled = true
-		chartView.setScaleEnabled(true)
-		chartView.pinchZoomEnabled = true
-
-		chartView.xAxis.gridLineDashLengths = [10, 10]
-		chartView.xAxis.gridLineDashPhase = 0
-
-		let leftAxis = chartView.leftAxis
-		leftAxis.axisMaximum = 55
-		leftAxis.axisMinimum = 0
-		leftAxis.gridLineDashLengths = [5, 5]
-		leftAxis.drawLimitLinesBehindDataEnabled = true
-        let xAxis = chartView.xAxis
-        xAxis.labelPosition = .topInside
-        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-		xAxis.labelTextColor = .black
-        xAxis.drawAxisLineEnabled = false
-        xAxis.drawGridLinesEnabled = true
-        xAxis.centerAxisLabelsEnabled = true
-		xAxis.valueFormatter = DateValueFormatter()
-		chartView.rightAxis.enabled = false
-
-		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
-								   font: .systemFont(ofSize: 12),
-								   textColor: .white,
-								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
-		marker.chartView = chartView
-		marker.minimumSize = CGSize(width: 80, height: 40)
-		chartView.marker = marker
-
-		chartView.legend.form = .line
-
-//		chartView.animate(xAxisDuration: 3.0)
+		setUpChartView()
 
 		tradesApi.getAllTrades(completion: { (trades) in
 			if let trades = trades {
@@ -98,7 +55,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 						for i in 0..<numberOfMinths {
 							dateComponents.month = i
 							guard let newdate = Calendar.current.date(byAdding: dateComponents, to: start) else { return }
-							let (assets, _) = self.getAssetsFromTradesAndTransactions(trades: &self.trades, transactions: &self.transactions, start: start, end: newdate)
+							let (assets, _) = ActiveCostAndPieApi.sharedManager.getAss (trades: &self.trades, transactions: &self.transactions, start: start, end: newdate)
 							for (key, value) in assets {
 								if assetsMonthly[key] !=  nil {
 									if newdate < start1 || newdate > end1 {
@@ -114,8 +71,9 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 								}
 							}
 						}
-						self.setDataCount(data: assetsMonthly)
-
+						DispatchQueue.main.async {
+							self.setDataCount(data: assetsMonthly)
+						}
 //						self.getAssetsDateAndAmount(trades: trades, transactions: transactions,
 						//timeInterval: 30,
 						//start: Date(timeIntervalSince1970: 0),
@@ -168,128 +126,44 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 		chartView.data = data
 	}
+}
 
-	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
-											transactions: inout [Transaction],
-											start: Date,
-											end: Date) -> ([String: Double], [(String, String, String)]) {
-		var strangeIds: [(String, String, String)] = []
-		var assets: [String: Double] = [:]
+// - MARK: ChartView
 
-		trades.sort { (firsttrade, secondtrade) -> Bool in
-			if firsttrade.dateTime == secondtrade.dateTime {
-				return firsttrade.id > secondtrade.id
-			}
-			return firsttrade.dateTime < secondtrade.dateTime
-		}
+extension LineChartVCCharts {
+	func setUpChartView() {
+		chartTitle.text = "Assets"
+		chartView.delegate = self
 
-		transactions.sort { (firsttransaction, secondtransaction) -> Bool in
-			if firsttransaction.dateTime == secondtransaction.dateTime {
-				return firsttransaction.id > secondtransaction.id
-			}
-			return firsttransaction.dateTime < secondtransaction.dateTime
-		}
+		chartView.chartDescription?.enabled = false
+		chartView.dragEnabled = true
+		chartView.setScaleEnabled(true)
+		chartView.pinchZoomEnabled = true
 
-		transactions = transactions.filter {
-			$0.transactionStatus == "Complete"
-		}
+		chartView.xAxis.gridLineDashLengths = [10, 10]
+		chartView.xAxis.gridLineDashPhase = 0
 
-		var tradeindex = 0, transactionindex = 0
+		let leftAxis = chartView.leftAxis
+		leftAxis.gridLineDashLengths = [5, 5]
+		leftAxis.drawLimitLinesBehindDataEnabled = true
+        let xAxis = chartView.xAxis
+        xAxis.labelPosition = .topInside
+        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+		xAxis.labelTextColor = .black
+        xAxis.drawAxisLineEnabled = false
+        xAxis.drawGridLinesEnabled = true
+        xAxis.centerAxisLabelsEnabled = true
+		xAxis.valueFormatter = DateValueFormatter()
+		chartView.rightAxis.enabled = false
 
-		for _ in 0..<trades.count + transactions.count {
+		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
+								   font: .systemFont(ofSize: 12),
+								   textColor: .white,
+								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
+		marker.chartView = chartView
+		marker.minimumSize = CGSize(width: 80, height: 40)
+		chartView.marker = marker
 
-			if tradeindex < trades.count && (trades[tradeindex].dateTime < start || trades[tradeindex].dateTime > end) {
-				tradeindex += 1
-				continue
-			}
-
-			if transactionindex < transactions.count && (transactions[transactionindex].dateTime < start || transactions[transactionindex].dateTime > end) {
-				transactionindex += 1 
-				continue
-			}
-
-			if transactionindex < transactions.count && tradeindex < trades.count {
-
-				if transactions[transactionindex].dateTime <= trades[tradeindex].dateTime {
-					processTransaction(transaction: transactions[transactionindex], assets: &assets, strangeIds: &strangeIds)
-					transactionindex += 1
-				} else {
-					processTrade(trade: trades[tradeindex], assets: &assets, strangeIds: &strangeIds)
-					tradeindex += 1
-				}
-			} else if transactionindex >= transactions.count {
-				processTrade(trade: trades[tradeindex], assets: &assets, strangeIds: &strangeIds)
-				tradeindex += 1
-			} else if tradeindex >= trades.count {
-				processTransaction(transaction: transactions[transactionindex], assets: &assets, strangeIds: &strangeIds)
-				transactionindex += 1
-			}
-
-		}
-		return (assets, strangeIds)
-	}
-
-	func processTrade(trade: Trade, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
-
-		var deductibleQuantity: Double = 0
-		var addedQuantity: Double = 0
-		var deductibleCurrency: String = ""
-		var addedCurrency: String = ""
-
-		if trade.tradeType == "Sell" {
-			deductibleCurrency = trade.tradedQuantityCurrency
-			deductibleQuantity = trade.tradedQuantity
-			addedCurrency = trade.tradedPriceCurrency
-			addedQuantity = trade.tradedPrice * trade.tradedQuantity
-		} else if trade.tradeType == "Buy" {
-			deductibleCurrency = trade.tradedPriceCurrency
-			deductibleQuantity = trade.tradedPrice * trade.tradedQuantity
-			addedCurrency = trade.tradedQuantityCurrency
-			addedQuantity = trade.tradedQuantity
-		}
-
-		if let currentassetQuantity = assets[deductibleCurrency] {
-			if currentassetQuantity < deductibleQuantity {
-				strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency)) }
-			assets[deductibleCurrency]? -= deductibleQuantity
-		} else {
-			assets[deductibleCurrency] = -deductibleQuantity
-			strangeIds.append(("Trade", trade.tradeValueId, deductibleCurrency))
-		}
-
-		if assets[addedCurrency] != nil {
-			assets[addedCurrency]? += addedQuantity
-		} else {
-			assets[addedCurrency] = addedQuantity
-		}
-		if assets[trade.commissionCurrency] != nil {
-			assets[trade.commissionCurrency]? -= trade.commission
-		} else {
-			assets[trade.commissionCurrency] = -trade.commission
-		}
-//		print(assets, trade.id)
-	}
-
-	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
-
-		if transaction.transactionType == "Withdraw" {
-			if let currentassetQuantity = assets[transaction.currency] {
-				if currentassetQuantity < transaction.amount {
-					strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
-				}
-				assets[transaction.currency]? -= transaction.amount
-			} else {
-				assets[transaction.currency] = -transaction.amount
-				strangeIds.append(("Transaction", transaction.transactionValueId, transaction.currency))
-			}
-		} else if transaction.transactionType == "Deposit" {
-			if assets[transaction.currency] != nil {
-				assets[transaction.currency]? += transaction.amount
-			} else {
-				assets[transaction.currency] = transaction.amount
-			}
-		}
-		assets[transaction.currency]? -= transaction.commission
-//		print(assets, transaction.id)
+		chartView.legend.form = .line
 	}
 }

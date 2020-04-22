@@ -27,13 +27,6 @@ class ForgotPasswordVC: UIViewController {
             simpleAlert(title: "Error", msg: "Fill in your email.")
             return
         }
-//        Auth.auth().sendPasswordReset(withEmail: email) { error in
-//            guard let error = error else {return}
-//            Auth.auth().handleFireError(error: error, vc: self)
-//            debugPrint(error)
-//            return
-//        }
-//        self.dismiss(animated: true, completion: nil)
     }
     
 }

@@ -23,7 +23,9 @@ typealias TradeResponseCompletion = ([Trade]?) -> Void
 typealias TransactionsResponseCompletion = ([Transaction]?) -> Void
 ///response format for api escaping request
 /// - Returns: [Quote]?
-typealias QuotesResponseCompletion = ([Quote]?) -> Void
+typealias QuotesResponsePeriodCompletion = ([String: [QuotePeriod]]?) -> Void
+
+typealias QuotesResponseTickerCompletion = ([String: [Quote]]?) -> Void
 ///response format for login api escaping request
 /// - Returns: [LoginResponse]?
 typealias AuthResponseCompletion = (AuthResponse?, Bool) -> Void
@@ -52,6 +54,7 @@ struct Urls {
 struct Identifiers {
     static let quoteCell = "quoteCell"
 	static let portfolioCell = "portfolio"
+	static let pieChartCell = "pieChartCell"
 }
 
 struct Segues {
@@ -64,6 +67,7 @@ struct AppColors {
     static let Red = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
 	static let Default = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
 	static let Blue = #colorLiteral(red: 0.2914361954, green: 0.3395442367, blue: 0.4364506006, alpha: 1)
+	static let Gray = UIColor(hex: 0xEFEFF2)
 }
 
 struct ImageIdtf {
@@ -72,20 +76,20 @@ struct ImageIdtf {
 }
 
 let currencies: [String: Double] = ["$": 1, "€": 1.3]
-let currencies1: [String: Double] = ["BTC": 7496.58,
-	"ETH": 150.2,
-	"BSV": 96.59,
-	"EOS": 2.744,
-	"EUR": 1.11,
-	"TRY": 0.17,
-	"EURS": 1.10,
-	"BTG": 5.97,
-	"BCH": 213.3,
-	"LTC": 45.56,
-	"GBP": 1.32,
-	"USDT": 1.0003,
-	"RUB": 0.016,
-	"USD": 1.0
+let currencies1: [String: Double] = ["btc": 7496.58,
+	"eth": 150.2,
+	"bsv": 96.59,
+	"eos": 2.744,
+	"eur": 1.11,
+	"try": 0.17,
+	"eurs": 1.10,
+	"btg": 5.97,
+	"bch": 213.3,
+	"ltc": 45.56,
+	"gbp": 1.32,
+	"usdt": 1.0003,
+	"rub": 0.016,
+	"usd": 1.0
 ]
 
 let allcurrencies = [

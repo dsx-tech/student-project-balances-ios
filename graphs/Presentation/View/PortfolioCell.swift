@@ -8,19 +8,36 @@
 
 import UIKit
 
+protocol CheckButton {
+	func ckeckBtn()
+}
+
 class PortfolioCell: UITableViewCell {
 
 	//Outlets
 	@IBOutlet weak var portfolioLbl: UILabel!
 	@IBOutlet var portfolioNameLbl: UILabel!
+	@IBOutlet weak var isSelectedBtn: UIButton!
+
+	//Variables
+	var portfolio: ViewPortfilioItem? {
+		didSet {
+			if let portfolio = portfolio {
+				portfolioLbl.text = String(portfolio.id)
+				portfolioNameLbl.text = portfolio.name
+			}
+		}
+	}
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
-	func configure(portfolio: Portfolio) {
-		portfolioLbl.text = String(portfolio.id)
-		portfolioNameLbl.text = portfolio.name
+	override func setSelected(_ selected: Bool, animated: Bool) {
+		super.setSelected(selected, animated: animated)
+
+		if let portfolio = self.portfolio {
+			isSelectedBtn.isHidden = !portfolio.isSelected
+		}
 	}
 }

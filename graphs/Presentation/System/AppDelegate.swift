@@ -8,11 +8,14 @@
 
 import UIKit
 import Foundation
+import KeychainAccess
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		let keychain = Keychain(service: "swagger")
+		keychain["base_currency"] = "usd"
 		return true
 	}
 

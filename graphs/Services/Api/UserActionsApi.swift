@@ -31,9 +31,11 @@ class TradeApi {
 
 	var trades: [Trade]!
 	var transactions: [Transaction]!
-	var quotes: [Quote]!
+	var quotes: [String: [QuotePeriod]]!
+	var quotesTicker: [String: [Quote]]!
 	let url = "http://3.248.170.197:9999/bcv/"
 	let urlQuotes = "http://3.248.170.197:8888/bcv/quotes/dailyBars/"
+	let urlQuotesTicker = "http://3.248.170.197:8888/bcv/quotes/ticker/"
 
 	/**
 	Get all Trades from backend
@@ -167,6 +169,63 @@ class TradeApi {
 			}
 		}
 	}
+
+	func getTickerQuotes(instruments: [String], completion: @escaping QuotesResponseTickerCompletion) {
+
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
+		let basecurrency = baseCurrency ?? "usd"
+
+		let fullurl = self.urlQuotesTicker
+
+		var baseinstruments = ""
+		instruments.forEach { (currency) in
+			let baseinstrument = currency + "-" + basecurrency
+			baseinstruments += baseinstrument
+			baseinstruments += ","
+		}
+
+		let params = [
+			"instruments": baseinstruments
+		]
+
+		guard let url = URL(string: fullurl) else {
+			print("Error in url making!")
+			completion(nil)
+			return } //make url from string
+
+		AF.request(url, parameters: params).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				completion(nil)
+				return
+			}
+
+			switch response.result {
+			case .success:
+				//get data from response
+				guard let data = response.data else {
+					print("Error in pulling out data from response")
+					return
+				}
+
+				let decoder = JSONDecoder()
+
+				do {
+					let quotes = try decoder.decode([String: [Quote]].self, from: data)
+					completion(quotes)
+				} catch {
+					print(error.localizedDescription)
+					debugPrint(error)
+					completion(nil)
+				}
+			case .failure(let error):
+				self.handleErrors(error: error)
+			}
+
+		}
+	}
 	/**
 	Get all quotes from backend
 	- Parameters:
@@ -176,9 +235,14 @@ class TradeApi {
 	- endTime: Date up to witch to count
 	- completion: ([Quote]?) -> Void what to make with response
 	*/
-	func getQuotesinPeriod(instrument: String, startTime: Date, endTime: Date, completion: @escaping QuotesResponseCompletion) {
+	func getQuotesinPeriod(instruments: [String], startTime: Date, endTime: Date, completion: @escaping QuotesResponsePeriodCompletion) {
 
-		let fullurl = self.urlQuotes + instrument + "/" + String(startTime.timeIntervalSince1970) + "/" + String(endTime.timeIntervalSince1970)
+		var fullurl = self.urlQuotes
+		instruments.forEach { (instrument) in
+			fullurl += instrument
+			fullurl += ","
+		}
+		fullurl += "/" + String(startTime.timeIntervalSince1970) + "/" + String(endTime.timeIntervalSince1970)
 
 		guard let url = URL(string: fullurl) else {
 			print("Error in url making!")
@@ -204,7 +268,7 @@ class TradeApi {
 				let decoder = JSONDecoder()
 
 				do {
-					let quotes = try decoder.decode([Quote].self, from: data)
+					let quotes = try decoder.decode([String: [QuotePeriod]].self, from: data)
 					completion(quotes)
 				} catch {
 					print(error.localizedDescription)
@@ -246,6 +310,7 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			self.trades = trades
@@ -258,6 +323,7 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			self.transactions = transactions
@@ -268,6 +334,7 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 
@@ -278,7 +345,7 @@ extension TradeApi {
 	func getAllTradesTransactionsAndQuotes(instrument: String,
 										   startTime: Date,
 										   endTime: Date,
-										   completion: @escaping  ([Trade]?, [Transaction]?, [Quote]?) -> Void) {
+										   completion: @escaping  ([Trade]?, [Transaction]?, [String: [QuotePeriod]]?) -> Void) {
 
 		//to get trades and transactions and quotes concurrently and return in one completion
 		let apiGroup = DispatchGroup()
@@ -288,6 +355,7 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			self.trades = trades
@@ -300,16 +368,18 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			self.transactions = transactions
 			apiGroup.leave()
 		})
 
-		getQuotesinPeriod(instrument: instrument, startTime: startTime, endTime: endTime) { [weak self] (quotes) in
+		getQuotesinPeriod(instruments: [instrument], startTime: startTime, endTime: endTime) { [weak self] (quotes) in
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			self.quotes = quotes
@@ -320,6 +390,7 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
+				apiGroup.leave()
 				return
 			}
 			completion(self.trades, self.transactions, self.quotes)

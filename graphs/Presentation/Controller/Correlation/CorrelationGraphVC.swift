@@ -15,8 +15,8 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 	var vc: CorrelationVC!
 	var firstInstrument: String!
 	var secondInstrument: [String]!
-	var firstQuotes: [Quote]!
-	var secondQuotes: [Quote]!
+	var firstQuotes: [QuotePeriod]!
+	var secondQuotes: [QuotePeriod]!
 
 	var correlations: [String: ([Double], [Double])] = [:]
 
@@ -138,9 +138,12 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 			}
 			//get quotes for first instrument
 			let quotesApi = TradeApi()
-			quotesApi.getQuotesinPeriod(instrument: firstinstrument, startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-				quotesApi.getQuotesinPeriod(instrument: secondinstrument, startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-					guard let firstQuotes = firstinstrumentquotes, let secondQuotes = secondinstrumentquotes else {
+			quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
+				quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
+					guard let firstQuotesArray = firstinstrumentquotes,
+						let secondQuotesArray = secondinstrumentquotes,
+						let firstQuotes = firstQuotesArray[firstinstrument],
+						let secondQuotes = secondQuotesArray[secondinstrument] else {
 						print("Error in getting quotes for  instrument")
 						return
 					}
@@ -182,7 +185,7 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		- transactions: quotes of second instrument
 		- Returns: Double
 		*/
-		func correlationQuotes(firstquotes: [Quote], secondquotes: [Quote]) -> Double {
+		func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> Double {
 			var firstaverage = firstquotes.reduce(0) { (result, quote) -> Double in
 				return result + quote.exchangeRate
 			}

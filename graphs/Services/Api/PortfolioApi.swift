@@ -85,10 +85,8 @@ class PortfolioApi {
 		]
 
 		let params: [String: Any] = [
-			"portfolioVO": [
-				"id": portfolio.id,
-				"name": portfolio.name
-			]
+			"id": portfolio.id,
+			"name": portfolio.name
 		]
 
 		AF.request(url, method: .post,
@@ -96,34 +94,34 @@ class PortfolioApi {
 				   encoding: JSONEncoding.default,
 				   headers: headers).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
 
-			guard let self = self else {
-				print("No Api instance more")
-				completion(false, nil)
-				return
-			}
+					guard let self = self else {
+						print("No Api instance more")
+						completion(false, nil)
+						return
+					}
 
-			switch response.result {
-			case .success:
-				//get data from response and handle errors
-				guard let dataresponse = response.data else {
-					print("Error in pulling out data from response")
-					return }
+					switch response.result {
+					case .success:
+						//get data from response and handle errors
+						guard let dataresponse = response.data else {
+							print("Error in pulling out data from response")
+							return }
 
-				//Initialise decoder
-				let decoder = JSONDecoder()
-				do {
+						//Initialise decoder
+						let decoder = JSONDecoder()
+						do {
 
-					let portfolio = try decoder.decode(Portfolio.self, from: dataresponse)
-					completion(true, portfolio)
-				} catch {
-					print(error.localizedDescription)
-					debugPrint(error)
-					completion(false, nil)
-				}
-			case .failure(let error):
-				self.handleErrors(error: error)
-				completion(false, nil)
-			}
+							let portfolio = try decoder.decode(Portfolio.self, from: dataresponse)
+							completion(true, portfolio)
+						} catch {
+							print(error.localizedDescription)
+							debugPrint(error)
+							completion(false, nil)
+						}
+					case .failure(let error):
+						self.handleErrors(error: error)
+						completion(false, nil)
+					}
 		}
 	}
 
@@ -152,39 +150,39 @@ class PortfolioApi {
 		]
 
 		AF.request(url,
-				   method: .post,
+				   method: .put,
 				   parameters: params,
 				   encoding: JSONEncoding.default,
 				   headers: headers).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
 
-			guard let self = self else {
-				print("No Api instance more")
-				completion(false, nil)
-				return
-			}
+					guard let self = self else {
+						print("No Api instance more")
+						completion(false, nil)
+						return
+					}
 
-			switch response.result {
-			case .success:
-				//get data from response and handle errors
-				guard let dataresponse = response.data else {
-					print("Error in pulling out data from response")
-					return }
+					switch response.result {
+					case .success:
+						//get data from response and handle errors
+						guard let dataresponse = response.data else {
+							print("Error in pulling out data from response")
+							return }
 
-				//Initialise decoder
-				let decoder = JSONDecoder()
-				do {
+						//Initialise decoder
+						let decoder = JSONDecoder()
+						do {
 
-					let portfolio = try decoder.decode(Portfolio.self, from: dataresponse)
-					completion(true, portfolio)
-				} catch {
-					print(error.localizedDescription)
-					debugPrint(error)
-					completion(false, nil)
-				}
-			case .failure(let error):
-				self.handleErrors(error: error)
-				completion(false, nil)
-			}
+							let portfolio = try decoder.decode(Portfolio.self, from: dataresponse)
+							completion(true, portfolio)
+						} catch {
+							print(error.localizedDescription)
+							debugPrint(error)
+							completion(false, nil)
+						}
+					case .failure(let error):
+						self.handleErrors(error: error)
+						completion(false, nil)
+					}
 		}
 	}
 
@@ -209,25 +207,25 @@ class PortfolioApi {
 		]
 
 		AF.request(url,
-				   method: .post,
+				   method: .delete,
 				   parameters: params,
 				   encoding: JSONEncoding.default,
-				   headers: headers).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+				   headers: headers).validate(statusCode: 200..<500).response(completionHandler: { [weak self] (response) in
 
-			guard let self = self else {
-				print("No Api instance more")
-				completion(false)
-				return
-			}
+					guard let self = self else {
+						print("No Api instance more")
+						completion(false)
+						return
+					}
 
-			switch response.result {
-			case .success:
-				completion(true)
-			case .failure(let error):
-				self.handleErrors(error: error)
-				completion(false)
-			}
-		}
+					switch response.result {
+					case .success:
+						completion(true)
+					case .failure(let error):
+						self.handleErrors(error: error)
+						completion(false)
+					}
+				})
 	}
 
 	func uploadTrades(id: Int, fileUrl: URL, completion: @escaping (Bool) -> Void) {
@@ -294,7 +292,7 @@ class PortfolioApi {
 				return
 			}
 			multipartData.append(idData, withName: "id")
-		}, to: url, method: .post, headers: headers).validate(statusCode: 200..<500).responseJSON(completionHandler: { [weak self] (response) in
+		}, to: url, method: .post, headers: headers).validate(statusCode: 200..<600).responseJSON(completionHandler: { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")

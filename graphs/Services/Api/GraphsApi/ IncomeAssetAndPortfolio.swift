@@ -12,7 +12,7 @@ class IncomeAssetAndPortfolioApi {
 	
 	func getIncomeForAssetFromTradesAndTransactionsAndQuotes(trades: [Trade],
 															 transactions: [Transaction],
-															 quotes: [Quote],
+															 quotes: [QuotePeriod],
 															 duration: DurationAssets,
 															 currency: String,
 															 start: Date,
@@ -149,7 +149,7 @@ class IncomeAssetAndPortfolioApi {
 		return assets
 	}
 
-	func processTrade(trade: Trade, income: inout Double, quote: Quote, currency: String) {
+	func processTrade(trade: Trade, income: inout Double, quote: QuotePeriod, currency: String) {
 		if trade.tradedQuantityCurrency.uppercased() == currency.uppercased() {
 			if trade.tradeType == "Buy" {
 				income += (trade.tradedQuantity - trade.commission) * quote.exchangeRate
@@ -165,7 +165,7 @@ class IncomeAssetAndPortfolioApi {
 		}
 	}
 
-	func processTransaction(transaction: Transaction, income: inout Double, quote: Quote) {
+	func processTransaction(transaction: Transaction, income: inout Double, quote: QuotePeriod) {
 		if transaction.transactionType == "Deposit" {
 			income -= (transaction.amount + transaction.commission) * quote.exchangeRate
 		} else if transaction.transactionType == "Withdraw" {

@@ -96,7 +96,7 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 						end = formatter.date(from: "2019-12-09T23:59:59") ?? Date()
 						start = formatter.date(from: "2019-01-01T00:00:01") ?? Date()
 						guard let numberOfMinths = Calendar.current.dateComponents([.month], from: start, to: end).month else { return }
-						//						print(numberOfMinths)
+
 						var dateComponents = DateComponents()
 						var assetsMonthly: [(Date, [Double])] = []
 						var labels: [String] = []
@@ -120,7 +120,6 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 							assetsMonthly.append((newdate, assetsValues))
 						}
 						self.setData(data: assetsMonthly, labels: labels)
-//						self.setChartData(count: 7, range: 9)
 					}
 				})
 			}
