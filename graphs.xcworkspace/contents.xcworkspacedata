@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:graphsTests/TransactionTests.swift">
+   </FileRef>
+   <FileRef
+      location = "group:graphsTests/getAssetsForActiveCost.swift">
+   </FileRef>
+   <FileRef
       location = "group:graphs.xcodeproj">
    </FileRef>
    <FileRef

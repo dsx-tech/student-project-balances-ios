@@ -1,4 +1,4 @@
-framework module Pods_graphs {
+module Pods_graphs {
   umbrella header "Pods-graphs-umbrella.h"
 
   export *

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4193DA1F60C0ADDD30366C76089628DA"
-               BuildableName = "Pods_graphs.framework"
+               BlueprintIdentifier = "FB5FDC6DCF7F1036FC4AEFEFB913CBF2"
+               BuildableName = "libPods-graphs.a"
                BlueprintName = "Pods-graphs"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
