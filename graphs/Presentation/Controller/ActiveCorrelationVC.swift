@@ -17,51 +17,71 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	//Variables
 	var firstQuotes: [QuotePeriod]!
 	var secondQuotes: [QuotePeriod]!
+	let quotesApi = TradeApi()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		chartView.delegate = self
-
+		setUpChart()
+		
 		let formatter = DateFormatter()
 
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
 		guard let start = formatter.date(from: "2018-01-01T00:00:01") else { return }
 
-		chartView.chartDescription?.enabled = false
-		chartView.dragEnabled = true
-		chartView.setScaleEnabled(true)
-		chartView.pinchZoomEnabled = true
+		self.correlationBetween(firstinstrument: "eur-usd", secondinstrument: "btc-usd", startDate: start, duration: .sixmonths)
+	}
+}
 
-		chartView.xAxis.gridLineDashLengths = [10, 10]
-		chartView.xAxis.gridLineDashPhase = 0
+// - MARK: ReloadData
 
-		let leftAxis = chartView.leftAxis
-		leftAxis.axisMaximum = 1
-		leftAxis.axisMinimum = -1
-		leftAxis.gridLineDashLengths = [5, 5]
-		leftAxis.drawLimitLinesBehindDataEnabled = true
-		let xAxis = chartView.xAxis
-		xAxis.labelPosition = .topInside
-		xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
-		xAxis.labelTextColor = .black
-		xAxis.drawAxisLineEnabled = false
-		xAxis.drawGridLinesEnabled = true
-		xAxis.centerAxisLabelsEnabled = true
-		xAxis.valueFormatter = DateValueFormatter()
-		chartView.rightAxis.enabled = false
+extension ActiveCorrelationVC {
 
-		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
-								   font: .systemFont(ofSize: 12),
-								   textColor: .white,
-								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
-		marker.chartView = chartView
-		marker.minimumSize = CGSize(width: 80, height: 40)
-		chartView.marker = marker
+	/**
+	visualise correlation from start date for duration between two instruments
+	- Author: Danila Ferents
+	- Parameters:
+	- firstinstrument: first instrument to callculate
+	- secondinstrument: second instrument to callculate
+	- startDate: Start date of interval
+	- duration: quotesDuration enum
+	- Returns: corellation value
+	*/
+	func correlationBetween(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
 
-		chartView.legend.form = .line
-		correlationBetween(firstinstrument: "eur-usd", secondinstrument: "btc-usd", startDate: start, duration: .sixmonths)
+		//number of months to count corellation, which we take from duration parameter
+		var dateComponents = DateComponents()
+		switch duration {
+
+		case .month:
+			dateComponents.month = 1
+		case .threemonths:
+			dateComponents.month = 3
+		case .sixmonths:
+			dateComponents.month = 6
+		case .year:
+			dateComponents.month = 12
+		}
+
+		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
+			print("Error in converting end date.")
+			return
+		}
+		//get quotes for first instrument
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrument, secondinstrument], startTime: startDate, endTime: enddate) { (quotes)  in
+			guard let quotesArray = quotes,
+				let firstQuotes = quotesArray[firstinstrument],
+				let secondQuotes = quotesArray[secondinstrument] else {
+					print("Error in getting quotes for  instrument")
+					return
+			}
+
+			let (newfirstquotes, newsecondquotes) = CorrelationApi.sharedManager.correlationQuotesNormed(firstquotes: firstQuotes, secondquotes: secondQuotes)
+
+			DispatchQueue.main.async {
+				self.setDataCount(data: [(firstinstrument, newfirstquotes), (secondinstrument, newsecondquotes)])
+			}
+		}
 	}
 
 	func setDataCount(data: [(String, [(Double, Double)])]) {
@@ -101,85 +121,46 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 
 		chartView.data = data
 	}
+}
 
-	/**
-	visualise correlation from start date for duration between two instruments
-	- Author: Danila Ferents
-	- Parameters:
-	- firstinstrument: first instrument to callculate
-	- secondinstrument: second instrument to callculate
-	- startDate: Start date of interval
-	- duration: quotesDuration enum
-	- Returns: corellation value
-	*/
-	func correlationBetween(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
+// - MARK: Set Up Functions
 
-		//number of months to count corellation, which we take from duration parameter
-		var dateComponents = DateComponents()
-		switch duration {
+extension ActiveCorrelationVC {
+	func setUpChart() {
 
-		case .month:
-			dateComponents.month = 1
-		case .threemonths:
-			dateComponents.month = 3
-		case .sixmonths:
-			dateComponents.month = 6
-		case .year:
-			dateComponents.month = 12
-		}
+		chartView.delegate = self
 
-		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
-			print("Error in converting end date.")
-			return
-		}
-		//get quotes for first instrument
-		let quotesApi = TradeApi()
-		quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-			quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-				guard let firstQuotesArray = firstinstrumentquotes,
-					let secondQuotesArray = secondinstrumentquotes,
-					let firstQuotes = firstQuotesArray[firstinstrument],
-					let secondQuotes = secondQuotesArray[secondinstrument] else {
-					print("Error in getting quotes for  instrument")
-					return
-				}
+		chartView.chartDescription?.enabled = false
+		chartView.dragEnabled = true
+		chartView.setScaleEnabled(true)
+		chartView.pinchZoomEnabled = true
 
-				let (newfirstquotes, newsecondquotes) = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
+		chartView.xAxis.gridLineDashLengths = [10, 10]
+		chartView.xAxis.gridLineDashPhase = 0
 
-				self.setDataCount(data: [(firstinstrument, newfirstquotes), (secondinstrument, newsecondquotes)])
-			}
-		}
-	}
+		let leftAxis = chartView.leftAxis
+		leftAxis.axisMaximum = 1
+		leftAxis.axisMinimum = -1
+		leftAxis.gridLineDashLengths = [5, 5]
+		leftAxis.drawLimitLinesBehindDataEnabled = true
+		let xAxis = chartView.xAxis
+		xAxis.labelPosition = .topInside
+		xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+		xAxis.labelTextColor = .black
+		xAxis.drawAxisLineEnabled = false
+		xAxis.drawGridLinesEnabled = true
+		xAxis.centerAxisLabelsEnabled = true
+		xAxis.valueFormatter = DateValueFormatter()
+		chartView.rightAxis.enabled = false
 
-	/**
-	recallculationg values for two quote arrays
-	- Author: Danila Ferents
-	- Parameters:
-	- firstquotes: quotes of first instrument
-	- transactions: quotes of second instrument
-	- Returns:
-	*/
-	func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> ([(Double, Double)], [(Double, Double)]) {
-		let maxfirstinstrument = firstquotes.max { (quote1, quote2) -> Bool in
-			return quote1.exchangeRate < quote2.exchangeRate
-		}?.exchangeRate
-		let minfirstinstrument = firstquotes.min { (quote1, quote2) -> Bool in
-			return quote1.exchangeRate < quote2.exchangeRate
-		}?.exchangeRate
-		let maxsecondinstrument = secondquotes.max { (quote1, quote2) -> Bool in
-			return quote1.exchangeRate < quote2.exchangeRate
-		}?.exchangeRate
-		let minsecondinstrument = secondquotes.min { (quote1, quote2) -> Bool in
-			return quote1.exchangeRate < quote2.exchangeRate
-		}?.exchangeRate
+		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),
+								   font: .systemFont(ofSize: 12),
+								   textColor: .white,
+								   insets: UIEdgeInsets(top: 8, left: 8, bottom: 20, right: 8))
+		marker.chartView = chartView
+		marker.minimumSize = CGSize(width: 80, height: 40)
+		chartView.marker = marker
 
-		let newquotesfirstinstrument = firstquotes.map { (quote) -> (Double, Double) in
-			return (Double(quote.timestamp), (quote.exchangeRate - (minfirstinstrument ?? 0)) / ((maxfirstinstrument ?? 1) - (minfirstinstrument ?? 0)))
-		}
-
-		let secondquotesfirstinstrument = secondquotes.map { (quote) -> (Double, Double) in
-			return (Double(quote.timestamp), (quote.exchangeRate - (minsecondinstrument ?? 0)) / ((maxsecondinstrument ?? 1) - (minsecondinstrument ?? 0)))
-		}
-		return (newquotesfirstinstrument, secondquotesfirstinstrument)
+		chartView.legend.form = .line
 	}
 }

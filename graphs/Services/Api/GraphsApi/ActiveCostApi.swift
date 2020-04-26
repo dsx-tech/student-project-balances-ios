@@ -60,9 +60,9 @@ class ActiveCostAndPieApi {
 	func getAssetsForPie(trades: inout [Trade], transactions: inout  [Transaction]) -> ([String: Double], [String]) {
 
 		let (assets, _) = getAssetsFromTradesAndTransactions(trades: &trades,
-																  transactions: &transactions,
-																  start: Date(timeIntervalSince1970: 0),
-																  end: Date(timeIntervalSinceNow: 0))
+															 transactions: &transactions,
+															 start: Date(timeIntervalSince1970: 0),
+															 end: Date(timeIntervalSinceNow: 0))
 		var currencies: [String] = []
 
 		for (key, _) in assets {
@@ -90,6 +90,87 @@ class ActiveCostAndPieApi {
 		}
 
 		return newassets
+	}
+
+	func getAssetsInDurationForStack(trades: inout [Trade],
+									 transactions: inout [Transaction],
+									 duration: AssetLineChartDuration,
+									 start: String,
+									 end: String) -> ([(Date, [Double])], [String]) {
+
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+		var calendar = Calendar(identifier: .iso8601)
+		guard let timezone = TimeZone(secondsFromGMT: 0) else {
+			print("Error in unwrapping Timezone")
+			return ([], [])
+		}
+		calendar.timeZone = timezone
+		var dateComponents = DateComponents()
+
+		let start = formatter.date(from: start) ?? Date()
+		let end = formatter.date(from: end) ?? Date()
+
+		let startdateComponents = calendar.date(bySettingHour: 00, minute: 00, second: 00, of: start) ?? Date()
+
+		var enddateComponents = calendar.date(bySettingHour: 00, minute: 00, second: 00, of: end) ?? Date()
+
+		enddateComponents = calendar.date(byAdding: .day, value: 1, to: enddateComponents) ?? Date()
+
+		var countComponents = 0
+
+		switch duration {
+		case.day:
+			print("Error! Not appropriate duration.")
+		case .month:
+			dateComponents = Calendar.current.dateComponents([.month], from: startdateComponents, to: enddateComponents)
+			countComponents = dateComponents.month ?? 0
+		case .year:
+			dateComponents = Calendar.current.dateComponents([.year], from: startdateComponents, to: enddateComponents)
+			countComponents = dateComponents.year ?? 0
+		}
+
+		countComponents += 1
+
+		var assetsInDuration: [(Date, [Double])] = []
+		var labels: [String] = []
+
+		for i in 0..<countComponents {
+			switch duration {
+			case .day:
+				print("Error! Not appropriate duration.")
+			case .month:
+				dateComponents.month = i
+			default:
+				dateComponents.year = i
+			}
+
+			guard let newdate = Calendar.current.date(byAdding: dateComponents, to: startdateComponents) else { return ([], []) }
+
+			let (assets, _) = ActiveCostAndPieApi.sharedManager.getAssetsFromTradesAndTransactions(
+				trades: &trades,
+				transactions: &transactions,
+				start: Date(timeIntervalSince1970: 0),
+				end: newdate)
+
+			let sortedassets = assets.sorted { $0.key < $1.key }
+
+			var assetsNames: [String] = []
+			var assetsValues: [Double] = []
+
+			for (key, value) in sortedassets where value >= 0 {
+					assetsNames.append(key)
+					if let currency = currencies1[key] {
+						assetsValues.append(value * currency)
+				}
+			}
+			if assetsNames.count > labels.count {
+				labels = assetsNames
+			}
+			assetsInDuration.append((newdate, assetsValues))
+		}
+		return (assetsInDuration, labels)
 	}
 
 	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
@@ -193,7 +274,7 @@ class ActiveCostAndPieApi {
 		} else {
 			assets[trade.commissionCurrency] = -trade.commission
 		}
-//				print(assets, trade.id)
+		//				print(assets, trade.id)
 	}
 
 	func processTransaction(transaction: Transaction, assets: inout [String: Double], strangeIds: inout [(String, String, String)]) {
@@ -216,7 +297,7 @@ class ActiveCostAndPieApi {
 			}
 		}
 		assets[transaction.currency]? -= transaction.commission
-//		print(assets, transaction.id)
+		//		print(assets, transaction.id)
 	}
 
 }

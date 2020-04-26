@@ -9,24 +9,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pieChartCell" rowHeight="59" id="KGk-i7-Jjw" customClass="PieChartCell" customModule="graphs" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="438" height="59"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pieChartCell" rowHeight="103" id="KGk-i7-Jjw" customClass="PieChartCell" customModule="graphs" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="471" height="103"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="438" height="59"/>
+                <rect key="frame" x="0.0" y="0.0" width="471" height="103"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aLw-oP-DXn" customClass="RoundedView" customModule="graphs" customModuleProvider="target">
-                        <rect key="frame" x="20" y="0.0" width="398" height="59"/>
+                        <rect key="frame" x="20" y="0.0" width="431" height="103"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" text="asset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRm-u7-A2M">
-                                <rect key="frame" x="100" y="0.0" width="41" height="59"/>
+                                <rect key="frame" x="100" y="0.0" width="41" height="103"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="value" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMe-dh-CFF">
-                                <rect key="frame" x="171" y="0.0" width="227" height="59"/>
+                                <rect key="frame" x="171" y="0.0" width="260" height="103"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -41,6 +41,7 @@
                             <constraint firstAttribute="bottom" secondItem="cRm-u7-A2M" secondAttribute="bottom" id="bpP-Bb-IGi"/>
                             <constraint firstItem="SMe-dh-CFF" firstAttribute="top" secondItem="aLw-oP-DXn" secondAttribute="top" id="hOM-IT-bJH"/>
                             <constraint firstItem="cRm-u7-A2M" firstAttribute="top" secondItem="aLw-oP-DXn" secondAttribute="top" id="mjM-g6-GE6"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="qtq-pR-zHo"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -57,7 +58,7 @@
                 <outlet property="value" destination="SMe-dh-CFF" id="hCh-iV-DRI"/>
                 <outlet property="view" destination="aLw-oP-DXn" id="fRS-zx-hhN"/>
             </connections>
-            <point key="canvasLocation" x="-17" y="26"/>
+            <point key="canvasLocation" x="6.5217391304347831" y="40.513392857142854"/>
         </tableViewCell>
     </objects>
 </document>

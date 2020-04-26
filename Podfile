@@ -11,6 +11,7 @@ use_modular_headers!
   pod 'Charts'
   pod 'SwiftLint'
   pod 'KeychainAccess'
+  pod 'iOSDropDown'
     target 'graphsTests' do
         inherit! :search_paths
     end

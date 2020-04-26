@@ -10,16 +10,12 @@ import XCTest
 
 class GetAssetsForActiveCost: XCTestCase {
 
-		var api: ActiveCostAndPieApi!
-
 		override func setUp() {
 			super.setUp()
-			api = ActiveCostAndPieApi()
 		}
 
 		override func tearDown() {
 			super.tearDown()
-			api = nil
 		}
 
 		func testgetAssetsFromTradesAndTransactions() {
@@ -165,8 +161,10 @@ class GetAssetsForActiveCost: XCTestCase {
 											transactionType: "Deposit",
 											commission: 0.00035))
 
-			let assets = self.api.getAssetsFromTradesAndTransactions(trades: &trades, transactions: &transactions, start: Date(timeIntervalSince1970: 0),
-			end: Date(timeIntervalSinceNow: 0))
+			let assets = ActiveCostAndPieApi.sharedManager.getAssetsFromTradesAndTransactions(trades: &trades,
+																							  transactions: &transactions,
+																							  start: Date(timeIntervalSince1970: 0),
+																							  end: Date(timeIntervalSinceNow: 0))
 
 			result.forEach { (key, value) in
 				let digits = String(result[key] ?? 0).count - String(Int(result[key] ?? 0)).count

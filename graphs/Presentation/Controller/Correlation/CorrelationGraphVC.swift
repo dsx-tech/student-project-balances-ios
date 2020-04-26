@@ -17,19 +17,104 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 	var secondInstrument: [String]!
 	var firstQuotes: [QuotePeriod]!
 	var secondQuotes: [QuotePeriod]!
+	let quotesApi = TradeApi()
 
 	var correlations: [String: ([Double], [Double])] = [:]
 
 	override func viewDidLoad() {
-        super.viewDidLoad()
+		super.viewDidLoad()
 
-		chartView.delegate = self
+		setUpGraph()
 
 		let formatter = DateFormatter()
 
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
 		guard let start = formatter.date(from: "2018-01-01T00:00:01") else { return }
+
+		secondInstrument.forEach { (instrument) in
+			callculatecorrelation(firstinstrument: self.firstInstrument, secondinstrument: instrument, startDate: start, duration: .sixmonths)
+		}
+	}
+}
+
+// - MARK: Correlation
+
+extension CorrelationGraphVC {
+	/**
+	callculationg correlation from start date for duration between two instruments
+	- Author: Danila Ferents
+	- Parameters:
+	- firstinstrument: first instrument to callculate
+	- secondinstrument: second instrument to callculate
+	- startDate: Start date of interval
+	- duration: quotesDuration enum
+	- Returns: corellation value
+	*/
+	func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
+
+		//number of months to count corellation, which we take from duration parameter
+		var dateComponents = DateComponents()
+		switch duration {
+
+		case .month:
+			dateComponents.month = 1
+		case .threemonths:
+			dateComponents.month = 3
+		case .sixmonths:
+			dateComponents.month = 6
+		case .year:
+			dateComponents.month = 12
+		}
+
+		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
+			print("Error in converting end date.")
+			return
+		}
+		//get quotes for first instrument
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrument, secondinstrument], startTime: startDate, endTime: enddate) { (quotes)  in
+
+			guard let quotesArray = quotes,
+				let firstQuotes = quotesArray[firstinstrument],
+				let secondQuotes = quotesArray[secondinstrument] else {
+					print("Error in getting quotes for  instrument")
+					return
+			}
+
+			//				let correlation = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
+
+			let numberOfMinths = dateComponents.month ?? 0
+			//						print(numberOfMinths)
+
+			for i in 0..<numberOfMinths {
+				dateComponents.month = i
+				let newdate = Calendar.current.date(byAdding: dateComponents, to: startDate) ?? Date()
+				let correl = CorrelationApi.sharedManager.correlationQuotes(firstquotes: firstQuotes.filter({ (quote) -> Bool in
+					return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
+				}), secondquotes: secondQuotes.filter({ (quote) -> Bool in
+					return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
+				}))
+
+				if self.correlations[secondinstrument] != nil {
+					self.correlations[secondinstrument]?.0.append(newdate.timeIntervalSince1970)
+					self.correlations[secondinstrument]?.1.append(correl)
+				} else {
+					self.correlations[secondinstrument] = ([newdate.timeIntervalSince1970], [correl])
+				}
+
+			}
+			self.setDataCount(data: self.correlations)
+
+		}
+	}
+
+}
+
+// - MARK: Set Up functions
+
+extension CorrelationGraphVC {
+	func setUpGraph() {
+		chartView.delegate = self
 
 		chartView.chartDescription?.enabled = false
 		chartView.dragEnabled = true
@@ -44,13 +129,13 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		leftAxis.axisMinimum = -1
 		leftAxis.gridLineDashLengths = [5, 5]
 		leftAxis.drawLimitLinesBehindDataEnabled = true
-        let xAxis = chartView.xAxis
-        xAxis.labelPosition = .topInside
-        xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
+		let xAxis = chartView.xAxis
+		xAxis.labelPosition = .topInside
+		xAxis.labelFont = .systemFont(ofSize: 10, weight: .light)
 		xAxis.labelTextColor = .black
-        xAxis.drawAxisLineEnabled = false
-        xAxis.drawGridLinesEnabled = true
-        xAxis.centerAxisLabelsEnabled = true
+		xAxis.drawAxisLineEnabled = false
+		xAxis.drawGridLinesEnabled = true
+		xAxis.centerAxisLabelsEnabled = true
 		xAxis.valueFormatter = DateValueFormatter()
 		chartView.rightAxis.enabled = false
 
@@ -63,169 +148,47 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		chartView.marker = marker
 
 		chartView.legend.form = .line
-		secondInstrument.forEach { (instrument) in
-			callculatecorrelation(firstinstrument: self.firstInstrument, secondinstrument: instrument, startDate: start, duration: .sixmonths)
-		}
-    }
-    
+	}
+}
+
+extension CorrelationGraphVC {
 	func setDataCount(data: [String: ([Double], [Double])]) {
 
-			var datasets: [LineChartDataSet] = []
+		var datasets: [LineChartDataSet] = []
 
 		data.forEach { (_, corellationWithDates) in
 			let values = (0..<corellationWithDates.0.count).map { (i) -> ChartDataEntry in
 				return ChartDataEntry(x: corellationWithDates.0[i], y: corellationWithDates.1[i])
-					}
+			}
 
 			let set1 = LineChartDataSet(entries: values, label: data.first?.key)
-					set1.drawIconsEnabled = false
+			set1.drawIconsEnabled = false
 
-					set1.lineDashLengths = [5, 2.5]
-					set1.highlightLineDashLengths = [5, 2.5]
-					set1.setColor(.black)
-					set1.setCircleColor(.black)
-					set1.lineWidth = 1
-					set1.circleRadius = 3
-					set1.drawCircleHoleEnabled = false
-					set1.valueFont = .systemFont(ofSize: 9)
-					set1.formLineDashLengths = [5, 2.5]
-					set1.formLineWidth = 1
-					set1.formSize = 15
+			set1.lineDashLengths = [5, 2.5]
+			set1.highlightLineDashLengths = [5, 2.5]
+			set1.setColor(.black)
+			set1.setCircleColor(.black)
+			set1.lineWidth = 1
+			set1.circleRadius = 3
+			set1.drawCircleHoleEnabled = false
+			set1.valueFont = .systemFont(ofSize: 9)
+			set1.formLineDashLengths = [5, 2.5]
+			set1.formLineWidth = 1
+			set1.formSize = 15
 
-					let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
-										  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
+			let gradientColors = [ChartColorTemplates.colorFromString("#00ff0000").cgColor,
+								  ChartColorTemplates.colorFromString("#ffff0000").cgColor]
 			guard let gradient = CGGradient(colorsSpace: nil, colors: gradientColors as CFArray, locations: nil) else { return }
 
-					set1.fillAlpha = 1
-					set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
-					set1.drawFilledEnabled = true
-					datasets.append(set1)
-			}
+			set1.fillAlpha = 1
+			set1.fill = Fill(linearGradient: gradient, angle: 90) //.linearGradient(gradient, angle: 90)
+			set1.drawFilledEnabled = true
+			datasets.append(set1)
+		}
+
+		DispatchQueue.main.async {
 			let data = LineChartData(dataSets: datasets)
-
-			chartView.data = data
+			self.chartView.data = data
 		}
-
-		/**
-		callculationg correlation from start date for duration between two instruments
-		- Author: Danila Ferents
-		- Parameters:
-		- firstinstrument: first instrument to callculate
-		- secondinstrument: second instrument to callculate
-		- startDate: Start date of interval
-		- duration: quotesDuration enum
-		- Returns: corellation value
-		*/
-		func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
-
-			//number of months to count corellation, which we take from duration parameter
-			var dateComponents = DateComponents()
-			switch duration {
-
-			case .month:
-				dateComponents.month = 1
-			case .threemonths:
-				dateComponents.month = 3
-			case .sixmonths:
-				dateComponents.month = 6
-			case .year:
-				dateComponents.month = 12
-			}
-
-			guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
-				print("Error in converting end date.")
-				return
-			}
-			//get quotes for first instrument
-			let quotesApi = TradeApi()
-			quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-				quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-					guard let firstQuotesArray = firstinstrumentquotes,
-						let secondQuotesArray = secondinstrumentquotes,
-						let firstQuotes = firstQuotesArray[firstinstrument],
-						let secondQuotes = secondQuotesArray[secondinstrument] else {
-						print("Error in getting quotes for  instrument")
-						return
-					}
-					//				let correlation = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
-
-					let numberOfMinths = dateComponents.month ?? 0
-				//						print(numberOfMinths)
-
-						for i in 0..<numberOfMinths {
-							dateComponents.month = i
-							let newdate = Calendar.current.date(byAdding: dateComponents, to: startDate) ?? Date()
-							let correl = self.correlationQuotes(firstquotes: firstQuotes.filter({ (quote) -> Bool in
-								return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
-							}), secondquotes: secondQuotes.filter({ (quote) -> Bool in
-								return quote.timestamp <= Int64(newdate.timeIntervalSince1970)
-							}))
-
-							if self.correlations[secondinstrument] != nil {
-								self.correlations[secondinstrument]?.0.append(newdate.timeIntervalSince1970)
-								self.correlations[secondinstrument]?.1.append(correl)
-							} else {
-								self.correlations[secondinstrument] = ([newdate.timeIntervalSince1970], [correl])
-							}
-
-						}
-					self.setDataCount(data: self.correlations)
-
-				}
-			}
-
-		}
-
-		/**
-		callculationg correlation for two quote arrays
-		cov(x,y)/((Standard Deviation1)*(Standard Deviation2)
-		- Author: Danila Ferents
-		- Parameters:
-		- firstquotes: quotes of first instrument
-		- transactions: quotes of second instrument
-		- Returns: Double
-		*/
-		func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> Double {
-			var firstaverage = firstquotes.reduce(0) { (result, quote) -> Double in
-				return result + quote.exchangeRate
-			}
-
-			var secondaverage = secondquotes.reduce(0) { (result, quote) -> Double in
-				return result + quote.exchangeRate
-			}
-
-			var cov = 0.0
-			var sizequotes = 0
-			if firstquotes.count < secondquotes.count {
-				sizequotes = firstquotes.count
-			} else {
-				sizequotes = secondquotes.count
-			}
-
-			firstaverage /= Double(sizequotes)
-			secondaverage /= Double(sizequotes)
-
-			for i in 0..<sizequotes {
-				cov += (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
-			}
-
-			var sumfirst = 0.0
-			for i in 0..<sizequotes {
-				sumfirst += pow(firstquotes[i].exchangeRate - firstaverage, 2)
-			}
-
-			var sumsecond = 0.0
-			for i in 0..<sizequotes {
-				sumsecond += pow(secondquotes[i].exchangeRate - secondaverage, 2)
-			}
-
-			let denominator = pow(sumfirst * sumsecond, 0.5)
-
-			let correl = cov / denominator
-			if correl.isNaN {
-				return 0.0
-			} else {
-				return correl
-			}
-		}
+	}
 }

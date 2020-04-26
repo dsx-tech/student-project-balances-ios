@@ -208,7 +208,7 @@ extension PortfoliosController: UITableViewDelegate {
 			let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
 			if let portfolioVC = targetStoryboard.instantiateViewController(identifier: "graph") as? UITabBarController {
 				portfolioVC.modalPresentationStyle = .fullScreen
-				portfolioVC.selectedIndex = 2
+				portfolioVC.selectedIndex = 0
 				self.present(portfolioVC, animated: true, completion: nil)
 			}
 		}))

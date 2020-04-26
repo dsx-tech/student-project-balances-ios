@@ -28,6 +28,17 @@ class RoundedShadowView: UIView {
     }
 }
 
+class RoundedTextField: UITextField {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+		layer.cornerRadius = 10
+		self.backgroundColor = UIColor.white
+		layer.borderColor = UIColor.gray.cgColor
+		layer.borderWidth = 1.0
+		self.clipsToBounds = true
+	}
+}
+
 class RoundedView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -9,7 +9,7 @@
 import Foundation
 
 class IncomeAssetAndPortfolioApi {
-	
+
 	func getIncomeForAssetFromTradesAndTransactionsAndQuotes(trades: [Trade],
 															 transactions: [Transaction],
 															 quotes: [QuotePeriod],
