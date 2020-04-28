@@ -15,7 +15,7 @@ extension Double {
 }
 
 protocol quoteCellDeleteDelegate: AnyObject {
-	func deleteCell(instrument1: String, instrument2: String)
+	func deleteCell(instrument1: String, instrument2: String, indexPath: IndexPath)
 	func processGraph(secondInstrument: String, indexPath: IndexPath)
 }
 
@@ -23,7 +23,6 @@ class QuoteCell: UITableViewCell {
 
 	//Outlets
 	@IBOutlet weak var firstQuotesImg: UIImageView!
-	@IBOutlet weak var secondQuotesImg: UIImageView!
 	@IBOutlet weak var correlationLbl: UILabel!
 	@IBOutlet weak var instrumentLbl: UILabel!
 	@IBOutlet weak var deleteBtn: UIButton!
@@ -50,7 +49,7 @@ class QuoteCell: UITableViewCell {
     }
 	
 	@IBAction func deleteCell(_ sender: Any) {
-		delegate.deleteCell(instrument1: maininstrument, instrument2: instrument.instrument)
+		delegate.deleteCell(instrument1: maininstrument, instrument2: instrument.instrument, indexPath: self.indexPath)
 	}
 
 	func configureCell(instrumentcor: InstrumentCorrelation, maininstrument: String, indexPath: IndexPath) {
@@ -61,9 +60,11 @@ class QuoteCell: UITableViewCell {
 
 		//put values in outlets
 		let doubleFormat = ".3"
+
 		correlationLbl.text = "\((instrumentcor.correlation).format(f: doubleFormat))"
 		timePeriodLbl.text = instrumentcor.timePeriod
-		instrumentLbl.text = instrumentcor.firstCurrency + "-" + instrumentcor.secondCurrency
+		instrumentLbl.text = instrumentcor.firstCurrency
+
 		if instrumentcor.correlation > 0 {
 			correlationLbl.textColor = AppColors.Green
 		} else if instrumentcor.correlation < 0 {
@@ -74,7 +75,7 @@ class QuoteCell: UITableViewCell {
 
 		firstQuotesImg.image = UIImage(named: instrumentcor.firstCurrency)
 
-		secondQuotesImg.image = UIImage(named: instrumentcor.secondCurrency)
+//		secondQuotesImg.image = UIImage(named: instrumentcor.secondCurrency)
 
 	}
 }

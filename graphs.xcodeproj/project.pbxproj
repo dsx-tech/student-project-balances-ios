@@ -37,6 +37,8 @@
 		8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8379168B241AABC8008C4B1E /* ForgotPasswordVC.swift */; };
 		8379168F241AAD35008C4B1E /* ForgotPasswordVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */; };
 		83791691241AAE7D008C4B1E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791690241AAE7D008C4B1E /* Extensions.swift */; };
+		837A957C2458C8FA009246AF /* AddTradeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837A957A2458C8FA009246AF /* AddTradeController.swift */; };
+		837A957D2458C8FA009246AF /* AddTradeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A957B2458C8FA009246AF /* AddTradeController.xib */; };
 		838610A92450893D002F1AD6 /* PieChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D93E244F760600DD0497 /* PieChartCell.swift */; };
 		8389E26C244263F600B14A68 /* PortfoliosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26B244263F600B14A68 /* PortfoliosController.swift */; };
 		8389E26E24426FF200B14A68 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26D24426FF200B14A68 /* HeaderView.swift */; };
@@ -126,6 +128,8 @@
 		8379168B241AABC8008C4B1E /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordVC.xib; sourceTree = "<group>"; };
 		83791690241AAE7D008C4B1E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		837A957A2458C8FA009246AF /* AddTradeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradeController.swift; sourceTree = "<group>"; };
+		837A957B2458C8FA009246AF /* AddTradeController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTradeController.xib; sourceTree = "<group>"; };
 		8389E26B244263F600B14A68 /* PortfoliosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfoliosController.swift; sourceTree = "<group>"; };
 		8389E26D24426FF200B14A68 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		8389E26F244285BC00B14A68 /* PortfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCell.swift; sourceTree = "<group>"; };
@@ -335,9 +339,9 @@
 				83C3D93D244F75B400DD0497 /* PieChart */,
 				8344A61B2451DDC20009897B /* LineChart */,
 				83F033252452354A007235E8 /* StackPortfolio */,
-				8344A61C2451DDD00009897B /* Incomes */,
 				838E8C7F240E757100CBD811 /* Correlation */,
-				838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */,
+				837A95772457915D009246AF /* ActiveCorrelation */,
+				8344A61C2451DDD00009897B /* Incomes */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -385,17 +389,35 @@
 		8379168D241AAD35008C4B1E /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				837A957B2458C8FA009246AF /* AddTradeController.xib */,
 				8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */,
 			);
 			name = XIBs;
 			path = graphs/Presentation/XIBs;
 			sourceTree = SOURCE_ROOT;
 		};
+		837A95772457915D009246AF /* ActiveCorrelation */ = {
+			isa = PBXGroup;
+			children = (
+				838E8C7D240E753800CBD811 /* ActiveCorrelationVC.swift */,
+			);
+			path = ActiveCorrelation;
+			sourceTree = "<group>";
+		};
+		837A957E2458C910009246AF /* AddControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddControllers;
+			sourceTree = "<group>";
+		};
 		8389E268244262E500B14A68 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
 				8389E26B244263F600B14A68 /* PortfoliosController.swift */,
 				8389E2752443429D00B14A68 /* AddFileController.swift */,
+				837A957A2458C8FA009246AF /* AddTradeController.swift */,
+				837A957E2458C910009246AF /* AddControllers */,
 			);
 			path = Portfolio;
 			sourceTree = "<group>";
@@ -537,6 +559,7 @@
 				83453899238C42120082DF88 /* LaunchScreen.storyboard in Resources */,
 				83E4FB2D239F32850013D703 /* main.storyboard in Resources */,
 				8379168F241AAD35008C4B1E /* ForgotPasswordVC.xib in Resources */,
+				837A957D2458C8FA009246AF /* AddTradeController.xib in Resources */,
 				83453896238C42120082DF88 /* Assets.xcassets in Resources */,
 				8389E272244285BC00B14A68 /* PortfolioCell.xib in Resources */,
 			);
@@ -667,6 +690,7 @@
 				831D132D240588170024BC49 /* 10VC.swift in Sources */,
 				8345388D238C42100082DF88 /* AppDelegate.swift in Sources */,
 				8314252723F9B8050086BED8 /* CorellationVC.swift in Sources */,
+				837A957C2458C8FA009246AF /* AddTradeController.swift in Sources */,
 				8336265123928A030077A815 /* UsersActions.swift in Sources */,
 				83E4FB27239D56D20013D703 /* BalloonMarker.swift in Sources */,
 				8314253023FB11350086BED8 /* InstrumentCorrelation.swift in Sources */,

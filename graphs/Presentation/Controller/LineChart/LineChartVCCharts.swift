@@ -23,11 +23,11 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	@IBOutlet weak var assetsValueLbl: UILabel!
 	@IBOutlet weak var baseassetLbl: UILabel!
 	@IBOutlet weak var assetsNameTextField: DropDown!
-	@IBOutlet weak var startDateTextField: UITextField!
+	@IBOutlet weak var startDateTextField: RoundedTextField!
 	@IBOutlet weak var durationSegmentedControl: UISegmentedControl!
 	let startDateDatePicker = UIDatePicker()
 	let endDateDatePicker = UIDatePicker()
-	@IBOutlet weak var endDateTextField: UITextField!
+	@IBOutlet weak var endDateTextField: RoundedTextField!
 
 	//Variables
 	var trades: [Trade]!
@@ -113,6 +113,7 @@ extension LineChartVCCharts {
 	}
 
 	func setUpDateTextFields() {
+
 		self.startDateTextField.inputView = self.startDateDatePicker
 		self.endDateTextField.inputView = self.endDateDatePicker
 		self.startDateDatePicker.datePickerMode = .date
@@ -288,7 +289,8 @@ extension LineChartVCCharts {
 				let assetsMonthly = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCost(trades: &self.trades,
 																							 transactions: &self.transactions,
 																							 start: start,
-																							 end: end)
+																							 end: end,
+																							 duration: self.duration)
 
 				DispatchQueue.main.async {
 					self.assetsInPortfolio = assetsMonthly
@@ -317,13 +319,16 @@ extension LineChartVCCharts {
 
 	func setUpDaily() {
 		self.duration = .day
+		self.reloadData(start: self.start, end: self.end)
 	}
 
 	func setUpMonthly() {
 		self.duration = .month
+		self.reloadData(start: self.start, end: self.end)
 	}
 
 	func setUpYearly() {
 		self.duration = .year
+		self.reloadData(start: self.start, end: self.end)
 	}
 }

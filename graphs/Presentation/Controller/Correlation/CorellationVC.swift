@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class CorrelationVC: UIViewController {
 	
@@ -28,7 +29,7 @@ class CorrelationVC: UIViewController {
 		
 		guard let start = formatter.date(from: "2019-01-01T00:00:01") else { return }
 		
-		callculatecorrelation(firstinstrument: "eur-usd", secondinstrument: "btc-usd", startDate: start, duration: .month)
+		callculatecorrelation(firstinstrument: "eur", secondinstrument: "btc", startDate: start, duration: .month)
 	}
 }
 
@@ -76,19 +77,26 @@ extension CorrelationVC {
 			return
 		}
 
-		quotesApi.getQuotesinPeriod(instruments: [firstinstrument, secondinstrument], startTime: startDate, endTime: enddate) { (quotes)  in
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
+
+		let firstinstrumentWithBase = firstinstrument + "-" + (baseCurrency ?? "usd")
+		let secondinstrumentWithBase = secondinstrument + "-" + (baseCurrency ?? "usd")
+
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrumentWithBase, secondinstrumentWithBase], startTime: startDate, endTime: enddate) { (quotes)  in
 			guard let quotesArray = quotes,
-				let firstQuotes = quotesArray[firstinstrument],
-				let secondQuotes = quotesArray[secondinstrument] else {
-					print("Error in getting quotes for  instrument")
+				let firstQuotes = quotesArray[firstinstrumentWithBase],
+				let secondQuotes = quotesArray[secondinstrumentWithBase] else {
+					self.simpleAlert(title: "Error", msg: "No such quotes!")
+					print("Error in getting quotes for instrument")
 					return
 			}
-			//				let correlation = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
+
 			self.quotes.append((firstinstrument, firstQuotes))
 			self.quotes.append((secondinstrument, secondQuotes))
 
-			let correl = InstrumentCorrelation(firstCurrency: String(secondinstrument.split(separator: "-").first ?? ""),
-											   secondCurrency: String(secondinstrument.split(separator: "-")[1]),
+			let correl = InstrumentCorrelation(firstCurrency: secondinstrument,
+											   secondCurrency: baseCurrency ?? "usd",
 											   correlation: CorrelationApi.sharedManager.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes),
 											   timePeriod: "months: \(dateComponents.month ?? 0)")
 			//				self.instrumentCorrelations.append(correl)
@@ -138,7 +146,7 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var height = tableView.frame.height
-		height /= 4
+		height /= 5
 		guard let float = CGFloat(exactly: height) else { return CGFloat() }
 		return float
 	}
@@ -151,7 +159,7 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource {
 
 				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
 				graphVC.secondInstrument = instrumentCorrelations[sender.1.section].1.compactMap({ (instrumentCorrel) -> String? in
-					return instrumentCorrel.firstCurrency + "-" + instrumentCorrel.secondCurrency
+					return instrumentCorrel.firstCurrency
 				})
 
 				graphVC.secondQuotes = quotes.first(where: { (element) -> Bool in
@@ -169,10 +177,8 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource {
 // - MARK: quoteCellDeleteDelegate
 
 extension CorrelationVC: quoteCellDeleteDelegate {
-	func deleteCell(instrument1: String, instrument2: String) {
-		instrumentCorrelations.removeAll { (instrumentCorrel) -> Bool in
-			return instrumentCorrel.0 == instrument1
-		}
+	func deleteCell(instrument1: String, instrument2: String, indexPath: IndexPath) {
+		self.instrumentCorrelations[indexPath.section].1.remove(at: indexPath.row)
 		quotestable.reloadData()
 	}
 }

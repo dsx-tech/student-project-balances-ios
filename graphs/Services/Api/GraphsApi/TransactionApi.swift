@@ -16,7 +16,7 @@ class TransactionApi {
 		//dictionary with dates from start to end with interval where value is (input, outcome)
 		var dateWithdrawDeposit: [Date: (Double, Double)] = [:]
 		//number of intervals
-		guard let numberOfComponents = Calendar.current.dateComponents([interval], from: start, to: end).value(for: interval) else { return [:] }
+		guard var numberOfComponents = Calendar.current.dateComponents([interval], from: start, to: end).value(for: interval) else { return [:] }
 
 		let calendar = getGMTCalendar()
 
@@ -37,9 +37,11 @@ class TransactionApi {
 			return [:]
 
 		}
-		print(newstart)
+//		print(newstart)
 		//add xAxis components (Data from start to end with interval)
 		var dateComponents = DateComponents()
+
+		numberOfComponents += 1
 
 		for i in 0...numberOfComponents {
 

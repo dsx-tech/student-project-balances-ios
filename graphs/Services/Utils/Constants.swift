@@ -554,4 +554,4 @@ let assets = [
 	"gip",
 	"pyg",
 	"zet"
-]
+].sorted()

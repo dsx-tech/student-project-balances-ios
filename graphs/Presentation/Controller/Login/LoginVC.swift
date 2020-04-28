@@ -88,7 +88,41 @@ class LoginVC: UIViewController {
 	}
 
 	@IBAction func guestClicked(_ sender: Any) {
-		//make demo
+
+		startIndicator()
+
+		let keychain = Keychain(service: "swagger")
+
+		AuthApi.sharedManager.authLogin(username: "username", password: "password") { [weak self] (response, result)  in
+
+			DispatchQueue.main.async {
+
+				guard let self = self else {
+					print("No instance more! ")
+					return }
+
+				guard let login = response else {
+					self.simpleAlert(title: "Error", msg: "Invalid password or Url!")
+					self.stopIndicator()
+					return
+				}
+
+				if result {
+					self.login = login
+					keychain["token"] = login.token
+
+					let targetStoryboardName = "main"
+					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
+					if let targetVC = targetStoryboard.instantiateInitialViewController() {
+						targetVC.modalPresentationStyle = .fullScreen
+						self.present(targetVC, animated: true, completion: nil)
+					}
+				} else {
+					self.simpleAlert(title: "Error", msg: "Something went wrong!")
+				}
+				self.stopIndicator()
+			}
+		}
 	}
 
 }

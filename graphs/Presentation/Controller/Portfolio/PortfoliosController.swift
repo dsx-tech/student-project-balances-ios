@@ -115,6 +115,14 @@ class PortfoliosController: UIViewController {
 		updateHeaderViewHeight(for: tableView.tableHeaderView)
 	}
 
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let addFileVC = segue.destination as? AddFileController {
+			addFileVC.ids = self.viewModel.selectedPortfolios.map({ (portfilio) -> Int in
+				return portfilio.id
+			})
+		}
+	}
+
 	@IBAction func addPortfilioClicked(_ sender: Any) {
 
 		let alert = UIAlertController(title: "Add Portfolio", message: "Please input portfolio name", preferredStyle: UIAlertController.Style.alert )
@@ -193,9 +201,8 @@ extension PortfoliosController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-		//initialise alert controller
 		let choiceAlertController = UIAlertController(title: "Choose: ", message: nil, preferredStyle: .actionSheet)
-		//addede open photo library button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Graphs", style: .default, handler: { _ in
 			var id = 0
 			let keychain = Keychain(service: "swagger")
@@ -212,13 +219,13 @@ extension PortfoliosController: UITableViewDelegate {
 				self.present(portfolioVC, animated: true, completion: nil)
 			}
 		}))
-		//added open camera button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Select", style: .default, handler: { _ in
 			self.viewModel.portfolios[indexPath.section].isSelected = true
 			self.addOperationBtn.isEnabled = !self.viewModel.selectedPortfolios.isEmpty
 			tableView.reloadRows(at: [indexPath], with: .fade)
 		}))
-		//added cancel button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
 		//present controller
@@ -228,9 +235,8 @@ extension PortfoliosController: UITableViewDelegate {
 
 	func deselect(indexPath: IndexPath) {
 
-		//initialise alert controller
 		let choiceAlertController = UIAlertController(title: "Choose: ", message: nil, preferredStyle: .actionSheet)
-		//addede open photo library button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Graphs", style: .default, handler: { _ in
 			var id = 0
 			let keychain = Keychain(service: "swagger")
@@ -244,16 +250,15 @@ extension PortfoliosController: UITableViewDelegate {
 			let portfolioVC = targetStoryboard.instantiateViewController(identifier: "pieChart")
 			self.present(portfolioVC, animated: true, completion: nil)
 		}))
-		//added open camera button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Deselect", style: .default, handler: { _ in
 			self.viewModel.portfolios[indexPath.section].isSelected = false
 			self.addOperationBtn.isEnabled = !self.viewModel.selectedPortfolios.isEmpty
 			self.tableView.reloadRows(at: [indexPath], with: .fade)
 		}))
-		//added cancel button
+
 		choiceAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
-		//present controller
 		choiceAlertController.pruneNegativeWidthConstraints()
 		self.present(choiceAlertController, animated: true, completion: nil)
 
