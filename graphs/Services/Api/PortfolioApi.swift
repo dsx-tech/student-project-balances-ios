@@ -13,6 +13,10 @@ import KeychainAccess
 class PortfolioApi {
 	// Make class Singleton
 	static let sharedManager = PortfolioApi()
+	var resultTradeFiles: Bool = true
+	var resultTransactionFiles: Bool = true
+	var resultTrade: Bool = true
+	var resultTransaction: Bool = true
 
 	private init() {
 	}
@@ -35,7 +39,7 @@ class PortfolioApi {
 			"Authorization": "Token_" + newtoken
 		]
 
-		AF.request(url, headers: headers).validate(statusCode: 200..<500).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
+		AF.request(url, headers: headers).validate(statusCode: 200..<300).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -92,7 +96,7 @@ class PortfolioApi {
 		AF.request(url, method: .post,
 				   parameters: params,
 				   encoding: JSONEncoding.default,
-				   headers: headers).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+				   headers: headers).validate(statusCode: 200..<300).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
 
 					guard let self = self else {
 						print("No Api instance more")
@@ -153,7 +157,7 @@ class PortfolioApi {
 				   method: .put,
 				   parameters: params,
 				   encoding: JSONEncoding.default,
-				   headers: headers).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+				   headers: headers).validate(statusCode: 200..<300).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
 
 					guard let self = self else {
 						print("No Api instance more")
@@ -210,7 +214,7 @@ class PortfolioApi {
 				   method: .delete,
 				   parameters: params,
 				   encoding: JSONEncoding.default,
-				   headers: headers).validate(statusCode: 200..<500).response(completionHandler: { [weak self] (response) in
+				   headers: headers).validate(statusCode: 200..<300).response(queue: PortfolioApi.self.serialQueue, completionHandler: { [weak self] (response) in
 
 					guard let self = self else {
 						print("No Api instance more")
@@ -227,10 +231,71 @@ class PortfolioApi {
 					}
 				})
 	}
+}
 
-	func uploadTrades(id: Int, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+// - MARK: Upload Trades And Transactions
 
-		guard let url = URL(string: Urls.portfolioUrl + "/" + String(id) + "trades/upload") else {
+extension PortfolioApi {
+
+	func addTrade(id: Int, trade: Trade, completion: @escaping (Bool) -> Void) {
+
+		guard let url = URL(string: Urls.tradesUrl + "?portfolioId=" + String(id)) else {
+			print("Error in making url")
+			return
+		}
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token")
+
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+			"Authorization": "Token_" + newtoken
+		]
+
+		let formatter = DateFormatter()
+
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+		let params: [String: Any] = [
+			"dateTime": formatter.string(from: trade.dateTime),
+			"id": trade.id,
+			"instrument": trade.instrument,
+			"tradeType": trade.tradeType,
+			"tradedQuantity": trade.tradedQuantity,
+			"tradedQuantityCurrency": trade.tradedQuantityCurrency,
+			"tradedPrice": trade.tradedPrice,
+			"tradedPriceCurrency": trade.tradedPriceCurrency,
+			"commission": trade.commission,
+			"commissionCurrency": trade.commissionCurrency,
+			"tradeValueId": trade.tradeValueId
+		]
+
+		AF.request(url,
+				   method: .post,
+				   parameters: params,
+				   encoding: JSONEncoding.default,
+				   headers: headers).validate(statusCode: 200..<300).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				completion(false)
+				return
+			}
+
+			switch response.result {
+			case .success:
+				completion(true)
+			case .failure(let error):
+				self.handleErrors(error: error)
+				completion(false)
+			}
+		}
+	}
+
+	func uploadTrades(csvFileFormat: String, id: Int, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+
+		guard let url = URL(string: Urls.tradesUrl + "/uploadFile" + "?csvFileFormat=" + csvFileFormat + "&portfolioId=" + String(id)) else {
 			print("Error in making url")
 			return
 		}
@@ -246,12 +311,10 @@ class PortfolioApi {
 
 		AF.upload(multipartFormData: { (multipartData) in
 			multipartData.append(fileUrl, withName: "file")
-			guard let idData = id.description.data(using: .utf8) else {
-				completion(false)
-				return
-			}
-			multipartData.append(idData, withName: "id")
-		}, to: url, method: .post, headers: headers).validate(statusCode: 200..<500).responseJSON(completionHandler: { [weak self] (response) in
+		},
+				  to: url,
+				  method: .post,
+				  headers: headers).validate(statusCode: 200..<300).response(queue: PortfolioApi.self.serialQueue, completionHandler: { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -269,9 +332,62 @@ class PortfolioApi {
 		})
 	}
 
-	func uploadTransactions(id: Int, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+	func addTransaction(id: Int, transaction: Transaction, completion: @escaping (Bool) -> Void) {
 
-		guard let url = URL(string: Urls.portfolioUrl + "/" + String(id) + "transactions/upload") else {
+		guard let url = URL(string: Urls.transactionsUrl + "?portfolioId=" + String(id)) else {
+			print("Error in making url")
+			return
+		}
+
+		let keychain = Keychain(service: "swagger")
+		let token = try? keychain.get("token")
+
+		guard let newtoken = token else { return }
+
+		let headers: HTTPHeaders = [
+			"Authorization": "Token_" + newtoken
+		]
+
+		let formatter = DateFormatter()
+
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+		let params: [String: Any] = [
+			"dateTime": formatter.string(from: transaction.dateTime),
+			"id": transaction.id,
+			"transactionType": transaction.transactionType,
+			"currency": transaction.currency,
+			"amount": transaction.amount,
+			"commission": transaction.commission,
+			"transactionStatus": transaction.transactionStatus,
+			"transactionValueId": transaction.transactionValueId
+		]
+
+		AF.request(url,
+				   method: .post,
+				   parameters: params,
+				   encoding: JSONEncoding.default,
+				   headers: headers).validate(statusCode: 200..<300).responseJSON(queue: PortfolioApi.self.serialQueue) { [weak self] (response) in
+
+			guard let self = self else {
+				print("No Api instance more")
+				completion(false)
+				return
+			}
+
+			switch response.result {
+			case .success:
+				completion(true)
+			case .failure(let error):
+				self.handleErrors(error: error)
+				completion(false)
+			}
+		}
+	}
+
+	func uploadTransactions(csvFileFormat: String, id: Int, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+
+		guard let url = URL(string: Urls.transactionsUrl + "/uploadFile" + "?csvFileFormat=" + csvFileFormat + "&portfolioId=" + String(id)) else {
 			print("Error in making url")
 			return
 		}
@@ -287,12 +403,9 @@ class PortfolioApi {
 
 		AF.upload(multipartFormData: { (multipartData) in
 			multipartData.append(fileUrl, withName: "file")
-			guard let idData = id.description.data(using: .utf8) else {
-				completion(false)
-				return
-			}
-			multipartData.append(idData, withName: "id")
-		}, to: url, method: .post, headers: headers).validate(statusCode: 200..<600).responseJSON(completionHandler: { [weak self] (response) in
+		}, to: url,
+		   method: .post,
+		   headers: headers).validate(statusCode: 200..<300).response(queue: PortfolioApi.self.serialQueue, completionHandler: { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -308,6 +421,116 @@ class PortfolioApi {
 				completion(false)
 			}
 		})
+	}
+
+	func uploadTradesFiles(ids: [Int], csvFormat: String, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+
+		let apiGroup = DispatchGroup()
+
+		self.resultTradeFiles = true
+
+		ids.forEach { (id) in
+			apiGroup.enter()
+
+			uploadTrades(csvFileFormat: csvFormat, id: id, fileUrl: fileUrl) { [weak self] (result) in
+				if !result {
+					self?.resultTradeFiles = false
+				}
+				apiGroup.leave()
+			}
+		}
+
+		apiGroup.notify(queue: PortfolioApi.self.serialQueue) { [weak self] in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			completion(self.resultTradeFiles)
+		}
+	}
+
+	func uploadTransactionsFiles(ids: [Int], csvFormat: String, fileUrl: URL, completion: @escaping (Bool) -> Void) {
+
+		let apiGroup = DispatchGroup()
+
+		self.resultTransactionFiles = true
+
+		ids.forEach { (id) in
+			apiGroup.enter()
+
+			uploadTransactions(csvFileFormat: csvFormat, id: id, fileUrl: fileUrl) { [weak self] (result) in
+				if !result {
+					self?.resultTransactionFiles = false
+				}
+				apiGroup.leave()
+			}
+		}
+
+		apiGroup.notify(queue: PortfolioApi.self.serialQueue) { [weak self] in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+			completion(self.resultTransactionFiles)
+		}
+	}
+
+	func addTradeInPortfolios(ids: [Int], trade: Trade, completion: @escaping (Bool) -> Void) {
+
+		let apiGroup = DispatchGroup()
+
+		self.resultTrade = true
+
+		ids.forEach { (id) in
+			apiGroup.enter()
+
+			addTrade(id: id, trade: trade) { [weak self] (result) in
+				if !result {
+					self?.resultTrade = false
+				}
+				apiGroup.leave()
+			}
+		}
+
+		apiGroup.notify(queue: PortfolioApi.self.serialQueue) { [weak self] in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+
+			completion(self.resultTrade)
+		}
+	}
+
+	func addTransactionInPortfolios(ids: [Int], transaction: Transaction, completion: @escaping (Bool) -> Void) {
+
+		let apiGroup = DispatchGroup()
+
+		self.resultTransaction = true
+
+		ids.forEach { (id) in
+			apiGroup.enter()
+
+			addTransaction(id: id, transaction: transaction) { [weak self] (result) in
+				if !result {
+					self?.resultTransaction = false
+				}
+				apiGroup.leave()
+			}
+		}
+
+		apiGroup.notify(queue: PortfolioApi.self.serialQueue) { [weak self] in
+
+			guard let self = self else {
+				print("No Api instance more")
+				return
+			}
+
+			completion(self.resultTransaction)
+		}
 	}
 }
 

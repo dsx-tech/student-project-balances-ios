@@ -194,7 +194,7 @@ class TradeApi {
 			completion(nil)
 			return } //make url from string
 
-		AF.request(url, parameters: params).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+		AF.request(url, parameters: params).validate(statusCode: 200..<300).responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -222,6 +222,7 @@ class TradeApi {
 				}
 			case .failure(let error):
 				self.handleErrors(error: error)
+				completion(nil)
 			}
 
 		}
@@ -237,19 +238,32 @@ class TradeApi {
 	*/
 	func getQuotesinPeriod(instruments: [String], startTime: Date, endTime: Date, completion: @escaping QuotesResponsePeriodCompletion) {
 
-		var fullurl = self.urlQuotes
+		 var fullurl = self.urlQuotes
+
+		var baseinstruments = ""
 		instruments.forEach { (instrument) in
-			fullurl += instrument
-			fullurl += ","
+			baseinstruments += instrument
+			baseinstruments += ","
 		}
-		fullurl += "/" + String(startTime.timeIntervalSince1970) + "/" + String(endTime.timeIntervalSince1970)
+
+//		let params: [String: Any] = [
+//			"endTime": Int64(endTime.timeIntervalSince1970),
+//			"instruments": baseinstruments,
+//			"startTime": Int64(startTime.timeIntervalSince1970)
+//		]
+		fullurl += baseinstruments
+		fullurl += "/"
+		fullurl += String(Int64(startTime.timeIntervalSince1970))
+		fullurl += "/"
+		fullurl += String(Int64(endTime.timeIntervalSince1970))
+		fullurl += "/"
 
 		guard let url = URL(string: fullurl) else {
 			print("Error in url making!")
 			completion(nil)
 			return } //make url from string
 
-		AF.request(url).validate(statusCode: 200..<500).responseJSON { [weak self] (response) in
+		AF.request(url, method: .get).validate(statusCode: 200..<300).responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
 
 			guard let self = self else {
 				print("No Api instance more")
@@ -277,6 +291,7 @@ class TradeApi {
 				}
 			case .failure(let error):
 				self.handleErrors(error: error)
+				completion(nil)
 			}
 
 		}
@@ -334,7 +349,6 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
-				apiGroup.leave()
 				return
 			}
 
@@ -390,7 +404,6 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
-				apiGroup.leave()
 				return
 			}
 			completion(self.trades, self.transactions, self.quotes)

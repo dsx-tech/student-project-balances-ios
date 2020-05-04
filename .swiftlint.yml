@@ -43,7 +43,7 @@ function_parameter_count:
   error: 15
 
 file_length:
-  warning: 500
+  warning: 1000
 
 type_body_length:
   warning: 400

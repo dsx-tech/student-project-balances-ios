@@ -42,17 +42,17 @@ class IncomeTests: XCTestCase {
 		]
 
 		let quotes = [
-			Quote(exchangeRate: 7419, timestamp: 0),
-			Quote(exchangeRate: 8098, timestamp: 1574294400),
-			Quote(exchangeRate: 7627, timestamp: 1574294400),
-			Quote(exchangeRate: 7268, timestamp: 1574380800),
-			Quote(exchangeRate: 7311, timestamp: 1574467200),
-			Quote(exchangeRate: 6903, timestamp: 1574553600),
-			Quote(exchangeRate: 7109, timestamp: 1574640000),
-			Quote(exchangeRate: 7156, timestamp: 1574726400),
-			Quote(exchangeRate: 7508, timestamp: 1574812800),
-			Quote(exchangeRate: 7419, timestamp: 1574899200),
-			Quote(exchangeRate: 7419, timestamp: 0)
+			QuotePeriod(exchangeRate: 7419, timestamp: 0),
+			QuotePeriod(exchangeRate: 8098, timestamp: 1574294400),
+			QuotePeriod(exchangeRate: 7627, timestamp: 1574294400),
+			QuotePeriod(exchangeRate: 7268, timestamp: 1574380800),
+			QuotePeriod(exchangeRate: 7311, timestamp: 1574467200),
+			QuotePeriod(exchangeRate: 6903, timestamp: 1574553600),
+			QuotePeriod(exchangeRate: 7109, timestamp: 1574640000),
+			QuotePeriod(exchangeRate: 7156, timestamp: 1574726400),
+			QuotePeriod(exchangeRate: 7508, timestamp: 1574812800),
+			QuotePeriod(exchangeRate: 7419, timestamp: 1574899200),
+			QuotePeriod(exchangeRate: 7419, timestamp: 0)
 		]
 
 		trades.append(Trade(id: 0,
@@ -237,14 +237,6 @@ class IncomeTests: XCTestCase {
 																				  currency: "btc",
 																				  start: Date(timeIntervalSince1970: 1574208000),
 																				  end: Date(timeIntervalSince1970: 1574899200))
-//		print(Date(timeIntervalSince1970: 1574208000))
-//		print(Date(timeIntervalSince1970: 1574899200))
-//		assets.forEach { (int, val) in
-//			print(Date(timeIntervalSince1970: int), val)
-//		}
-//		quotes.forEach { (quote) in
-//			print(Date(timeIntervalSince1970: TimeInterval(quote.timestamp)), quote.exchangeRate)
-//		}
 		var i = 0
 		assets.forEach({ (_, value) in
 			let digits = Double(String(value).count - String(Int(value)).count)

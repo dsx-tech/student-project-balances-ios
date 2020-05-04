@@ -318,8 +318,8 @@
             filePath = "graphsTests/getAssetsForActiveCost.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "testgetAssetsInPeriod()"
             landmarkType = "7">
          </BreakpointContent>
@@ -328,7 +328,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "8E779167-8B12-40BF-B32D-368592F582FB"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
@@ -344,7 +344,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "9A8D540B-BC33-4CE2-ADE9-61382BC56E7F"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
@@ -366,24 +366,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/AddFileController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "38EA99A3-5093-4EF0-8C57-E01A059864DB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graphs/Presentation/Controller/Portfolio/AddFileController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "documentPicker(_:didPickDocumentsAt:)"
-            landmarkType = "7">
+            startingLineNumber = "154"
+            endingLineNumber = "154">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -396,9 +380,9 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "uploadTrades(id:fileUrl:completion:)"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
+            landmarkName = "uploadTrades(csvFileFormat:id:fileUrl:completion:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -444,9 +428,9 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "uploadTrades(id:fileUrl:completion:)"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
+            landmarkName = "uploadTrades(csvFileFormat:id:fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -460,41 +444,9 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "uploadTrades(id:fileUrl:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2274414E-6E0E-492D-B1D2-C41AECBD4622"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graphs/Services/Api/PortfolioApi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
-            landmarkName = "uploadTransactions(id:fileUrl:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3FCE5C3F-2416-4643-B4FE-7409F615CE33"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graphs/Services/Api/PortfolioApi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
-            landmarkName = "uploadTransactions(id:fileUrl:completion:)"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "uploadTrades(csvFileFormat:id:fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -508,9 +460,9 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
-            landmarkName = "uploadTrades(id:fileUrl:completion:)"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
+            landmarkName = "uploadTrades(csvFileFormat:id:fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -524,9 +476,9 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "uploadTrades(id:fileUrl:completion:)"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "uploadTrades(csvFileFormat:id:fileUrl:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -716,8 +668,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "addPortfilioClicked(_:)"
             landmarkType = "7">
             <Locations>
@@ -764,8 +716,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "addPortfolio(portfolio:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -780,8 +732,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
             landmarkName = "addPortfolio(portfolio:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -796,8 +748,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "addPortfilioClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -812,8 +764,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "tableView(_:trailingSwipeActionsConfigurationForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -828,8 +780,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "tableView(_:trailingSwipeActionsConfigurationForRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -876,8 +828,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "213"
+            endingLineNumber = "213"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -892,8 +844,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -908,8 +860,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "addPortfilioClicked(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -924,8 +876,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -940,8 +892,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -956,8 +908,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -972,8 +924,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -988,8 +940,8 @@
             filePath = "graphs/Services/Api/PortfolioApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "deletePortfolio(id:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1004,8 +956,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1020,8 +972,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1036,8 +988,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "deselect(indexPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1052,8 +1004,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -1100,8 +1052,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1116,8 +1068,8 @@
             filePath = "graphs/Presentation/Controller/Portfolio/PortfoliosController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "258"
-            endingLineNumber = "258"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
             landmarkName = "deselect(indexPath:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1279,6 +1231,1046 @@
             startingLineNumber = "193"
             endingLineNumber = "193"
             landmarkName = "getTickerQuotes(instruments:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6AC27548-F67B-4699-9C94-AB9F8E52C7CA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "getQuotesinPeriod(instruments:startTime:endTime:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C90846B-BAAC-43C2-864B-246709D42750"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "getQuotesinPeriod(instruments:startTime:endTime:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9BECAE24-C884-4AE1-B9AC-C860C91502E1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
+            landmarkName = "getQuotesinPeriod(instruments:startTime:endTime:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D78BEDB7-E18F-4E4D-B5BA-91B0F1CBCCEF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "getQuotesinPeriod(instruments:startTime:endTime:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6F82DB3D-0A6D-4476-8A28-D068569E15CA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/PieChart/PieChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "updateData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "96AA63BE-2C56-4B29-A26B-7D45C18F6777"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/System/AppDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "application(_:configurationForConnecting:options:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F09A876E-156E-455E-87A6-41D32AA21F16"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "correlationBetween(firstinstrument:secondinstrument:startDate:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5DD5822F-2DC5-4D6F-8FD5-B9FC372D0513"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "setDataCount(data:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6945418E-E0EA-4E32-8F7E-48C9C763F5BA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8F6C8873-29B4-42E0-A212-C4251BFD2D53"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "562E8BCD-DC91-4EA0-BCB1-DEB78C25D631"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "correlationBetween(firstinstrument:secondinstrument:startDate:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3ECC526-C92F-4881-BC59-A94EEABC6BA0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/LineChart/LineChartVCCharts.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "setDataCount(asset:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "55869B65-BE92-4403-81E5-03B80DBACC90"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B64785A-4C76-4B68-9EBA-49E0645EF23B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "doneActionEndFunc()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "01BC3160-E22D-4EE7-81DC-516F4673F668"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
+            landmarkName = "reloadData(start:end:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "01BC3160-E22D-4EE7-81DC-516F4673F668 - ee47e8c626faba13"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;graphs.Trade&gt;&gt;, Swift.Optional&lt;Swift.Array&lt;graphs.Transaction&gt;&gt;) -&gt; () in graphs.StackedBarChartVC.reloadData(start: Swift.String, end: Swift.String) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "374"
+                  endingLineNumber = "374"
+                  offsetFromSymbolStart = "1257">
+               </Location>
+               <Location
+                  uuid = "01BC3160-E22D-4EE7-81DC-516F4673F668 - cef0a2b19b80e60"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Optional&lt;Swift.Array&lt;graphs.Trade&gt;&gt;, Swift.Optional&lt;Swift.Array&lt;graphs.Transaction&gt;&gt;) -&gt; () in graphs.StackedBarChartVC.reloadData(start: Swift.String, end: Swift.String) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "374"
+                  endingLineNumber = "374"
+                  offsetFromSymbolStart = "118">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "50CBCFAB-5F15-4E0E-B47A-D227CC2F5FAD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
+            landmarkName = "reloadData(start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73E67BF1-D8C3-41E5-AE6A-1BD65A7F101D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "reloadData(start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A3DAC91A-CCD4-4765-A818-4AF49B5A0A58"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "377"
+            endingLineNumber = "377"
+            landmarkName = "reloadData(start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7408AFAB-377B-40FD-A738-DA39797BF95C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7A8E8150-F8CD-456E-ADCD-D9CD456E5402"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
+            landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7A8E8150-F8CD-456E-ADCD-D9CD456E5402 - d67c3bc6577328ca"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "graphs.ActiveCostAndPieApi.getAssetsInDurationForStack(trades: inout Swift.Array&lt;graphs.Trade&gt;, transactions: inout Swift.Array&lt;graphs.Transaction&gt;, duration: graphs.AssetLineChartDuration, start: Swift.String, end: Swift.String) -&gt; (Swift.Array&lt;(Foundation.Date, Swift.Array&lt;Swift.Double&gt;)&gt;, Swift.Array&lt;Swift.String&gt;)"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "8824">
+               </Location>
+               <Location
+                  uuid = "7A8E8150-F8CD-456E-ADCD-D9CD456E5402 - 45ed21a215a9977a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 ((key: Swift.String, value: Swift.Double), (key: Swift.String, value: Swift.Double)) -&gt; Swift.Bool in graphs.ActiveCostAndPieApi.getAssetsInDurationForStack(trades: inout Swift.Array&lt;graphs.Trade&gt;, transactions: inout Swift.Array&lt;graphs.Transaction&gt;, duration: graphs.AssetLineChartDuration, start: Swift.String, end: Swift.String) -&gt; (Swift.Array&lt;(Foundation.Date, Swift.Array&lt;Swift.Double&gt;)&gt;, Swift.Array&lt;Swift.String&gt;)"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "61">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7C25857-2116-4033-AE62-A1E6AA22398D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9AF747F-39FA-4DAE-A9D6-F02ABC8DA24B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
+            landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1F2A0655-EFD8-4C79-8FCD-3417A062754F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A88A8C8C-E24D-406B-A08C-BBE69B2D45FA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "formatter"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7C12A256-9F5C-4A03-A747-40C5B54847A6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "formatter"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "877A2CD7-9AEF-4F02-9EE5-F4213724EC20"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "setUpProcents()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8CCE1CDE-F1B8-4AB1-98D1-40379DF26582"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "260"
+            endingLineNumber = "260"
+            landmarkName = "setData(data:labels:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68852506-83E3-4DD2-9326-0E3AB9477C2A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "setData(data:labels:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "54DCEE15-AC3F-411D-B061-4D2CAA23F2C5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "getAssetsForActiveCost(trades:transactions:start:end:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "21F8BD9D-7933-46C8-9B4F-33E329781A29"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "getAssetsForActiveCost(trades:transactions:start:end:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3171F566-16AC-4DDB-B407-EDFDB836B6D2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorellationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1E7611CB-470E-496A-B9D4-89F1E6C6BDAF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorellationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:duration:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85CA0715-05CA-4067-A5D1-FD652D75DCDA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BD1F39F9-78E3-477D-AD00-B23F580A8349"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414 - 162120c4309399e5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "graphs.CorrelationGraphVC.callculatecorrelation(firstinstrument: Swift.String, secondinstrument: Swift.String, startDate: Foundation.Date, duration: graphs.DurationQuotes) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "83"
+                  endingLineNumber = "83"
+                  offsetFromSymbolStart = "3076">
+               </Location>
+               <Location
+                  uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414 - 14e8f755964164e8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.Array&lt;graphs.QuotePeriod&gt;&gt;&gt;) -&gt; () in graphs.CorrelationGraphVC.callculatecorrelation(firstinstrument: Swift.String, secondinstrument: Swift.String, startDate: Foundation.Date, duration: graphs.DurationQuotes) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "58"
+                  endingLineNumber = "58"
+                  offsetFromSymbolStart = "606">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6F2CD0E2-1BED-4B2D-AC55-FC29B259B8A9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "getQuotesinPeriod(instruments:startTime:endTime:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF416F9E-4A8E-4F46-8ED5-5504A57253A8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "688AB923-35AE-4B04-9E54-80D554FE39B6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C54BD916-8D44-40C4-B585-52F1D383253E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelation/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "299"
+            endingLineNumber = "299"
+            landmarkName = "reloadData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "09819D67-BFA6-4557-9375-BF79728479F2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/ActiveCorrelation/ActiveCorrelationVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "doneActionStartFunc()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD63F4DE-2ED1-41DA-8410-93E3D57C3A30"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Incomes/10VC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "reloadData(start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E3D304E3-F018-4F0A-99FA-346E37343365"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "getDatafromTransactions(transactions:interval:start:end:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "47FF16DA-E131-4CEC-BF2D-81538C9C600F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "getAllTransactions(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9820053-2C76-4CF3-A62E-8F80EE6D596A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/UserActionsApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "getAllTransactions(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "64101581-08C6-47CE-AE82-DDF52907F392"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "addTrade(id:trade:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F56BE810-EB94-49C4-87C7-53CD13086E22"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
+            landmarkName = "addTrade(id:trade:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E2B05474-0CAB-462B-A853-7EFD4CF29487"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Portfolio/AddControllers/AddTradeController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "AddTradeController"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "694FF21B-84C0-4703-95E6-A7C02838026B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/Portfolio/AddControllers/AddTradeController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "AddTradeController"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A9AA310A-D803-42AD-805A-9E8A892BDA10"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
+            landmarkName = "addTransactionInPortfolios(ids:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B158FBA-21A7-4DFE-8AC4-CCCC0AFE8EE5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
+            landmarkName = "uploadTransactions(csvFileFormat:id:fileUrl:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5B158FBA-21A7-4DFE-8AC4-CCCC0AFE8EE5 - d9f0738530351c35"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "graphs.PortfolioApi.uploadTransactions(csvFileFormat: Swift.String, id: Swift.Int, fileUrl: Foundation.URL, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Services/Api/PortfolioApi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "412"
+                  endingLineNumber = "412"
+                  offsetFromSymbolStart = "1365">
+               </Location>
+               <Location
+                  uuid = "5B158FBA-21A7-4DFE-8AC4-CCCC0AFE8EE5 - ee9f6792430a8249"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.MultipartFormData) -&gt; () in graphs.PortfolioApi.uploadTransactions(csvFileFormat: Swift.String, id: Swift.Int, fileUrl: Foundation.URL, completion: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "graphs"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Services/Api/PortfolioApi.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "396"
+                  endingLineNumber = "396"
+                  offsetFromSymbolStart = "179">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DAB2CA4F-CA2E-4AFF-9D72-7640E1D3F001"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "86DA9C10-FA20-4AD5-ACAD-2B426DC08810"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "884F65A4-294A-4652-9EE6-04E7922AAB7A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "372"
+            endingLineNumber = "372"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F3121582-4AA6-4B44-8E5C-C8E105CD21B9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "379"
+            endingLineNumber = "379"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EBE02FFA-AEF6-4B85-A4DD-F57F300C58EA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A31A5332-81E6-4270-9042-7DB2443D5DE0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Services/Api/PortfolioApi.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "addTransaction(id:transaction:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CEA1BE0F-002E-42F1-914C-CB75C69C6EEC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "graphs/Presentation/Controller/PieChart/PieChartVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -13,7 +13,7 @@ import UIKit
 class RoundedButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = 10  //Make corners angled
+        layer.cornerRadius = 12  //Make corners angled
     }
 }
 
@@ -26,6 +26,17 @@ class RoundedShadowView: UIView {
         layer.shadowOffset = CGSize.zero //shadow bias
         layer.shadowRadius = 3 //make  shadow bigger
     }
+}
+
+class RoundedTextField: UITextField {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+		layer.cornerRadius = 10
+		self.backgroundColor = UIColor.white
+		layer.borderColor = UIColor.gray.cgColor
+		layer.borderWidth = 1.0
+		self.clipsToBounds = true
+	}
 }
 
 class RoundedView: UIView {

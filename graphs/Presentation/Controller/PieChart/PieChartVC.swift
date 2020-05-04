@@ -152,9 +152,12 @@ extension PieChartVC: UITableViewDataSource {
 		/// Create the view.
 		let headerView = UIView()
 		headerView.backgroundColor = .clear
-
 		/// Return view.
 		return headerView
+	}
+
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 10
 	}
 
 	func numberOfSections(in tableView: UITableView) -> Int {
@@ -180,23 +183,23 @@ extension PieChartVC {
 
 				let (assets, currencies) = ActiveCostAndPieApi.sharedManager.getAssetsForPie(trades: &self.trades, transactions: &self.transactions)
 
-				self.tradesApi.getTickerQuotes(instruments: currencies) { (quotes) in
+				self.tradesApi.getTickerQuotes(instruments: currencies) { [weak self] (quotes) in
 					let assets = ActiveCostAndPieApi.sharedManager.getAssetsForPieWithQuotes(assets: assets, quotes: quotes ?? [:])
 
 					let filteredAssets = assets.filter({ (asset) -> Bool in
-						return !asset.1.isLess(than: 0.0)
+						return !asset.1.isLessThanOrEqualTo(0.0)
 					})
 
 					let sortedAssets = filteredAssets.sorted { (asset1, asset2) -> Bool in
 						return asset1.1 > asset2.1
 					}
 
-					self.assets = sortedAssets
-					let chartData = self.customiseChart(data: assets)
+					self?.assets = sortedAssets
 					//				print(assets)
 					DispatchQueue.main.async {
-						self.viewPlace.data = chartData
-						self.tableView.reloadData()
+						let chartData = self?.customiseChart(data: assets)
+						self?.viewPlace.data = chartData
+						self?.tableView.reloadData()
 					}
 				}
 			}

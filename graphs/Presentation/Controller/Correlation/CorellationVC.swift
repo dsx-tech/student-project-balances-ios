@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KeychainAccess
 
 class CorrelationVC: UIViewController {
 	
@@ -20,39 +21,31 @@ class CorrelationVC: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		quotestable.delegate = self
-		quotestable.register(UINib(nibName: "quoteCell", bundle: nil), forCellReuseIdentifier: Identifiers.quoteCell)
-		quotestable.dataSource = self
+		setUpTableView()
+
 		let formatter = DateFormatter()
 		
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 		
 		guard let start = formatter.date(from: "2019-01-01T00:00:01") else { return }
 		
-		callculatecorrelation(firstinstrument: "eur-usd", secondinstrument: "btc-usd", startDate: start, duration: .month)
+		callculatecorrelation(firstinstrument: "eur", secondinstrument: "btc", startDate: start, duration: .month)
 	}
-	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let vc = segue.destination as? AddIInstrumentVC {
-			vc.vc = self
-		} else if let graphVC = segue.destination as? CorrelationGraphVC {
-			if let sender = sender as? (String, IndexPath) {
+}
 
-				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
-				graphVC.secondInstrument = instrumentCorrelations[sender.1.section].1.compactMap({ (instrumentCorrel) -> String? in
-					return instrumentCorrel.firstCurrency + "-" + instrumentCorrel.secondCurrency
-					})
+// - MARK: setUpfunctions
 
-				graphVC.secondQuotes = quotes.first(where: { (element) -> Bool in
-					return element.0 == sender.0
-					})?.1
-				graphVC.firstQuotes = quotes.first(where: { (element) -> Bool in
-					return element.0 == instrumentCorrelations[sender.1.section].0
-					})?.1
-			}
-			graphVC.vc = self
-		}
+extension CorrelationVC {
+	func setUpTableView() {
+		quotestable.delegate = self
+		quotestable.register(UINib(nibName: "quoteCell", bundle: nil), forCellReuseIdentifier: Identifiers.quoteCell)
+		quotestable.dataSource = self
 	}
+}
+
+// - MARK: Correlation
+
+extension CorrelationVC {
 	
 	/**
 	callculationg correlation from start date for duration between two instruments
@@ -65,7 +58,7 @@ class CorrelationVC: UIViewController {
 	- Returns: corellation value
 	*/
 	func callculatecorrelation(firstinstrument: String, secondinstrument: String, startDate: Date, duration: DurationQuotes) {
-		
+
 		//number of months to count corellation, which we take from duration parameter
 		var dateComponents = DateComponents()
 		switch duration {
@@ -78,108 +71,56 @@ class CorrelationVC: UIViewController {
 		case .year:
 			dateComponents.month = 12
 		}
-		
+
 		guard let enddate = Calendar.current.date(byAdding: dateComponents, to: startDate) else {
 			print("Error in converting end date.")
 			return
 		}
 
-		quotesApi.getQuotesinPeriod(instruments: [firstinstrument], startTime: startDate, endTime: enddate) { (firstinstrumentquotes) in
-			self.quotesApi.getQuotesinPeriod(instruments: [secondinstrument], startTime: startDate, endTime: enddate) { (secondinstrumentquotes) in
-				guard let firstQuotesArray = firstinstrumentquotes,
-					let secondQuotesArray = secondinstrumentquotes,
-					let firstQuotes = firstQuotesArray[firstinstrument],
-					let secondQuotes = secondQuotesArray[secondinstrument] else {
-					print("Error in getting quotes for  instrument")
-					return
-				}
-				//				let correlation = self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes)
-				self.quotes.append((firstinstrument, firstQuotes))
-				self.quotes.append((secondinstrument, secondQuotes))
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
 
-				let correl = InstrumentCorrelation(firstCurrency: String(secondinstrument.split(separator: "-").first ?? ""),
-												   secondCurrency: String(secondinstrument.split(separator: "-")[1]),
-												   correlation: self.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes),
-												   timePeriod: "months: \(dateComponents.month ?? 0)")
-//				self.instrumentCorrelations.append(correl)
-				if let firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
-					return element.0 == firstinstrument
-				}) {
-					self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
-				} else {
-					self.instrumentCorrelations.append((firstinstrument, [correl]))
-				}
-				print(self.instrumentCorrelations)
+		let firstinstrumentWithBase = firstinstrument + "-" + (baseCurrency ?? "usd")
+		let secondinstrumentWithBase = secondinstrument + "-" + (baseCurrency ?? "usd")
+
+		quotesApi.getQuotesinPeriod(instruments: [firstinstrumentWithBase, secondinstrumentWithBase], startTime: startDate, endTime: enddate) { (quotes)  in
+			guard let quotesArray = quotes,
+				let firstQuotes = quotesArray[firstinstrumentWithBase],
+				let secondQuotes = quotesArray[secondinstrumentWithBase] else {
+					self.simpleAlert(title: "Error", msg: "No such quotes!")
+					print("Error in getting quotes for instrument")
+					return
+			}
+
+			self.quotes.append((firstinstrument, firstQuotes))
+			self.quotes.append((secondinstrument, secondQuotes))
+
+			let correl = InstrumentCorrelation(firstCurrency: secondinstrument,
+											   secondCurrency: baseCurrency ?? "usd",
+											   correlation: CorrelationApi.sharedManager.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes),
+											   timePeriod: "months: \(dateComponents.month ?? 0)")
+			//				self.instrumentCorrelations.append(correl)
+			if let firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
+				return element.0 == firstinstrument
+			}) {
+				self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
+			} else {
+				self.instrumentCorrelations.append((firstinstrument, [correl]))
+			}
+			print(self.instrumentCorrelations)
+			DispatchQueue.main.async {
 				self.quotestable.reloadData()
 			}
 		}
-		
-	}
-	
-	/**
-	callculationg correlation for two quote arrays
-	cov(x,y)/((Standard Deviation1)*(Standard Deviation2)
-	- Author: Danila Ferents
-	- Parameters:
-	- firstquotes: quotes of first instrument
-	- transactions: quotes of second instrument
-	- Returns: Double
-	*/
-	func correlationQuotes(firstquotes: [QuotePeriod], secondquotes: [QuotePeriod]) -> Double {
-		var firstaverage = firstquotes.reduce(0) { (result, quote) -> Double in
-			return result + quote.exchangeRate
-		}
-		
-		var secondaverage = secondquotes.reduce(0) { (result, quote) -> Double in
-			return result + quote.exchangeRate
-		}
-		
-		var cov = 0.0
-		var sizequotes = 0
-		if firstquotes.count < secondquotes.count {
-			sizequotes = firstquotes.count
-		} else {
-			sizequotes = secondquotes.count
-		}
-		
-		firstaverage /= Double(sizequotes)
-		secondaverage /= Double(sizequotes)
-		
-		for i in 0..<sizequotes {
-			cov += (firstquotes[i].exchangeRate - firstaverage) * (secondquotes[i].exchangeRate - secondaverage)
-		}
-		
-		var sumfirst = 0.0
-		for i in 0..<sizequotes {
-			sumfirst += pow(firstquotes[i].exchangeRate - firstaverage, 2)
-		}
-		
-		var sumsecond = 0.0
-		for i in 0..<sizequotes {
-			sumsecond += pow(secondquotes[i].exchangeRate - secondaverage, 2)
-		}
-		
-		let denominator = pow(sumfirst * sumsecond, 0.5)
-
-		let correl = cov / denominator
-		if correl.isNaN {
-			return 0.0
-		} else {
-			return correl
-		}
 	}
 }
-extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDeleteDelegate {
+
+// - MARK: UITableViewDelegate, UITableViewDataSource
+
+extension CorrelationVC: UITableViewDelegate, UITableViewDataSource {
 
 	func processGraph(secondInstrument: String, indexPath: IndexPath) {
 		performSegue(withIdentifier: Segues.toGraph, sender: (secondInstrument, indexPath))
-	}
-
-	func deleteCell(instrument1: String, instrument2: String) {
-		instrumentCorrelations.removeAll { (instrumentCorrel) -> Bool in
-			return instrumentCorrel.0 == instrument1
-		}
-		quotestable.reloadData()
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -205,8 +146,39 @@ extension CorrelationVC: UITableViewDelegate, UITableViewDataSource, quoteCellDe
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var height = tableView.frame.height
-		height /= 4
+		height /= 5
 		guard let float = CGFloat(exactly: height) else { return CGFloat() }
 		return float
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let vc = segue.destination as? AddIInstrumentVC {
+			vc.vc = self
+		} else if let graphVC = segue.destination as? CorrelationGraphVC {
+			if let sender = sender as? (String, IndexPath) {
+
+				graphVC.firstInstrument = instrumentCorrelations[sender.1.section].0
+				graphVC.secondInstrument = instrumentCorrelations[sender.1.section].1.compactMap({ (instrumentCorrel) -> String? in
+					return instrumentCorrel.firstCurrency
+				})
+
+				graphVC.secondQuotes = quotes.first(where: { (element) -> Bool in
+					return element.0 == sender.0
+				})?.1
+				graphVC.firstQuotes = quotes.first(where: { (element) -> Bool in
+					return element.0 == instrumentCorrelations[sender.1.section].0
+				})?.1
+			}
+			graphVC.vc = self
+		}
+	}
+}
+
+// - MARK: quoteCellDeleteDelegate
+
+extension CorrelationVC: quoteCellDeleteDelegate {
+	func deleteCell(instrument1: String, instrument2: String, indexPath: IndexPath) {
+		self.instrumentCorrelations[indexPath.section].1.remove(at: indexPath.row)
+		quotestable.reloadData()
 	}
 }

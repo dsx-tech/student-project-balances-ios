@@ -15,7 +15,6 @@ protocol CheckButton {
 class PortfolioCell: UITableViewCell {
 
 	//Outlets
-	@IBOutlet weak var portfolioLbl: UILabel!
 	@IBOutlet var portfolioNameLbl: UILabel!
 	@IBOutlet weak var isSelectedBtn: UIButton!
 
@@ -23,7 +22,6 @@ class PortfolioCell: UITableViewCell {
 	var portfolio: ViewPortfilioItem? {
 		didSet {
 			if let portfolio = portfolio {
-				portfolioLbl.text = String(portfolio.id)
 				portfolioNameLbl.text = portfolio.name
 			}
 		}

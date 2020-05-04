@@ -4,6 +4,7 @@ PODS:
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
+  - iOSDropDown (0.3.4)
   - KeychainAccess (4.1.0)
   - SwiftLint (0.35.0)
 
@@ -11,6 +12,7 @@ DEPENDENCIES:
   - AAInfographics (from `https://github.com/AAChartModel/AAChartKit-Swift.git`)
   - Alamofire (~> 5.0.0-rc.2)
   - Charts
+  - iOSDropDown
   - KeychainAccess
   - SwiftLint
 
@@ -20,6 +22,7 @@ SPEC REPOS:
     - Charts
     - SwiftLint
   trunk:
+    - iOSDropDown
     - KeychainAccess
 
 EXTERNAL SOURCES:
@@ -35,9 +38,10 @@ SPEC CHECKSUMS:
   AAInfographics: bbeed03caece4ee3b5e557d734967394e9bcdb11
   Alamofire: f9450d3c7f6bea2ad62e7a541c3e9b186c7991d6
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+  iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   KeychainAccess: 445e28864fe6d3458b41fa211bcdc39890e8bd5a
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: ead8d5db565e8c8f6919658b1e22205729027c15
+PODFILE CHECKSUM: eb7ea1bf3881d8a01cdb0eb21f38f5e3e051c791
 
 COCOAPODS: 1.8.4
