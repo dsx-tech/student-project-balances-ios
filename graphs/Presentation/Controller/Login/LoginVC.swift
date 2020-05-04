@@ -61,7 +61,7 @@ class LoginVC: UIViewController {
 				if result {
 					self.login = login
 					keychain["token"] = login.token
-
+					print(login.token)
 					let targetStoryboardName = "main"
 					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
 					if let targetVC = targetStoryboard.instantiateInitialViewController() {
@@ -110,7 +110,8 @@ class LoginVC: UIViewController {
 				if result {
 					self.login = login
 					keychain["token"] = login.token
-
+					print(login.token)
+					
 					let targetStoryboardName = "main"
 					let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
 					if let targetVC = targetStoryboard.instantiateInitialViewController() {

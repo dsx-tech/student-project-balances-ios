@@ -22,6 +22,9 @@
                                     <constraint firstAttribute="height" constant="60" id="zFR-Hr-Tro"/>
                                 </constraints>
                                 <state key="normal" image="plus"/>
+                                <connections>
+                                    <action selector="addOperationButtonClicked:" destination="yvV-1q-ov3" eventType="touchUpInside" id="NV7-Ps-tdt"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm6-Sy-ORZ">
                                 <rect key="frame" x="136.33333333333334" y="88" width="102.33333333333334" height="36"/>
@@ -114,7 +117,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FpG-8c-iRY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4346" y="222"/>
+            <point key="canvasLocation" x="-4178" y="222"/>
         </scene>
         <!--Portfolios-->
         <scene sceneID="WIq-G6-w9Y">
@@ -185,10 +188,10 @@
                     <connections>
                         <segue destination="0BR-Tp-C8C" kind="relationship" relationship="viewControllers" id="bK7-Zb-gBo"/>
                         <segue destination="AQl-vT-SQM" kind="relationship" relationship="viewControllers" id="shx-bN-TZb"/>
-                        <segue destination="7hS-yG-ciu" kind="relationship" relationship="viewControllers" id="MSW-if-TOh"/>
                         <segue destination="Eqw-Ul-acK" kind="relationship" relationship="viewControllers" id="uX7-Z2-0QH"/>
                         <segue destination="Wmn-76-0cv" kind="relationship" relationship="viewControllers" id="Bxa-Hg-LJT"/>
                         <segue destination="uc2-g0-7ip" kind="relationship" relationship="viewControllers" id="5rJ-cr-pIw"/>
+                        <segue destination="027-bQ-TWY" kind="relationship" relationship="viewControllers" id="P5O-fa-jBv"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jMm-5l-l1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -707,7 +710,7 @@
         <!--Portfolio-->
         <scene sceneID="idm-l5-wba">
             <objects>
-                <viewController id="7hS-yG-ciu" customClass="PieChartVC" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pieChart" id="7hS-yG-ciu" customClass="PieChartVC" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5us-hY-JL8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -732,7 +735,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jVC-8b-qIk">
-                                <rect key="frame" x="20" y="539" width="335" height="190"/>
+                                <rect key="frame" x="20" y="539" width="335" height="239"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
@@ -750,15 +753,69 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Portfolio" image="pie" selectedImage="pie" id="X6g-SI-sDz"/>
                     <connections>
-                        <outlet property="tableView" destination="jVC-8b-qIk" id="Rag-He-kLW"/>
+                        <outlet property="tableView" destination="jVC-8b-qIk" id="mLb-Nk-jcB"/>
                         <outlet property="view" destination="yaE-SV-UIi" id="9ki-9x-SPM"/>
-                        <outlet property="viewPlace" destination="yaE-SV-UIi" id="3pa-hv-MRH"/>
-                        <outlet property="viewVP" destination="31w-Sa-utu" id="saK-Kw-uXc"/>
+                        <outlet property="viewPlace" destination="yaE-SV-UIi" id="Gkl-j9-aa7"/>
+                        <outlet property="viewVP" destination="31w-Sa-utu" id="bkZ-dF-G8g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fM7-Gz-0jL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1855" y="363"/>
+        </scene>
+        <!--Portfolio-->
+        <scene sceneID="D55-fM-UsT">
+            <objects>
+                <viewController id="027-bQ-TWY" customClass="PieChartVC" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aPy-wy-fZp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F83-K2-9xQ">
+                                <rect key="frame" x="20" y="54" width="375" height="475"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="FG1-A2-Xph" customClass="PieChartView" customModule="Charts">
+                                        <rect key="frame" x="20" y="20" width="335" height="435"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="FG1-A2-Xph" firstAttribute="leading" secondItem="F83-K2-9xQ" secondAttribute="leading" constant="20" id="D3X-NJ-S2E"/>
+                                    <constraint firstAttribute="bottom" secondItem="FG1-A2-Xph" secondAttribute="bottom" constant="20" id="MBg-dk-IId"/>
+                                    <constraint firstAttribute="height" constant="475" id="kJ1-0D-m5c"/>
+                                    <constraint firstItem="FG1-A2-Xph" firstAttribute="top" secondItem="F83-K2-9xQ" secondAttribute="top" constant="20" id="kVw-7K-Rc1"/>
+                                    <constraint firstAttribute="trailing" secondItem="FG1-A2-Xph" secondAttribute="trailing" constant="20" id="lJZ-hb-hAh"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rpU-2r-bMj">
+                                <rect key="frame" x="20" y="539" width="335" height="190"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="F83-K2-9xQ" firstAttribute="top" secondItem="yAt-J9-9za" secondAttribute="top" constant="10" id="C0N-m5-C4M"/>
+                            <constraint firstItem="rpU-2r-bMj" firstAttribute="top" secondItem="F83-K2-9xQ" secondAttribute="bottom" constant="10" id="GJ3-yj-tQj"/>
+                            <constraint firstItem="F83-K2-9xQ" firstAttribute="leading" secondItem="yAt-J9-9za" secondAttribute="leading" constant="20" id="NVf-e8-Ma9"/>
+                            <constraint firstItem="yAt-J9-9za" firstAttribute="trailing" secondItem="rpU-2r-bMj" secondAttribute="trailing" constant="20" id="UvG-O7-Eu4"/>
+                            <constraint firstItem="rpU-2r-bMj" firstAttribute="leading" secondItem="yAt-J9-9za" secondAttribute="leading" constant="20" id="aMi-Xm-EhZ"/>
+                            <constraint firstItem="F83-K2-9xQ" firstAttribute="trailing" secondItem="yAt-J9-9za" secondAttribute="trailing" constant="20" id="hQz-bd-brd"/>
+                            <constraint firstItem="rpU-2r-bMj" firstAttribute="bottom" secondItem="yAt-J9-9za" secondAttribute="bottom" id="zh3-8L-T4e"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yAt-J9-9za"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Portfolio" image="pie" id="Bwr-hP-m9r"/>
+                    <navigationItem key="navigationItem" id="2Aq-5a-84x"/>
+                    <connections>
+                        <outlet property="tableView" destination="rpU-2r-bMj" id="sTp-v8-CXD"/>
+                        <outlet property="viewPlace" destination="FG1-A2-Xph" id="90Z-ve-EhD"/>
+                        <outlet property="viewVP" destination="F83-K2-9xQ" id="8aP-R3-nKs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XUA-wD-Hng" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1056.8" y="363.54679802955667"/>
         </scene>
         <!--NormedCorrelation-->
         <scene sceneID="tJ1-EZ-2tK">

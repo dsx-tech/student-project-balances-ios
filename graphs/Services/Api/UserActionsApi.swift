@@ -349,7 +349,6 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
-				apiGroup.leave()
 				return
 			}
 
@@ -405,7 +404,6 @@ extension TradeApi {
 
 			guard let self = self else {
 				print("No Api instance more")
-				apiGroup.leave()
 				return
 			}
 			completion(self.trades, self.transactions, self.quotes)

@@ -49,6 +49,8 @@ struct Urls {
 	static let quotesurl = "http://3.248.170.197:8888/bcv/quotes/bars/"
 	static let loginUrl = "http://3.248.170.197:9999/bcv/auth/login"
 	static let registerUrl = "http://3.248.170.197:9999/bcv/auth/register"
+	static let tradesUrl = "http://3.248.170.197:9999/bcv/trades"
+	static let transactionsUrl = "http://3.248.170.197:9999/bcv/transactions"
 }
 
 struct Identifiers {

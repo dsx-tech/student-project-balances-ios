@@ -21,6 +21,7 @@ class AddFileController: UIViewController {
 	//Variables
 	var ids: [Int]!
 	var isTrades: Bool!
+	var type: String!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -41,38 +42,101 @@ class AddFileController: UIViewController {
 		self.isTrades = true
 		present(picker, animated: true, completion: nil)
 	}
-	
+
+	@IBAction func addOperationButtonClicked(_ sender: Any) {
+
+		let choiceAlertController = UIAlertController(title: "Choose: ", message: nil, preferredStyle: .actionSheet)
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload Trade", style: .default, handler: { _ in
+			let vc = AddTradeController()
+			vc.ids = self.ids
+			vc.modalTransitionStyle = .flipHorizontal
+			vc.modalPresentationStyle = .overCurrentContext
+			self.present(vc, animated: true, completion: nil)
+		}))
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload  Transaction", style: .default, handler: { _ in
+			let vc = AddTransactionController()
+			vc.ids = self.ids
+			vc.modalTransitionStyle = .flipHorizontal
+			vc.modalPresentationStyle = .overCurrentContext
+			self.present(vc, animated: true, completion: nil)
+		}))
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload  Dsx Trade File", style: .default, handler: { _ in
+
+			let picker = UIDocumentPickerViewController(documentTypes: [kUTTypeCommaSeparatedText as String], in: .open)
+			picker.delegate = self
+
+			self.isTrades = true
+			self.type = "Dsx"
+			self.present(picker, animated: true, completion: nil)
+		}))
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload  Tinkoff Trade File", style: .default, handler: { _ in
+
+			let picker = UIDocumentPickerViewController(documentTypes: [kUTTypeCommaSeparatedText as String], in: .open)
+			picker.delegate = self
+
+			self.isTrades = true
+			self.type = "Tinkoff"
+			self.present(picker, animated: true, completion: nil)
+		}))
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload  Dsx Transacton File", style: .default, handler: { _ in
+
+			let picker = UIDocumentPickerViewController(documentTypes: [kUTTypeCommaSeparatedText as String], in: .open)
+			picker.delegate = self
+
+			self.isTrades = false
+			self.type = "Dsx"
+			self.present(picker, animated: true, completion: nil)
+		}))
+
+		choiceAlertController.addAction(UIAlertAction(title: "Upload  Tinkoff Trade File", style: .default, handler: { _ in
+
+			let picker = UIDocumentPickerViewController(documentTypes: [kUTTypeCommaSeparatedText as String], in: .open)
+			picker.delegate = self
+
+			self.isTrades = false
+			self.type = "Tinkoff"
+			self.present(picker, animated: true, completion: nil)
+		}))
+		choiceAlertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+		//present controller
+		choiceAlertController.pruneNegativeWidthConstraints()
+		self.present(choiceAlertController, animated: true, completion: nil)
+	}
 }
 
 // MARK: - UIDocumentPickerDelegate
 
 extension AddFileController: UIDocumentPickerDelegate {
 	func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-		guard let isTrades = self.isTrades, let ids = self.ids, let url = urls.first else {
+		guard let isTrades = self.isTrades, let ids = self.ids, let url = urls.first, let type = self.type else {
 			simpleAlert(title: "Error.", msg: "Error in uploading")
 			return
 		}
 
-		ids.forEach { (id) in
-			if isTrades {
-				PortfolioApi.sharedManager.uploadTransactions(id: id, fileUrl: url) { [weak self] (result) in
+		if isTrades {
+			PortfolioApi.sharedManager.uploadTradesFiles(ids: ids, csvFormat: type, fileUrl: url) { [weak self] (result) in
 
-					guard let self = self else {
-						print("No Instance more!")
-						return
-					}
-
-					self.presentError(result: result)
+				guard let self = self else {
+					print("No Instance more!")
+					return
 				}
-			} else {
-				PortfolioApi.sharedManager.uploadTrades(id: id, fileUrl: url) { [weak self] (result) in
 
-					guard let self = self else {
-						print("No Instance more!")
-						return
-					}
-					self.presentError(result: result)
-				}
+				self.presentError(result: result)
+			}
+		} else {
+			PortfolioApi.sharedManager.uploadTradesFiles(ids: ids, csvFormat: type, fileUrl: url) {  [weak self] (result) in
+
+			   guard let self = self else {
+				   print("No Instance more!")
+				   return
+			   }
+			   self.presentError(result: result)
 			}
 		}
 	}

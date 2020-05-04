@@ -68,6 +68,7 @@ class PortfoliosController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		addOperationBtn.isEnabled = false
 		tableView.delegate = self
 		tableView.dataSource = self
 		self.view.backgroundColor = AppColors.Gray
@@ -247,7 +248,7 @@ extension PortfoliosController: UITableViewDelegate {
 
 			let targetStoryboardName = "main"
 			let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
-			let portfolioVC = targetStoryboard.instantiateViewController(identifier: "pieChart")
+			let portfolioVC = targetStoryboard.instantiateViewController(identifier: "graph")
 			self.present(portfolioVC, animated: true, completion: nil)
 		}))
 

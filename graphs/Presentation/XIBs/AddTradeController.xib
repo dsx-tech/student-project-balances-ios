@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -9,23 +9,261 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddTradeController" customModule="graphs" customModuleProvider="target">
             <connections>
+                <outlet property="comissionCurrencyTextField" destination="c6f-tQ-OJf" id="5V6-7Z-siH"/>
+                <outlet property="comissionTextField" destination="SXI-EO-qJR" id="K30-lf-TRU"/>
+                <outlet property="dateTextField" destination="mA1-1W-eeZ" id="uyj-R9-pwS"/>
+                <outlet property="firstAssetTextField" destination="3LO-Td-fmt" id="0mR-ZK-yry"/>
+                <outlet property="gesture" destination="gxj-Ga-g6b" id="pnc-JX-qrJ"/>
+                <outlet property="idTextField" destination="GeK-dL-6ME" id="X8T-cY-LBT"/>
+                <outlet property="priceCurrencyTextField" destination="eSf-as-p24" id="IKe-wZ-obJ"/>
+                <outlet property="priceTextField" destination="TH9-LI-FtG" id="GPf-9X-ZBn"/>
+                <outlet property="quantityCurrencyTextField" destination="DiD-Wt-Sme" id="a4f-5s-jOh"/>
+                <outlet property="quantityTextField" destination="xeh-oE-nzx" id="MlJ-gC-QhX"/>
+                <outlet property="secondAssetTextField" destination="52l-oi-Dd7" id="0C0-IQ-YaJ"/>
+                <outlet property="tradeTypeSegmentControl" destination="2TY-Oi-3Bm" id="Coe-Ma-HKt"/>
+                <outlet property="valueIdTextField" destination="EFc-Bf-oY2" id="gxx-lm-fIc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QcW-Rp-5tK">
-                    <rect key="frame" x="45" y="153" width="335" height="577"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="QcW-Rp-5tK">
+                    <rect key="frame" x="54" y="44" width="267" height="591.33333333333337"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ss0-bU-Qgw">
+                            <rect key="frame" x="30" y="30" width="41" height="20.666666666666671"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Date..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mA1-1W-eeZ" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="79" y="23.333333333333329" width="120" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="2HI-iW-V2z"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Id:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHV-GN-qlm">
+                            <rect key="frame" x="30" y="84" width="19" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Id..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GeK-dL-6ME" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="79" y="77.333333333333329" width="52.666666666666657" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgW-bn-aNa">
+                            <rect key="frame" x="129.66666666666666" y="138" width="8" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Asset..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3LO-Td-fmt" customClass="DropDownRoundedAssets" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="8.0000000000000071" y="131.33333333333334" width="114.66666666666669" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Asset..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52l-oi-Dd7" customClass="DropDownRoundedAssets" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="144.66666666666666" y="131.33333333333334" width="114.33333333333334" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quantity:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDa-wa-KBo">
+                            <rect key="frame" x="20" y="226.33333333333331" width="70" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Quantity..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xeh-oE-nzx" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="8" y="262.33333333333331" width="80" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="XCC-zo-UTC"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Currency..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DiD-Wt-Sme" customClass="DropDownRoundedAssets" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="161" y="262.33333333333331" width="98" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price...." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TH9-LI-FtG" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="8" y="347.33333333333331" width="77" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Price Currency..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eSf-as-p24" customClass="DropDownRoundedAssets" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="179" y="347.33333333333331" width="80" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="YrJ-ma-GqL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comission:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSP-cU-G7o">
+                            <rect key="frame" x="8" y="396.33333333333331" width="85" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTh-Kh-eOV">
+                            <rect key="frame" x="179" y="396.33333333333331" width="75" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comission..." textAlignment="natural" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="SXI-EO-qJR" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="8" y="432.33333333333331" width="80" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="80" id="IHs-jY-igr"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Currency..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c6f-tQ-OJf" customClass="DropDownRoundedAssets" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="159" y="432.33333333333331" width="100" height="34"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="6XH-gN-xjG"/>
+                                <constraint firstAttribute="width" constant="100" id="q5D-Xi-erB"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Id..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EFc-Bf-oY2" customClass="RoundedTextField" customModule="graphs" customModuleProvider="target">
+                            <rect key="frame" x="107" y="511.33333333333337" width="53" height="34"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ValueId:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2N-42-Bp7">
+                            <rect key="frame" x="103" y="476.33333333333337" width="61" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2TY-Oi-3Bm">
+                            <rect key="frame" x="91" y="185.33333333333334" width="85" height="32"/>
+                            <segments>
+                                <segment title="Sell"/>
+                                <segment title="Buy"/>
+                            </segments>
+                        </segmentedControl>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xeq-99-LEQ">
+                            <rect key="frame" x="172" y="226.33333333333331" width="75" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0or-fS-Mdy">
+                            <rect key="frame" x="25" y="311.33333333333331" width="44" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSK-a4-Zbc">
+                            <rect key="frame" x="172" y="311.33333333333331" width="75" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NwZ-x0-5Lj">
+                            <rect key="frame" x="200" y="553.33333333333337" width="47" height="36"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                            <state key="normal" title="Save">
+                                <color key="titleColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="saveTradeClicked:" destination="-1" eventType="touchUpInside" id="dzR-JK-Sev"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t8U-JA-fys">
+                            <rect key="frame" x="20" y="553.33333333333337" width="67" height="36"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" red="0.39380136129999999" green="0.43339109419999999" blue="0.51765877010000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelBtnClicked:" destination="-1" eventType="touchUpInside" id="eze-Mu-rjb"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstItem="QSK-a4-Zbc" firstAttribute="top" secondItem="DiD-Wt-Sme" secondAttribute="bottom" constant="15" id="1H3-y1-ACU"/>
+                        <constraint firstItem="w2N-42-Bp7" firstAttribute="centerX" secondItem="QcW-Rp-5tK" secondAttribute="centerX" id="2c3-No-RuA"/>
+                        <constraint firstItem="jDa-wa-KBo" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="20" id="2gd-nS-EHL"/>
+                        <constraint firstItem="3LO-Td-fmt" firstAttribute="top" secondItem="GeK-dL-6ME" secondAttribute="bottom" constant="20" id="5tc-WB-Mvd"/>
+                        <constraint firstItem="NwZ-x0-5Lj" firstAttribute="centerY" secondItem="t8U-JA-fys" secondAttribute="centerY" id="6sv-kA-Ef0"/>
+                        <constraint firstItem="0or-fS-Mdy" firstAttribute="top" secondItem="xeh-oE-nzx" secondAttribute="bottom" constant="15" id="7UE-N5-IhA"/>
+                        <constraint firstItem="eSf-as-p24" firstAttribute="top" secondItem="QSK-a4-Zbc" secondAttribute="bottom" constant="15" id="9cu-FF-y13"/>
+                        <constraint firstItem="DiD-Wt-Sme" firstAttribute="top" secondItem="Xeq-99-LEQ" secondAttribute="bottom" constant="15" id="Abl-g9-jMu"/>
+                        <constraint firstItem="0or-fS-Mdy" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="25" id="BNA-Dl-wiV"/>
+                        <constraint firstAttribute="trailing" secondItem="Xeq-99-LEQ" secondAttribute="trailing" constant="20" id="Bfl-FM-yBj"/>
+                        <constraint firstItem="t8U-JA-fys" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="20" id="BzP-aI-age"/>
+                        <constraint firstItem="EFc-Bf-oY2" firstAttribute="centerX" secondItem="QcW-Rp-5tK" secondAttribute="centerX" id="Chn-9n-WVs"/>
+                        <constraint firstItem="ss0-bU-Qgw" firstAttribute="top" secondItem="QcW-Rp-5tK" secondAttribute="top" constant="30" id="EhP-1q-KvP"/>
+                        <constraint firstAttribute="trailing" secondItem="eSf-as-p24" secondAttribute="trailing" constant="8" id="EmG-P9-oab"/>
+                        <constraint firstItem="NwZ-x0-5Lj" firstAttribute="top" secondItem="EFc-Bf-oY2" secondAttribute="bottom" constant="8" id="FNh-IC-jd2"/>
+                        <constraint firstItem="GeK-dL-6ME" firstAttribute="leading" secondItem="eHV-GN-qlm" secondAttribute="trailing" constant="30" id="Hbh-Ok-hLy"/>
+                        <constraint firstItem="2TY-Oi-3Bm" firstAttribute="top" secondItem="3LO-Td-fmt" secondAttribute="bottom" constant="20" id="If3-bT-9S9"/>
+                        <constraint firstItem="jDa-wa-KBo" firstAttribute="top" secondItem="2TY-Oi-3Bm" secondAttribute="bottom" constant="10" id="Kky-io-ILu"/>
+                        <constraint firstAttribute="trailing" secondItem="52l-oi-Dd7" secondAttribute="trailing" constant="8" id="M1K-TF-0vA"/>
+                        <constraint firstItem="oTh-Kh-eOV" firstAttribute="top" secondItem="eSf-as-p24" secondAttribute="bottom" constant="15" id="P1a-u2-9G4"/>
+                        <constraint firstItem="FSP-cU-G7o" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="8" id="Q7f-9D-zw9"/>
+                        <constraint firstAttribute="bottom" secondItem="NwZ-x0-5Lj" secondAttribute="bottom" constant="2" id="RyF-sp-G9i"/>
+                        <constraint firstItem="SXI-EO-qJR" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="8" id="TCX-oh-ZDM"/>
+                        <constraint firstItem="c6f-tQ-OJf" firstAttribute="top" secondItem="oTh-Kh-eOV" secondAttribute="bottom" constant="15" id="TsJ-N6-QhF"/>
+                        <constraint firstItem="eHV-GN-qlm" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="30" id="VlC-Jt-kYo"/>
+                        <constraint firstItem="52l-oi-Dd7" firstAttribute="centerY" secondItem="sgW-bn-aNa" secondAttribute="centerY" id="W8M-W3-ogR"/>
+                        <constraint firstItem="w2N-42-Bp7" firstAttribute="top" secondItem="c6f-tQ-OJf" secondAttribute="bottom" constant="10" id="XeQ-zg-RKc"/>
+                        <constraint firstItem="2TY-Oi-3Bm" firstAttribute="centerX" secondItem="QcW-Rp-5tK" secondAttribute="centerX" id="Xrz-Qw-DFF"/>
+                        <constraint firstItem="sgW-bn-aNa" firstAttribute="leading" secondItem="3LO-Td-fmt" secondAttribute="trailing" constant="7" id="Y32-qL-WVf"/>
+                        <constraint firstItem="Xeq-99-LEQ" firstAttribute="top" secondItem="2TY-Oi-3Bm" secondAttribute="bottom" constant="10" id="ZjZ-6E-9zD"/>
+                        <constraint firstItem="FSP-cU-G7o" firstAttribute="top" secondItem="TH9-LI-FtG" secondAttribute="bottom" constant="15" id="aPG-AR-rcB"/>
+                        <constraint firstItem="52l-oi-Dd7" firstAttribute="leading" secondItem="sgW-bn-aNa" secondAttribute="trailing" constant="7" id="aQL-T8-RCO"/>
+                        <constraint firstAttribute="trailing" secondItem="QSK-a4-Zbc" secondAttribute="trailing" constant="20" id="b9n-zJ-2LA"/>
+                        <constraint firstItem="EFc-Bf-oY2" firstAttribute="top" secondItem="w2N-42-Bp7" secondAttribute="bottom" constant="14" id="bUP-Cq-SJf"/>
+                        <constraint firstItem="mA1-1W-eeZ" firstAttribute="leading" secondItem="ss0-bU-Qgw" secondAttribute="trailing" constant="8" id="bdi-c6-ojc"/>
+                        <constraint firstItem="xeh-oE-nzx" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="8" id="d0q-gh-nFu"/>
+                        <constraint firstItem="GeK-dL-6ME" firstAttribute="top" secondItem="mA1-1W-eeZ" secondAttribute="bottom" constant="20" id="dXe-MS-cr9"/>
+                        <constraint firstItem="ss0-bU-Qgw" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="30" id="e8x-tR-lYX"/>
+                        <constraint firstAttribute="trailing" secondItem="DiD-Wt-Sme" secondAttribute="trailing" constant="8" id="erq-Hd-qea"/>
+                        <constraint firstAttribute="trailing" secondItem="NwZ-x0-5Lj" secondAttribute="trailing" constant="20" id="h2M-zQ-aub"/>
+                        <constraint firstAttribute="trailing" secondItem="oTh-Kh-eOV" secondAttribute="trailing" constant="13" id="lB9-6A-HYb"/>
+                        <constraint firstItem="mA1-1W-eeZ" firstAttribute="centerY" secondItem="ss0-bU-Qgw" secondAttribute="centerY" id="loM-9N-izU"/>
+                        <constraint firstItem="xeh-oE-nzx" firstAttribute="top" secondItem="jDa-wa-KBo" secondAttribute="bottom" constant="15" id="mrK-Ax-Scd"/>
+                        <constraint firstItem="GeK-dL-6ME" firstAttribute="centerY" secondItem="eHV-GN-qlm" secondAttribute="centerY" id="pJz-vV-sEd"/>
+                        <constraint firstItem="SXI-EO-qJR" firstAttribute="top" secondItem="FSP-cU-G7o" secondAttribute="bottom" constant="15" id="pYk-UQ-GH4"/>
+                        <constraint firstItem="TH9-LI-FtG" firstAttribute="top" secondItem="0or-fS-Mdy" secondAttribute="bottom" constant="15" id="qOh-NC-hLc"/>
+                        <constraint firstAttribute="trailing" secondItem="c6f-tQ-OJf" secondAttribute="trailing" constant="8" id="qpk-ME-TSv"/>
+                        <constraint firstItem="3LO-Td-fmt" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="8" id="ti2-EO-N4Z"/>
+                        <constraint firstItem="TH9-LI-FtG" firstAttribute="leading" secondItem="QcW-Rp-5tK" secondAttribute="leading" constant="8" id="vlu-Lz-GIv"/>
+                        <constraint firstItem="52l-oi-Dd7" firstAttribute="centerY" secondItem="3LO-Td-fmt" secondAttribute="centerY" id="xSz-sy-kix"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="gxj-Ga-g6b" appends="YES" id="7V0-Xo-iPe"/>
+                    </connections>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.6251070205" colorSpace="calibratedRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="QcW-Rp-5tK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="6Gt-1u-iyk"/>
+                <constraint firstItem="QcW-Rp-5tK" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="GPC-Xd-dgX"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="137.68115942028987" y="141.96428571428569"/>
+            <point key="canvasLocation" x="136.23188405797103" y="141.29464285714286"/>
         </view>
+        <tapGestureRecognizer id="gxj-Ga-g6b">
+            <connections>
+                <action selector="gestureTapped:" destination="-1" id="bYU-Gx-NZw"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

@@ -39,6 +39,8 @@
 		83791691241AAE7D008C4B1E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83791690241AAE7D008C4B1E /* Extensions.swift */; };
 		837A957C2458C8FA009246AF /* AddTradeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837A957A2458C8FA009246AF /* AddTradeController.swift */; };
 		837A957D2458C8FA009246AF /* AddTradeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A957B2458C8FA009246AF /* AddTradeController.xib */; };
+		837A95812458DE4E009246AF /* AddTransactionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837A957F2458DE4E009246AF /* AddTransactionController.swift */; };
+		837A95822458DE4E009246AF /* AddTransactionController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837A95802458DE4E009246AF /* AddTransactionController.xib */; };
 		838610A92450893D002F1AD6 /* PieChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C3D93E244F760600DD0497 /* PieChartCell.swift */; };
 		8389E26C244263F600B14A68 /* PortfoliosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26B244263F600B14A68 /* PortfoliosController.swift */; };
 		8389E26E24426FF200B14A68 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8389E26D24426FF200B14A68 /* HeaderView.swift */; };
@@ -130,6 +132,8 @@
 		83791690241AAE7D008C4B1E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		837A957A2458C8FA009246AF /* AddTradeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTradeController.swift; sourceTree = "<group>"; };
 		837A957B2458C8FA009246AF /* AddTradeController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTradeController.xib; sourceTree = "<group>"; };
+		837A957F2458DE4E009246AF /* AddTransactionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionController.swift; sourceTree = "<group>"; };
+		837A95802458DE4E009246AF /* AddTransactionController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddTransactionController.xib; sourceTree = "<group>"; };
 		8389E26B244263F600B14A68 /* PortfoliosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfoliosController.swift; sourceTree = "<group>"; };
 		8389E26D24426FF200B14A68 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		8389E26F244285BC00B14A68 /* PortfolioCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioCell.swift; sourceTree = "<group>"; };
@@ -389,8 +393,9 @@
 		8379168D241AAD35008C4B1E /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
-				837A957B2458C8FA009246AF /* AddTradeController.xib */,
 				8379168E241AAD35008C4B1E /* ForgotPasswordVC.xib */,
+				837A957B2458C8FA009246AF /* AddTradeController.xib */,
+				837A95802458DE4E009246AF /* AddTransactionController.xib */,
 			);
 			name = XIBs;
 			path = graphs/Presentation/XIBs;
@@ -407,6 +412,8 @@
 		837A957E2458C910009246AF /* AddControllers */ = {
 			isa = PBXGroup;
 			children = (
+				837A957A2458C8FA009246AF /* AddTradeController.swift */,
+				837A957F2458DE4E009246AF /* AddTransactionController.swift */,
 			);
 			path = AddControllers;
 			sourceTree = "<group>";
@@ -416,7 +423,6 @@
 			children = (
 				8389E26B244263F600B14A68 /* PortfoliosController.swift */,
 				8389E2752443429D00B14A68 /* AddFileController.swift */,
-				837A957A2458C8FA009246AF /* AddTradeController.swift */,
 				837A957E2458C910009246AF /* AddControllers */,
 			);
 			path = Portfolio;
@@ -555,6 +561,7 @@
 			files = (
 				8314252E23FACCC30086BED8 /* quoteCell.xib in Resources */,
 				83C3D941244F760600DD0497 /* PieChartCell.xib in Resources */,
+				837A95822458DE4E009246AF /* AddTransactionController.xib in Resources */,
 				83791685241A9F9B008C4B1E /* LoginStoryboard.storyboard in Resources */,
 				83453899238C42120082DF88 /* LaunchScreen.storyboard in Resources */,
 				83E4FB2D239F32850013D703 /* main.storyboard in Resources */,
@@ -707,6 +714,7 @@
 				834538AD238C81830082DF88 /* Constants.swift in Sources */,
 				83E4FB25239D49EC0013D703 /* LineChartVCCharts.swift in Sources */,
 				8389E26E24426FF200B14A68 /* HeaderView.swift in Sources */,
+				837A95812458DE4E009246AF /* AddTransactionController.swift in Sources */,
 				8379168C241AABC8008C4B1E /* ForgotPasswordVC.swift in Sources */,
 				8389E2782443542500B14A68 /* Portfolio.swift in Sources */,
 				83BFE99824361115006CA7B6 /*  IncomeAssetAndPortfolio.swift in Sources */,
