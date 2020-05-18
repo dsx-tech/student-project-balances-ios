@@ -52,6 +52,10 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 
 		self.reloadData(start: self.start, end: self.end)
 	}
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(true)
+		setUpBaseLbl()
+	}
 }
 
 // - MARK: Set up functions

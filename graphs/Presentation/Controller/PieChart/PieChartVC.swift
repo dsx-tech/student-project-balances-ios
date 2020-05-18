@@ -8,6 +8,7 @@
 
 import UIKit
 import Charts
+import KeychainAccess
 
 extension UIColor {
 	func toHexString() -> String {
@@ -53,6 +54,10 @@ class PieChartVC: UIViewController {
 		setUpTableView()
 		//get all trades and transactions
 		self.view.backgroundColor = AppColors.Gray
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(true)
 		updateData()
 	}
 }
@@ -69,15 +74,21 @@ extension PieChartVC {
 			if !value.isLessThanOrEqualTo(0.0) {
 				let dataEntry = PieChartDataEntry(value: value, label: asset, data: asset)
 				dataEntries.append(dataEntry)
+				summ += value
 			}
-			summ += value
 		}
 		let formatter = NumberFormatter()
 		formatter.numberStyle = .none
 		formatter.maximumFractionDigits = 3
 
 		if let summ = formatter.string(from: summ as NSNumber) {
-			self.viewPlace.centerText = summ + "$"
+			let keychain = Keychain(service: "swagger")
+			
+			if let currency = keychain["base_currency_img"] {
+				self.viewPlace.centerText = summ + currency
+			} else {
+				self.viewPlace.centerText = summ + "$"
+			}
 		}
 
 		let marker = BalloonMarker(color: UIColor(white: 180 / 255, alpha: 1),

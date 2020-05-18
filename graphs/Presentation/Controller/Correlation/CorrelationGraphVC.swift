@@ -37,11 +37,6 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		setUpDateTextFields()
-		setUpGraph()
-		setUpToolBar()
-
 		if let start = formatter.date(from: "2019-01-01T00:00:01"), let end = formatter.date(from: "2020-04-09T23:59:59") {
 			self.startDateDatePicker.date = start
 			self.endDateDatePicker.date = end
@@ -53,6 +48,11 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 			self.endDateTextField.text = "09.04.2020 00:00"
 			reloadData(start: "2019-01-01T00:00:01", end: "2020-04-09T23:59:59")
 		}
+
+		setUpDateTextFields()
+		setUpGraph()
+		setUpToolBar()
+
 	}
 }
 

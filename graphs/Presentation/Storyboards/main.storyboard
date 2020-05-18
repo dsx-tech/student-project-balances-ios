@@ -159,6 +159,12 @@
                         <viewLayoutGuide key="safeArea" id="1FZ-G6-jCL"/>
                     </view>
                     <navigationItem key="navigationItem" title="Portfolios" id="uu7-kQ-gmB">
+                        <barButtonItem key="leftBarButtonItem" title="Log out" id="iDt-Fy-YGY">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="logoutClicked:" destination="nNe-HX-GKU" id="xsG-0C-mXw"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tCr-QY-KUL">
                             <color key="tintColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
@@ -186,19 +192,20 @@
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="0BR-Tp-C8C" kind="relationship" relationship="viewControllers" id="bK7-Zb-gBo"/>
-                        <segue destination="AQl-vT-SQM" kind="relationship" relationship="viewControllers" id="shx-bN-TZb"/>
-                        <segue destination="Eqw-Ul-acK" kind="relationship" relationship="viewControllers" id="uX7-Z2-0QH"/>
-                        <segue destination="Wmn-76-0cv" kind="relationship" relationship="viewControllers" id="Bxa-Hg-LJT"/>
-                        <segue destination="uc2-g0-7ip" kind="relationship" relationship="viewControllers" id="5rJ-cr-pIw"/>
-                        <segue destination="027-bQ-TWY" kind="relationship" relationship="viewControllers" id="P5O-fa-jBv"/>
+                        <segue destination="0BR-Tp-C8C" kind="relationship" relationship="viewControllers" id="rAo-47-I56"/>
+                        <segue destination="Eqw-Ul-acK" kind="relationship" relationship="viewControllers" id="xLg-AM-FjO"/>
+                        <segue destination="027-bQ-TWY" kind="relationship" relationship="viewControllers" id="ogH-FL-2VG"/>
+                        <segue destination="AQl-vT-SQM" kind="relationship" relationship="viewControllers" id="miE-5k-cNt"/>
+                        <segue destination="Wmn-76-0cv" kind="relationship" relationship="viewControllers" id="7SI-FZ-bd7"/>
+                        <segue destination="uc2-g0-7ip" kind="relationship" relationship="viewControllers" id="afK-MN-vE1"/>
+                        <segue destination="lAw-J7-1eT" kind="relationship" relationship="viewControllers" id="vcl-fJ-4V3"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jMm-5l-l1F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3359" y="222"/>
         </scene>
-        <!--Asset-->
+        <!--AssetCost-->
         <scene sceneID="Cye-hP-mAP">
             <objects>
                 <viewController id="0BR-Tp-C8C" customClass="LineChartVCCharts" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
@@ -316,7 +323,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uqj-pM-zlp"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Asset" image="splineopen" selectedImage="splineopen" id="h69-bi-dp9">
+                    <tabBarItem key="tabBarItem" title="AssetCost" image="linegraph" selectedImage="linegraphclicked" id="h69-bi-dp9">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="994-mk-f7D"/>
@@ -391,7 +398,7 @@
                     <navigationItem key="navigationItem" id="pmc-Bd-66T"/>
                     <connections>
                         <outlet property="chartView" destination="hZB-1f-Bgc" id="Pf3-DH-67K"/>
-                        <outlet property="endDateTextField" destination="5yi-fk-cil" id="OQp-Wb-9RS"/>
+                        <outlet property="endDateTextField" destination="uaX-en-PR6" id="D7k-KK-7fq"/>
                         <outlet property="startDateTextField" destination="fyA-zC-0hG" id="Jza-wu-zOA"/>
                     </connections>
                 </viewController>
@@ -528,7 +535,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0as-At-oUQ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="PortfolioStacked" image="spline" selectedImage="spline" id="Sus-Vk-db2"/>
+                    <tabBarItem key="tabBarItem" title="PortfolioStacked" image="stacked" selectedImage="stackedclicked" id="Sus-Vk-db2"/>
                     <navigationItem key="navigationItem" id="r6C-8x-bhf"/>
                     <connections>
                         <outlet property="chartView" destination="fzz-wl-B0V" id="6d8-zu-hNH"/>
@@ -586,7 +593,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fUd-br-4SA"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Correlation" id="Tf5-5A-EJR"/>
+                    <tabBarItem key="tabBarItem" title="Correlation" image="correlation" selectedImage="correlationclicked" id="Tf5-5A-EJR"/>
                     <connections>
                         <outlet property="quotestable" destination="3fd-PZ-U1n" id="lqV-et-DPA"/>
                         <segue destination="HOz-3i-UuT" kind="show" identifier="toGraph" id="1AJ-R0-Izd"/>
@@ -761,7 +768,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fM7-Gz-0jL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1855" y="363"/>
+            <point key="canvasLocation" x="-1937" y="364"/>
         </scene>
         <!--Portfolio-->
         <scene sceneID="D55-fM-UsT">
@@ -772,10 +779,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F83-K2-9xQ">
-                                <rect key="frame" x="20" y="54" width="375" height="475"/>
+                                <rect key="frame" x="20" y="54" width="335" height="475"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="FG1-A2-Xph" customClass="PieChartView" customModule="Charts">
-                                        <rect key="frame" x="20" y="20" width="335" height="435"/>
+                                        <rect key="frame" x="20" y="20" width="295" height="435"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                 </subviews>
@@ -800,12 +807,12 @@
                             <constraint firstItem="F83-K2-9xQ" firstAttribute="leading" secondItem="yAt-J9-9za" secondAttribute="leading" constant="20" id="NVf-e8-Ma9"/>
                             <constraint firstItem="yAt-J9-9za" firstAttribute="trailing" secondItem="rpU-2r-bMj" secondAttribute="trailing" constant="20" id="UvG-O7-Eu4"/>
                             <constraint firstItem="rpU-2r-bMj" firstAttribute="leading" secondItem="yAt-J9-9za" secondAttribute="leading" constant="20" id="aMi-Xm-EhZ"/>
-                            <constraint firstItem="F83-K2-9xQ" firstAttribute="trailing" secondItem="yAt-J9-9za" secondAttribute="trailing" constant="20" id="hQz-bd-brd"/>
+                            <constraint firstAttribute="trailing" secondItem="F83-K2-9xQ" secondAttribute="trailing" constant="20" id="crL-Cd-q91"/>
                             <constraint firstItem="rpU-2r-bMj" firstAttribute="bottom" secondItem="yAt-J9-9za" secondAttribute="bottom" id="zh3-8L-T4e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yAt-J9-9za"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Portfolio" image="pie" id="Bwr-hP-m9r"/>
+                    <tabBarItem key="tabBarItem" title="Portfolio" image="pie" selectedImage="pieclicked" id="Bwr-hP-m9r"/>
                     <navigationItem key="navigationItem" id="2Aq-5a-84x"/>
                     <connections>
                         <outlet property="tableView" destination="rpU-2r-bMj" id="sTp-v8-CXD"/>
@@ -900,7 +907,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="D9Q-hY-wME"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="NormedCorrelation" id="TAM-tP-2ck"/>
+                    <tabBarItem key="tabBarItem" title="NormedCorrelation" image="normed" selectedImage="normed" id="TAM-tP-2ck"/>
                     <connections>
                         <outlet property="chartView" destination="wsP-Rn-igW" id="QpU-ec-TeW"/>
                         <outlet property="endDateTExtField" destination="5yi-fk-cil" id="hBX-g6-ebZ"/>
@@ -913,7 +920,78 @@
             </objects>
             <point key="canvasLocation" x="-1855" y="3189"/>
         </scene>
-        <!--Incomes-->
+        <!--Settings-->
+        <scene sceneID="c7v-fO-zhQ">
+            <objects>
+                <viewController id="lAw-J7-1eT" customClass="SettingsController" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="neH-y6-fGJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egM-NV-GXZ" customClass="RoundedButton" customModule="graphs" customModuleProvider="target">
+                                <rect key="frame" x="30" y="653" width="315" height="56"/>
+                                <color key="backgroundColor" red="0.2470588235" green="0.47058823529999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="bNW-Zu-fla"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutClicked:" destination="lAw-J7-1eT" eventType="touchUpInside" id="Qdg-IC-bun"/>
+                                </connections>
+                            </button>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="kbM-rZ-uRa">
+                                <rect key="frame" x="30" y="144" width="315" height="32"/>
+                                <segments>
+                                    <segment title="$Usd"/>
+                                    <segment title="€Euro"/>
+                                </segments>
+                                <connections>
+                                    <action selector="indexChanged:" destination="lAw-J7-1eT" eventType="valueChanged" id="acL-0k-DHa"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3D-M4-b2q" customClass="RoundedButton" customModule="graphs" customModuleProvider="target">
+                                <rect key="frame" x="30" y="577" width="315" height="56"/>
+                                <color key="backgroundColor" red="0.2470588235" green="0.47058823529999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="3B7-bP-03N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                <state key="normal" title="Portfolios">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="portfoliosClicked:" destination="lAw-J7-1eT" eventType="touchUpInside" id="FTm-VO-8Em"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="E3H-Eb-jYH" firstAttribute="trailing" secondItem="kbM-rZ-uRa" secondAttribute="trailing" constant="30" id="Qll-vp-FEj"/>
+                            <constraint firstItem="E3H-Eb-jYH" firstAttribute="trailing" secondItem="S3D-M4-b2q" secondAttribute="trailing" constant="30" id="RzP-2W-Qcs"/>
+                            <constraint firstItem="kbM-rZ-uRa" firstAttribute="leading" secondItem="E3H-Eb-jYH" secondAttribute="leading" constant="30" id="Vbc-7r-QqO"/>
+                            <constraint firstItem="E3H-Eb-jYH" firstAttribute="trailing" secondItem="egM-NV-GXZ" secondAttribute="trailing" constant="30" id="eGB-sS-jBf"/>
+                            <constraint firstItem="egM-NV-GXZ" firstAttribute="leading" secondItem="E3H-Eb-jYH" secondAttribute="leading" constant="30" id="hGO-7r-2pV"/>
+                            <constraint firstItem="kbM-rZ-uRa" firstAttribute="centerX" secondItem="neH-y6-fGJ" secondAttribute="centerX" id="nEr-CL-HBn"/>
+                            <constraint firstItem="kbM-rZ-uRa" firstAttribute="top" secondItem="E3H-Eb-jYH" secondAttribute="top" constant="100" id="obp-zn-dYC"/>
+                            <constraint firstItem="egM-NV-GXZ" firstAttribute="top" secondItem="S3D-M4-b2q" secondAttribute="bottom" constant="20" id="ozg-8F-OdY"/>
+                            <constraint firstItem="S3D-M4-b2q" firstAttribute="leading" secondItem="E3H-Eb-jYH" secondAttribute="leading" constant="30" id="pCp-Ov-fEJ"/>
+                            <constraint firstItem="E3H-Eb-jYH" firstAttribute="bottom" secondItem="egM-NV-GXZ" secondAttribute="bottom" constant="20" id="wET-7g-1Iw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="E3H-Eb-jYH"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" selectedImage="settings" id="4UD-KA-xj7"/>
+                    <connections>
+                        <outlet property="baseAssetSegmentController" destination="kbM-rZ-uRa" id="6Z5-3g-f4T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Bc-6b-VKC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3434" y="3188"/>
+        </scene>
+        <!--Deposit/Withdraw-->
         <scene sceneID="UzM-1Z-PPu">
             <objects>
                 <viewController id="Wmn-76-0cv" customClass="VC10" customModule="graphs" customModuleProvider="target" sceneMemberID="viewController">
@@ -951,7 +1029,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lOf-T3-wbC"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Incomes" id="WvK-Jy-Zdv"/>
+                    <tabBarItem key="tabBarItem" title="Deposit/Withdraw" image="inputoutput" selectedImage="inputoutputclicked" id="WvK-Jy-Zdv"/>
                     <navigationItem key="navigationItem" id="S26-yi-Mfc"/>
                     <connections>
                         <outlet property="chartView" destination="N1q-jc-j2V" id="TpW-WA-7kS"/>
@@ -964,9 +1042,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="pie" width="40" height="40"/>
+        <image name="correlation" width="20" height="20"/>
+        <image name="correlationclicked" width="20" height="20"/>
+        <image name="inputoutput" width="20" height="20"/>
+        <image name="inputoutputclicked" width="20" height="20"/>
+        <image name="linegraph" width="20" height="20"/>
+        <image name="linegraphclicked" width="20" height="20"/>
+        <image name="normed" width="20" height="20"/>
+        <image name="pie" width="20" height="20"/>
+        <image name="pieclicked" width="20" height="20"/>
         <image name="plus" width="457" height="457"/>
-        <image name="spline" width="40" height="40"/>
-        <image name="splineopen" width="40" height="40"/>
+        <image name="settings" width="20" height="20"/>
+        <image name="stacked" width="20" height="20"/>
+        <image name="stackedclicked" width="20" height="20"/>
     </resources>
 </document>

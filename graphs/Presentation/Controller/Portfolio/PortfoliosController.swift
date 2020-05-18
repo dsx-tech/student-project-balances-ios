@@ -176,6 +176,14 @@ class PortfoliosController: UIViewController {
 
 		self.present(alert, animated: true, completion: nil)
 	}
+	@IBAction func logoutClicked(_ sender: Any) {
+		let targetStoryboardName = "LoginStoryboard"
+		let targetStoryboard = UIStoryboard(name: targetStoryboardName, bundle: nil)
+		if let targetVC = targetStoryboard.instantiateInitialViewController() {
+			targetVC.modalPresentationStyle = .fullScreen
+			self.present(targetVC, animated: true, completion: nil)
+		}
+	}
 }
 
 // MARK: - UITableViewDelegate

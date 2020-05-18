@@ -33,9 +33,9 @@ class TradeApi {
 	var transactions: [Transaction]!
 	var quotes: [String: [QuotePeriod]]!
 	var quotesTicker: [String: [Quote]]!
-	let url = "http://3.248.170.197:9999/bcv/"
-	let urlQuotes = "http://3.248.170.197:8888/bcv/quotes/dailyBars/"
-	let urlQuotesTicker = "http://3.248.170.197:8888/bcv/quotes/ticker/"
+	let url = "http://35.217.7.122:9999/bcv/"
+	let urlQuotes = "http://35.217.7.122:8888/bcv/quotes/dailyBars/"
+	let urlQuotesTicker = "http://35.217.7.122:8888/bcv/quotes/ticker/"
 
 	/**
 	Get all Trades from backend
