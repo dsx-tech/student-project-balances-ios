@@ -20,7 +20,11 @@ class CorrelationVC: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
+//		instrumentCorrelations = [("eur",
+//								   [InstrumentCorrelation(firstCurrency: "btc", secondCurrency: "usd", correlation: 0.138, timePeriod: "3 months"),
+//									InstrumentCorrelation(firstCurrency: "eurs", secondCurrency: "usd", correlation: -0.5, timePeriod: "1 month"),
+//									InstrumentCorrelation(firstCurrency: "btg", secondCurrency: "usd", correlation: 0.837, timePeriod: "6 months")]),
+//								  ("btc", [InstrumentCorrelation(firstCurrency: "bsv", secondCurrency: "usd", correlation: 0.038, timePeriod: "3 months")])]
 		setUpTableView()
 
 		let formatter = DateFormatter()
@@ -87,27 +91,32 @@ extension CorrelationVC {
 			guard let quotesArray = quotes,
 				let firstQuotes = quotesArray[firstinstrumentWithBase],
 				let secondQuotes = quotesArray[secondinstrumentWithBase] else {
-					self.simpleAlert(title: "Error", msg: "No such quotes!")
+					DispatchQueue.main.async {
+						self.simpleAlert(title: "Error", msg: "No such quotes!")
+					}
 					print("Error in getting quotes for instrument")
 					return
 			}
-
-			self.quotes.append((firstinstrument, firstQuotes))
-			self.quotes.append((secondinstrument, secondQuotes))
+			DispatchQueue.main.async {
+				self.quotes.append((firstinstrument, firstQuotes))
+				self.quotes.append((secondinstrument, secondQuotes))
+			}
 
 			let correl = InstrumentCorrelation(firstCurrency: secondinstrument,
 											   secondCurrency: baseCurrency ?? "usd",
 											   correlation: CorrelationApi.sharedManager.correlationQuotes(firstquotes: firstQuotes, secondquotes: secondQuotes),
 											   timePeriod: "months: \(dateComponents.month ?? 0)")
 			//				self.instrumentCorrelations.append(correl)
-			if let firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
-				return element.0 == firstinstrument
-			}) {
-				self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
-			} else {
-				self.instrumentCorrelations.append((firstinstrument, [correl]))
+			DispatchQueue.main.async {
+				if let firstInstrumentIndex = self.instrumentCorrelations.firstIndex(where: { (element) -> Bool in
+					return element.0 == firstinstrument
+				}) {
+					self.instrumentCorrelations[firstInstrumentIndex].1.append(correl)
+				} else {
+					self.instrumentCorrelations.append((firstinstrument, [correl]))
+				}
 			}
-			print(self.instrumentCorrelations)
+//			print(self.instrumentCorrelations)
 			DispatchQueue.main.async {
 				self.quotestable.reloadData()
 			}

@@ -70,3 +70,11 @@ struct AuthResponse: Codable {
 	let username: String
 	let token: String
 }
+
+struct QuoteWithAsset {
+	///exchangeRate of instrument
+	let exchangeRate: Double
+	///timestamp in seconds
+	let timestamp: Int64
+	let asset: String
+}

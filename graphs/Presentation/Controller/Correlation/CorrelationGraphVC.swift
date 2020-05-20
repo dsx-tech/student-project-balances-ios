@@ -52,7 +52,7 @@ class CorrelationGraphVC: UIViewController, ChartViewDelegate {
 		setUpDateTextFields()
 		setUpGraph()
 		setUpToolBar()
-
+//		self.setDataCount(data: [:])
 	}
 }
 
@@ -263,6 +263,9 @@ extension CorrelationGraphVC {
 extension CorrelationGraphVC {
 	func setDataCount(data: [String: ([Double], [Double])]) {
 
+//		let newdata = ["btc": ([1577883601.0, 1580562001.0, 1583067601.0, 1585746001.0], [0.56, 0.78, 0.5, 0.2]),
+//					 "eurs": ([1577883601.0, 1580562001.0, 1583067601.0, 1585746001.0], [-0.2, -0.38, -0.5, -0.2]),
+//					 "btg": ([1577883601.0, 1580562001.0, 1583067601.0, 1585746001.0], [0.9, 0.887, 0.823, 0.897])]
 		var datasets: [LineChartDataSet] = []
 
 		data.forEach { (asset, corellationWithDates) in

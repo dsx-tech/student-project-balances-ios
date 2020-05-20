@@ -95,6 +95,10 @@ class ActiveCostAndPieApi {
 		return assetsDuration
 	}
 
+	func getAssetsForActiveCostWithQuotes(assets: [String: ([Double], [Double])], quotes: [String: [Quote]]) {
+
+	}
+
 	func getAssetsForPie(trades: inout [Trade], transactions: inout  [Transaction]) -> ([String: Double], [String]) {
 
 		let (assets, _) = getAssetsFromTradesAndTransactions(trades: &trades,

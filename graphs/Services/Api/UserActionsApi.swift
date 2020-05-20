@@ -34,7 +34,8 @@ class TradeApi {
 	var quotes: [String: [QuotePeriod]]!
 	var quotesTicker: [String: [Quote]]!
 	let url = "http://35.217.7.122:9999/bcv/"
-	let urlQuotes = "http://35.217.7.122:8888/bcv/quotes/dailyBars/"
+	let urlQuotesDaily = "http://35.217.7.122:8888/bcv/quotes/dailyBars/"
+	let urlQuotesMontly = "http://35.217.7.122:8888/bcv/quotes/monthlyBars/"
 	let urlQuotesTicker = "http://35.217.7.122:8888/bcv/quotes/ticker/"
 
 	/**
@@ -238,7 +239,7 @@ class TradeApi {
 	*/
 	func getQuotesinPeriod(instruments: [String], startTime: Date, endTime: Date, completion: @escaping QuotesResponsePeriodCompletion) {
 
-		 var fullurl = self.urlQuotes
+		 var fullurl = self.urlQuotesDaily
 
 		var baseinstruments = ""
 		instruments.forEach { (instrument) in
