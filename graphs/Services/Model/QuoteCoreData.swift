@@ -23,5 +23,6 @@ public class QuoteCD: NSManagedObject {
     @NSManaged public var exchangeRate: Double
     @NSManaged public var timestamp: Int64
     @NSManaged public var asset: String
+	@NSManaged public var duration: String
 
 }

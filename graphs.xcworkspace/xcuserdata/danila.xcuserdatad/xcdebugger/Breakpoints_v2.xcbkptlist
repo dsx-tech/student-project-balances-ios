@@ -1420,8 +1420,8 @@
             filePath = "graphs/Presentation/Controller/LineChart/LineChartVCCharts.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "setDataCount(asset:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1436,8 +1436,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1564,8 +1564,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1580,8 +1580,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "getAssetsInDurationForStack(trades:transactions:duration:start:end:)"
             landmarkType = "7">
             <Locations>
@@ -1628,8 +1628,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1644,8 +1644,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1660,8 +1660,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "getAssetsFromTradesAndTransactions(trades:transactions:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1772,8 +1772,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "getAssetsForActiveCost(trades:transactions:start:end:duration:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2348,8 +2348,8 @@
             filePath = "graphs/Presentation/Controller/LineChart/LineChartVCCharts.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "setUpBaseLbl()"
             landmarkType = "7">
          </BreakpointContent>
@@ -2364,8 +2364,8 @@
             filePath = "graphs/Services/Api/GraphsApi/ActiveCostApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "getAssetsForPieWithQuotes(assets:quotes:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2380,9 +2380,9 @@
             filePath = "graphs/Services/Model/CoreDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "readQuotes(assets:start:end:completion:)"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "readQuotes(assets:start:end:duration:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

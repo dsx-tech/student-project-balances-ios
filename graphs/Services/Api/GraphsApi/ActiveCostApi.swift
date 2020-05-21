@@ -21,7 +21,7 @@ class ActiveCostAndPieApi {
 								transactions: inout  [Transaction],
 								start: String,
 								end: String,
-								duration: AssetLineChartDuration) -> [String: ([Double], [Double])] {
+								duration: AssetLineChartDuration) -> ([String: ([Double], [Double])], Set<String>) {
 
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -29,7 +29,7 @@ class ActiveCostAndPieApi {
 		var calendar = Calendar(identifier: .iso8601)
 		guard let timezone = TimeZone(secondsFromGMT: 0) else {
 			print("Error in unwrapping Timezone")
-			return ([:])
+			return (([:], []))
 		}
 		calendar.timeZone = timezone
 
@@ -73,7 +73,7 @@ class ActiveCostAndPieApi {
 				dateComponents.year = i
 			}
 
-			guard let newdate = Calendar.current.date(byAdding: dateComponents, to: startdateComponents) else { return [:] }
+			guard let newdate = Calendar.current.date(byAdding: dateComponents, to: startdateComponents) else { return ([:], []) }
 
 			let (assets, _) = getAssetsFromTradesAndTransactions(trades: &trades, transactions: &transactions, start: Date(timeIntervalSince1970: 0), end: newdate)
 
@@ -92,11 +92,39 @@ class ActiveCostAndPieApi {
 				}
 			}
 		}
-		return assetsDuration
+		var currencies: Set<String> = []
+
+		for (key, _) in assetsDuration {
+			currencies.insert(key)
+		}
+		return (assetsDuration, currencies)
 	}
 
-	func getAssetsForActiveCostWithQuotes(assets: [String: ([Double], [Double])], quotes: [String: [Quote]]) {
+	func getAssetsForActiveCostWithQuotes(assets: [String: ([Double], [Double])],
+										  quotes: [String: [QuotePeriod]]) -> [String: ([Double], [Double])] {
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
 
+		guard let newbasecurrency = baseCurrency else { return [:] }
+
+		var newassets: [String: ([Double], [Double])] = assets
+
+		for (key, value) in assets {
+			var newvalues: [Double] = []
+			if let currencyarray = quotes[key + "-" + newbasecurrency] {
+				for i in 0..<value.0.count {
+					newvalues.append(value.0[i]*currencyarray[i].exchangeRate)
+				}
+			} else if let currency = currencies1[key] {
+				print("Why here!")
+				for i in 0..<value.0.count {
+					newvalues.append(value.0[i]*currency)
+				}
+				newassets[key]?.0 = newvalues
+			}
+		}
+
+		return newassets
 	}
 
 	func getAssetsForPie(trades: inout [Trade], transactions: inout  [Transaction]) -> ([String: Double], [String]) {

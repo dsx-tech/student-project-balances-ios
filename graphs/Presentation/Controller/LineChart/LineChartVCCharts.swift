@@ -33,6 +33,7 @@ class LineChartVCCharts: UIViewController, ChartViewDelegate {
 	var trades: [Trade]!
 	var transactions: [Transaction]!
 	let tradesApi = TradeApi()
+	let syncCoordinator = SyncCoordinator()
 	var assetsInPortfolio: [String: ([Double], [Double])]!
 	let formatter = DateFormatter()
 
@@ -290,15 +291,20 @@ extension LineChartVCCharts {
 
 				self.formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-				let assetsMonthly = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCost(trades: &self.trades,
+				let (assetsMonthly, currencies) = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCost(trades: &self.trades,
 																							 transactions: &self.transactions,
 																							 start: start,
 																							 end: end,
 																							 duration: self.duration)
-
-				DispatchQueue.main.async {
-					self.assetsInPortfolio = assetsMonthly
-					self.setDataCount(asset: self.asset)
+				self.syncCoordinator.getAndSyncQuotesInPeriod(assets: Array(currencies),
+															  start: self.formatter.date(from: start) ?? Date(),
+															  end: self.formatter.date(from: end) ?? Date(),
+															  duration: "monthly") { (quotes) in
+					let assetsMonthlyWithQuotes = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCostWithQuotes(assets: assetsMonthly, quotes: quotes ?? [:])
+					DispatchQueue.main.async {
+						self.assetsInPortfolio = assetsMonthlyWithQuotes
+						self.setDataCount(asset: self.asset)
+					}
 				}
 			}
 		}

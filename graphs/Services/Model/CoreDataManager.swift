@@ -27,7 +27,7 @@ class CoreDataManager {
 // MARK: - QuotesProtocol
 
 extension CoreDataManager {
-	func syncQuotes(assets: [String], quotes: [String: [QuotePeriod]], start: Int64, end: Int64) {
+	func syncQuotes(assets: [String], quotes: [String: [QuotePeriod]], start: Int64, end: Int64, duration: String) {
 		self.persistentContainer.performBackgroundTask { [weak self] (context) in
 			guard let self = self else {
 				return
@@ -35,7 +35,7 @@ extension CoreDataManager {
 
 			let matchingRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuoteCD")
 
-			matchingRequest.predicate = NSPredicate(format: "asset in %@ AND timestamp <= @i AND timestamp >= @i", assets, start, end)
+			matchingRequest.predicate = NSPredicate(format: "asset in %@ AND timestamp <= %i AND timestamp >= %i AND duration==%@", assets, start, end, duration)
 
 			var newquotes: [QuoteWithAsset] = []
 			quotes.forEach { (key, value) in
@@ -51,7 +51,7 @@ extension CoreDataManager {
 				if let resultQuotes = results as? [QuoteCD] {
 					resultQuotes.forEach { (object) in
 						newquotes.removeAll { (quote) -> Bool in
-							return quote.asset == object.asset && quote.exchangeRate == object.exchangeRate && quote.timestamp == object.timestamp
+							return quote.asset == object.asset && quote.exchangeRate == object.exchangeRate && quote.timestamp == object.timestamp && object.duration == duration
 						}
 					}
 					newquotes.forEach { (quote) in
@@ -60,6 +60,7 @@ extension CoreDataManager {
 						newquote.asset = quote.asset
 						newquote.exchangeRate = quote.exchangeRate
 						newquote.timestamp = quote.timestamp
+						newquote.duration = duration
 					}
 					self.saveContext(context: context)
 				}
@@ -72,18 +73,19 @@ extension CoreDataManager {
 func readQuotes(assets: [String],
 				start: Int64,
 				end: Int64,
+				duration: String,
 				completion: @escaping ([String: [QuotePeriod]]?) -> Void) {
 		self.persistentContainer.performBackgroundTask { [weak self] (context) in
 			guard let self = self else { return completion(nil) }
 
 			let matchingRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "QuoteCD")
 
-			matchingRequest.predicate = NSPredicate(format: "asset in %@ AND timestamp <= @i AND timestamp >= @i", assets, start, end)
+			matchingRequest.predicate = NSPredicate(format: "asset in %@ AND timestamp <= %i AND timestamp >= %i AND duration == %@", assets, start, end, duration)
 
 			do {
 				let results = try context.fetch(matchingRequest)
 				if let resultQuotes = results as? [QuoteCD] {
-					if resultQuotes.count == assets.count * (NSCalendar.current.dateComponents([.day],
+					if resultQuotes.count == assets.count * (NSCalendar.current.dateComponents([duration=="daily" ? .day : .month],
 																							   from: Date(timeIntervalSince1970: Double(start)),
 																							   to: Date(timeIntervalSince1970: Double(end))).day ?? 0) {
 						var newquotes: [String: [QuotePeriod]] = [:]

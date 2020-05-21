@@ -229,7 +229,7 @@ class TradeApi {
 		}
 	}
 	/**
-	Get all quotes from backend
+	Get all quotes Daily from backend
 	- Parameters:
 	- url: Url to make response
 	- instrument: ex: btc-usd
@@ -297,7 +297,75 @@ class TradeApi {
 
 		}
 	}
+		/**
+		Get all quotes Montly from backend
+		- Parameters:
+		- url: Url to make response
+		- instrument: ex: btc-usd
+		- startTime: Date from which to count
+		- endTime: Date up to witch to count
+		- completion: ([Quote]?) -> Void what to make with response
+		*/
+		func getQuotesinPeriodMonthly(instruments: [String], startTime: Date, endTime: Date, completion: @escaping QuotesResponsePeriodCompletion) {
 
+			 var fullurl = self.urlQuotesMontly
+
+			var baseinstruments = ""
+			instruments.forEach { (instrument) in
+				baseinstruments += instrument
+				baseinstruments += ","
+			}
+
+	//		let params: [String: Any] = [
+	//			"endTime": Int64(endTime.timeIntervalSince1970),
+	//			"instruments": baseinstruments,
+	//			"startTime": Int64(startTime.timeIntervalSince1970)
+	//		]
+			fullurl += baseinstruments
+			fullurl += "/"
+			fullurl += String(Int64(startTime.timeIntervalSince1970))
+			fullurl += "/"
+			fullurl += String(Int64(endTime.timeIntervalSince1970))
+			fullurl += "/"
+
+			guard let url = URL(string: fullurl) else {
+				print("Error in url making!")
+				completion(nil)
+				return } //make url from string
+
+			AF.request(url, method: .get).validate(statusCode: 200..<300).responseJSON(queue: TradeApi.self.concurrentQueue) { [weak self] (response) in
+
+				guard let self = self else {
+					print("No Api instance more")
+					completion(nil)
+					return
+				}
+
+				switch response.result {
+				case .success:
+					//get data from response
+					guard let data = response.data else {
+						print("Error in pulling out data from response")
+						return
+					}
+
+					let decoder = JSONDecoder()
+
+					do {
+						let quotes = try decoder.decode([String: [QuotePeriod]].self, from: data)
+						completion(quotes)
+					} catch {
+						print(error.localizedDescription)
+						debugPrint(error)
+						completion(nil)
+					}
+				case .failure(let error):
+					self.handleErrors(error: error)
+					completion(nil)
+				}
+
+			}
+		}
 	func getTokenAndId() -> (String, String) {
 
 		let keychain = Keychain(service: "swagger")
