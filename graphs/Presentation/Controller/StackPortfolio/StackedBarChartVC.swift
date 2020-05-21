@@ -47,8 +47,9 @@ class StackedBarChartVC: UIViewController, ChartViewDelegate {
 	var transactions: [Transaction]!
 	let tradesApi = TradeApi()
 	let formatterDate = DateFormatter()
+	let syncCoordinator = SyncCoordinator()
 
-	var data: ([(Date, [Double])], [String]) = ([], [])
+	var data: ([(Date, [(String, Double)])], [String]) = ([], [])
 
 	var start = "2014-01-01T00:00:01"
 	var end = "2020-12-09T23:59:59"
@@ -226,7 +227,7 @@ extension StackedBarChartVC {
 // - MARK: ChartData
 
 extension StackedBarChartVC {
-	func setData(data: [(Date, [Double])], labels: [String]) {
+	func setData(data: [(Date, [(String, Double)])], labels: [String]) {
 
 		if self.valueOrProcentSegmentControle.selectedSegmentIndex == 0 {
 			setHighestPortfolioCost(data: data)
@@ -236,7 +237,10 @@ extension StackedBarChartVC {
 
 		let yVals = (0..<data.count).map { (i) -> BarChartDataEntry in
 
-			var values = data[i].1
+			var values = data[i].1.map { (value) -> Double in
+				value.1
+			}
+
 			for _ in data[i].1.count..<labels.count {
 				values.append(0)
 			}
@@ -264,13 +268,13 @@ extension StackedBarChartVC {
 		chartView.animate(xAxisDuration: 1.0)
 	}
 
-	func setHighestPortfolioCost(data: [(Date, [Double])]) {
+	func setHighestPortfolioCost(data: [(Date, [(String, Double)])]) {
 		// set max cost monthly
 		var maxportfolioCostInDuration = 0.0
 		data.forEach { (month) in
 			var inDurationPortfolioCost = 0.0
 			month.1.forEach { (assetinBase) in
-				inDurationPortfolioCost += assetinBase
+				inDurationPortfolioCost += assetinBase.1
 			}
 			if maxportfolioCostInDuration < inDurationPortfolioCost {
 				maxportfolioCostInDuration = inDurationPortfolioCost
@@ -292,7 +296,7 @@ extension StackedBarChartVC {
 		if let last = data.last {
 
 			last.1.forEach { (cost) in
-				todayCost += cost
+				todayCost += cost.1
 			}
 		}
 
@@ -314,16 +318,16 @@ extension StackedBarChartVC {
 		}
 	}
 
-	func setProcent(data: [(Date, [Double])], labels: [String]) {
+	func setProcent(data: [(Date, [(String, Double)])], labels: [String]) {
 
 		var procentAssetName = ""
 		var procentAssetValue = 0.0
 
 		if let last = data.last {
 
-			for i in 0..<last.1.count where last.1[i] > procentAssetValue {
-					procentAssetName = labels[i]
-					procentAssetValue = last.1[i]
+			for i in 0..<last.1.count where last.1[i].1 > procentAssetValue {
+				procentAssetName = labels[i]
+				procentAssetValue = last.1[i].1
 			}
 		}
 
@@ -373,21 +377,35 @@ extension StackedBarChartVC {
 
 				self.trades = trades
 				self.transactions = transactions
+				let dateFormatter = DateFormatter()
+				dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-				let (assets, labels) = ActiveCostAndPieApi.sharedManager.getAssetsInDurationForStack(trades: &self.trades,
-																									 transactions: &self.transactions,
-																									 duration: self.duration,
-																									 start: start,
-																									 end: end)
+//				let (assets, labels) = ActiveCostAndPieApi.sharedManager.getAssetsInDurationForStack(trades: &self.trades,
+//																									 transactions: &self.transactions,
+//																									 duration: self.duration,
+//																									 start: start,
+//																									 end: end)
 
-				DispatchQueue.main.async {
-					if !labels.isEmpty {
-						self.setData(data: assets, labels: labels)
-						self.data = (assets, labels)
-					} else {
-						self.chartView.data = nil
-						self.data = ([], [])
-					}
+				let (assets, labels) = ActiveCostAndPieApi.sharedManager.changeAssetsInDurationForStack(trades: &self.trades,
+				transactions: &self.transactions,
+				duration: self.duration,
+				start: start,
+				end: end)
+
+				self.syncCoordinator.getAndSyncQuotesInPeriod(assets: labels,
+															  start: dateFormatter .date(from: start) ?? Date(),
+															  end: dateFormatter.date(from: end) ?? Date(),
+															  duration: "monthly") { (quotes) in
+																let newassets = ActiveCostAndPieApi.sharedManager.getAssetsInDurationForStackQuotes(assets: assets, quotes: quotes ?? [:])
+																	DispatchQueue.main.async {
+																		if !labels.isEmpty {
+																			self.setData(data: newassets, labels: labels)
+																			self.data = (newassets, labels)
+																		} else {
+																			self.chartView.data = nil
+																			self.data = ([], [])
+																		}
+																	}
 				}
 			}
 		}
@@ -438,16 +456,21 @@ extension StackedBarChartVC {
 
 	func setUpProcents() {
 
-		var procentData: ([(Date, [Double])], [String]) = ([], self.data.1)
+		var procentData: ([(Date, [(String, Double)])], [String]) = ([], self.data.1)
 
 		self.data.0.forEach { (period) in
-			let summvalue = period.1.reduce(0, +)
 
-			var valuesInProcent: [Double] = []
+			var summvalue = 0.0
+
+			for i in 0..<period.1.count {
+				summvalue += period.1[i].1
+			}
+
+			var valuesInProcent: [(String, Double)] = []
 
 			period.1.forEach { (value) in
-				let valueInProcent = (value / summvalue) * 100
-				valuesInProcent.append(valueInProcent)
+				let valueInProcent = (value.1 / summvalue) * 100
+				valuesInProcent.append(("", valueInProcent))
 			}
 			procentData.0.append((period.0, valuesInProcent))
 		}

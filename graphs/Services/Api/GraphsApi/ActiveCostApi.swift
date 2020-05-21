@@ -243,6 +243,110 @@ class ActiveCostAndPieApi {
 		return (assetsInDuration, labels)
 	}
 
+	func changeAssetsInDurationForStack(trades: inout [Trade],
+									 transactions: inout [Transaction],
+									 duration: AssetLineChartDuration,
+									 start: String,
+									 end: String) -> ([(Date, [(String, Double)])], [String]) {
+
+		let formatter = DateFormatter()
+		formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+		var calendar = Calendar(identifier: .iso8601)
+		guard let timezone = TimeZone(secondsFromGMT: 0) else {
+			print("Error in unwrapping Timezone")
+			return ([], [])
+		}
+		calendar.timeZone = timezone
+		var dateComponents = DateComponents()
+
+		let start = formatter.date(from: start) ?? Date()
+		let end = formatter.date(from: end) ?? Date()
+
+		let startdateComponents = calendar.date(bySettingHour: 00, minute: 00, second: 00, of: start) ?? Date()
+
+		var enddateComponents = calendar.date(bySettingHour: 00, minute: 00, second: 00, of: end) ?? Date()
+
+		enddateComponents = calendar.date(byAdding: .day, value: 1, to: enddateComponents) ?? Date()
+
+		var countComponents = 0
+
+		switch duration {
+		case.day:
+			print("Error! Not appropriate duration.")
+		case .month:
+			dateComponents = Calendar.current.dateComponents([.month], from: startdateComponents, to: enddateComponents)
+			countComponents = dateComponents.month ?? 0
+		case .year:
+			dateComponents = Calendar.current.dateComponents([.year], from: startdateComponents, to: enddateComponents)
+			countComponents = dateComponents.year ?? 0
+		}
+
+		countComponents += 1
+
+		var assetsInDuration: [(Date, [(String, Double)])] = []
+		var labels: [String] = []
+
+		for i in 0..<countComponents {
+			switch duration {
+			case .day:
+				print("Error! Not appropriate duration.")
+			case .month:
+				dateComponents.month = i
+			default:
+				dateComponents.year = i
+			}
+
+			guard let newdate = Calendar.current.date(byAdding: dateComponents, to: startdateComponents) else { return ([], []) }
+
+			let (assets, _) = ActiveCostAndPieApi.sharedManager.getAssetsFromTradesAndTransactions(
+				trades: &trades,
+				transactions: &transactions,
+				start: Date(timeIntervalSince1970: 0),
+				end: newdate)
+
+			let sortedassets = assets.sorted { $0.key < $1.key }
+
+			var assetsNames: [String] = []
+			var assetsValues: [(String, Double)] = []
+
+			for (key, value) in sortedassets where value >= 0 {
+					assetsNames.append(key)
+//					if let currency = currencies1[key] {
+						assetsValues.append((key, value))
+//				}
+			}
+			if assetsNames.count > labels.count {
+				labels = assetsNames
+			}
+			assetsInDuration.append((newdate, assetsValues))
+		}
+		return (assetsInDuration, labels)
+	}
+
+	func getAssetsInDurationForStackQuotes(assets: [(Date, [(String, Double)])], quotes: [String: [QuotePeriod]]) -> [(Date, [(String, Double)])] {
+
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
+
+		guard let newbasecurrency = baseCurrency else { return [] }
+
+		var newassets = assets
+
+		for i in 0..<newassets.count {
+			for j in 0..<newassets[i].1.count {
+				if let quotes = quotes[newassets[i].1[j].0 + "-" + newbasecurrency] {
+					newassets[i].1[j].1 *= quotes[i].exchangeRate
+				} else if let cuurency = currencies1[newassets[i].1[j].0] {
+					print("Why here!")
+					newassets[i].1[j].1 *= cuurency
+				}
+			}
+		}
+
+		return newassets
+	}
+
 	func getAssetsFromTradesAndTransactions(trades: inout [Trade],
 											transactions: inout [Transaction],
 											start: Date,
