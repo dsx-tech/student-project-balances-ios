@@ -392,20 +392,43 @@ extension StackedBarChartVC {
 				start: start,
 				end: end)
 
-				self.syncCoordinator.getAndSyncQuotesInPeriod(assets: labels,
-															  start: dateFormatter .date(from: start) ?? Date(),
-															  end: dateFormatter.date(from: end) ?? Date(),
-															  duration: "monthly") { (quotes) in
-																let newassets = ActiveCostAndPieApi.sharedManager.getAssetsInDurationForStackQuotes(assets: assets, quotes: quotes ?? [:])
-																	DispatchQueue.main.async {
-																		if !labels.isEmpty {
-																			self.setData(data: newassets, labels: labels)
-																			self.data = (newassets, labels)
-																		} else {
-																			self.chartView.data = nil
-																			self.data = ([], [])
-																		}
-																	}
+				switch self.duration {
+				case .day:
+					DispatchQueue.main.async {
+						if !labels.isEmpty {
+							self.setData(data: assets, labels: labels)
+							self.data = (assets, labels)
+						} else {
+							self.chartView.data = nil
+							self.data = ([], [])
+						}
+					}
+				case .month:
+					self.syncCoordinator.getAndSyncQuotesInPeriod(assets: labels,
+												  start: dateFormatter .date(from: start) ?? Date(),
+												  end: dateFormatter.date(from: end) ?? Date(),
+												  duration: "monthly") { (quotes) in
+													let newassets = ActiveCostAndPieApi.sharedManager.getAssetsInDurationForStackQuotes(assets: assets, quotes: quotes ?? [:])
+														DispatchQueue.main.async {
+															if !labels.isEmpty {
+																self.setData(data: newassets, labels: labels)
+																self.data = (newassets, labels)
+															} else {
+																self.chartView.data = nil
+																self.data = ([], [])
+															}
+														}
+					}
+				case.year:
+					DispatchQueue.main.async {
+						if !labels.isEmpty {
+							self.setData(data: assets, labels: labels)
+							self.data = (assets, labels)
+						} else {
+							self.chartView.data = nil
+							self.data = ([], [])
+						}
+					}
 				}
 			}
 		}

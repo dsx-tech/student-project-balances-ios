@@ -65,6 +65,7 @@ struct QuotePeriod: Codable {
 struct Quote: Codable {
 	let exchangeRate: Double
 }
+
 ///Struct to get username and token from server
 struct AuthResponse: Codable {
 	let username: String

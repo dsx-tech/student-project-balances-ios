@@ -15,6 +15,7 @@ class CorrelationVC: UIViewController {
 	var instrumentCorrelations: [(String, [InstrumentCorrelation])] = []
 	var quotes: [(String, [QuotePeriod])] = []
 	let quotesApi = TradeApi()
+	let syncCoordinator = SyncCoordinator()
 
 	@IBOutlet weak var quotestable: UITableView!
 	
@@ -87,7 +88,11 @@ extension CorrelationVC {
 		let firstinstrumentWithBase = firstinstrument + "-" + (baseCurrency ?? "usd")
 		let secondinstrumentWithBase = secondinstrument + "-" + (baseCurrency ?? "usd")
 
-		quotesApi.getQuotesinPeriod(instruments: [firstinstrumentWithBase, secondinstrumentWithBase], startTime: startDate, endTime: enddate) { (quotes)  in
+		self.syncCoordinator.getAndSyncQuotesInPeriod(assets: [firstinstrumentWithBase, secondinstrumentWithBase],
+													  start: startDate,
+													  end: enddate,
+													  duration: "daily") { (quotes) in
+
 			guard let quotesArray = quotes,
 				let firstQuotes = quotesArray[firstinstrumentWithBase],
 				let secondQuotes = quotesArray[secondinstrumentWithBase] else {

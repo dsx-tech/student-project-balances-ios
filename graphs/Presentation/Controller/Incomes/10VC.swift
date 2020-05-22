@@ -32,6 +32,7 @@ class VC10: UIViewController, ChartViewDelegate {
 
 	let tradesApi = TradeApi()
 	let transactionsApi = TransactionApi()
+	let syncCoordinator = SyncCoordinator()
 	let formatter = DateFormatter()
 
     lazy var customFormatter: NumberFormatter = {
@@ -222,9 +223,21 @@ extension VC10 {
 			let start = self.formatter.date(from: start)
 			let end = self.formatter.date(from: end)
 
-			let balances = self.transactionsApi.getDatafromTransactions(transactions: &self.transactions, interval: .month, start: start ?? Date(), end: end ?? Date())
+			let quotesCurrencies = self.transactions.compactMap({ (transaction) -> String in
+				return transaction.currency
+			})
+			self.syncCoordinator.getAndSyncQuotesInPeriod(assets: quotesCurrencies,
+														  start: start ?? Date(),
+														  end: end ?? Date(),
+														  duration: "monthly") { (quotes) in
+															let balances = self.transactionsApi.getDatafromTransactions(transactions: &self.transactions,
+																														quotes: quotes ?? [:],
+																														interval: .month,
+																														start: start ?? Date(),
+																														end: end ?? Date())
 
-			self.setChartData(dateDepositWithdraw: balances)
+															self.setChartData(dateDepositWithdraw: balances)
+			}
 		})
 	}
 

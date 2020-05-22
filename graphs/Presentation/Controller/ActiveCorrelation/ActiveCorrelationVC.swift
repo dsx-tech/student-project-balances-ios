@@ -29,6 +29,7 @@ class ActiveCorrelationVC: UIViewController, ChartViewDelegate {
 	var end: Date!
 
 	let quotesApi = TradeApi()
+	let syncCoordinator = SyncCoordinator()
 	let formatter = DateFormatter()
 
 	override func viewDidLoad() {
@@ -66,7 +67,10 @@ extension ActiveCorrelationVC {
 		let secondinstrumentWithBase = secondinstrument + "-" + (baseCurrency ?? "usd")
 
 		//get quotes for first instrument
-		quotesApi.getQuotesinPeriod(instruments: [firstinstrumentWithBase, secondinstrumentWithBase], startTime: startDate, endTime: endDate) { (quotes)  in
+		self.syncCoordinator.getAndSyncQuotesInPeriod(assets: [firstinstrumentWithBase, secondinstrumentWithBase],
+													  start: startDate,
+													  end: endDate,
+													  duration: "daily") { (quotes) in
 			guard let quotesArray = quotes,
 				let firstQuotes = quotesArray[firstinstrumentWithBase],
 				let secondQuotes = quotesArray[secondinstrumentWithBase] else {

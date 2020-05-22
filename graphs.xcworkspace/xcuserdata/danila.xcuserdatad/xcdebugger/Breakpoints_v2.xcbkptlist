@@ -334,9 +334,9 @@
             filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "getDatafromTransactions(transactions:interval:start:end:)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getDatafromTransactions(transactions:quotes:interval:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -350,9 +350,9 @@
             filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "getDatafromTransactions(transactions:interval:start:end:)"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "getDatafromTransactions(transactions:quotes:interval:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1628,8 +1628,8 @@
             filePath = "graphs/Presentation/Controller/StackPortfolio/StackedBarChartVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "setUpProcents()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1708,8 +1708,8 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorellationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:duration:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1724,8 +1724,8 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorellationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:duration:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1740,10 +1740,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1756,58 +1756,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "unknown"
-            landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414 - 162120c4309399e5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "graphs.CorrelationGraphVC.callculatecorrelation(firstinstrument: Swift.String, secondinstrument: Swift.String, startDate: Foundation.Date, duration: graphs.DurationQuotes) -&gt; ()"
-                  moduleName = "graphs"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
-                  offsetFromSymbolStart = "3076">
-               </Location>
-               <Location
-                  uuid = "5FB0ED01-65C9-4656-B5FE-3A1673469414 - 14e8f755964164e8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Dictionary&lt;Swift.String, Swift.Array&lt;graphs.QuotePeriod&gt;&gt;&gt;) -&gt; () in graphs.CorrelationGraphVC.callculatecorrelation(firstinstrument: Swift.String, secondinstrument: Swift.String, startDate: Foundation.Date, duration: graphs.DurationQuotes) -&gt; ()"
-                  moduleName = "graphs"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/danilafurenc/AllMyProjects/IosProjects/dsxt/graphs/graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "58"
-                  endingLineNumber = "58"
-                  offsetFromSymbolStart = "606">
-               </Location>
-            </Locations>
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1836,10 +1788,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1852,10 +1804,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "callculatecorrelation(firstinstrument:secondinstrument:startDate:endDate:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1868,8 +1820,8 @@
             filePath = "graphs/Presentation/Controller/ActiveCorrelation/ActiveCorrelationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "reloadData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1884,8 +1836,8 @@
             filePath = "graphs/Presentation/Controller/ActiveCorrelation/ActiveCorrelationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
             landmarkName = "doneActionStartFunc()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1900,8 +1852,8 @@
             filePath = "graphs/Presentation/Controller/Incomes/10VC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "reloadData(start:end:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1916,9 +1868,9 @@
             filePath = "graphs/Services/Api/GraphsApi/TransactionApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "getDatafromTransactions(transactions:interval:start:end:)"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "getDatafromTransactions(transactions:quotes:interval:start:end:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2204,10 +2156,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2220,10 +2172,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2236,10 +2188,10 @@
             filePath = "graphs/Presentation/Controller/Correlation/CorrelationGraphVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2303,22 +2255,6 @@
             startingLineNumber = "90"
             endingLineNumber = "90"
             landmarkName = "readQuotes(assets:start:end:duration:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CD9D9B43-A756-457D-87B5-DFA32D9E7566"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "graphs/Presentation/Controller/LineChart/LineChartVCCharts.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
-            landmarkName = "reloadData(start:end:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

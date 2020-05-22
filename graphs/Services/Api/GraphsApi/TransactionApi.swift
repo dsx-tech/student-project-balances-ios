@@ -7,11 +7,16 @@
 //
 
 import Foundation
+import KeychainAccess
 
 class TransactionApi {
 
 	///get data for chart from transactions
-	func getDatafromTransactions(transactions: inout [Transaction], interval: Calendar.Component, start: Date, end: Date) -> [Date: (Double, Double)] {
+	func getDatafromTransactions(transactions: inout [Transaction],
+								 quotes: [String: [QuotePeriod]],
+								 interval: Calendar.Component,
+								 start: Date,
+								 end: Date) -> [Date: (Double, Double)] {
 
 		//dictionary with dates from start to end with interval where value is (input, outcome)
 		var dateWithdrawDeposit: [Date: (Double, Double)] = [:]
@@ -63,55 +68,69 @@ class TransactionApi {
 			$0.transactionStatus == "Complete"
 		}
 
+		let keychain = Keychain(service: "swagger")
+		let baseCurrency = try? keychain.get("base_currency")
+
 		transactions.forEach { (transaction) in
 			if transaction.dateTime > start && transaction.dateTime < end {
-				processTransaction(transaction: transaction, dateWithdrawDeposit: &dateWithdrawDeposit, interval: interval)
+				if let quotesAsset = quotes[transaction.currency + "-" + (baseCurrency ?? "usd")] {
+					processTransaction(transaction: transaction, quotes: quotesAsset, dateWithdrawDeposit: &dateWithdrawDeposit, interval: interval)
+				} else if let quote = currencies1[transaction.currency] {
+					processTransaction(transaction: transaction,
+									   quotes: [QuotePeriod(exchangeRate: quote, timestamp: 0)],
+									   dateWithdrawDeposit: &dateWithdrawDeposit,
+									   interval: interval)
+				}
+
 			}
 		}
 
 		return dateWithdrawDeposit
 	}
 
-	func processTransaction(transaction: Transaction, dateWithdrawDeposit: inout [Date: (Double, Double)], interval: Calendar.Component) {
+	func processTransaction(transaction: Transaction, quotes: [QuotePeriod], dateWithdrawDeposit: inout [Date: (Double, Double)], interval: Calendar.Component) {
 
 		let calendar = getGMTCalendar()
 		var components = DateComponents()
+		var index = 0
 
 		switch interval {
 		case .year:
 			components = calendar.dateComponents([.year], from: transaction.dateTime)
+			index = components.year ?? 0
 		case .month:
 			components = calendar.dateComponents([.year, .month], from: transaction.dateTime)
+			index = components.month ?? 0
 		case .day:
 			components = calendar.dateComponents([.year, .month, .day], from: transaction.dateTime)
+			index = components.day ?? 0
 		default: break
 		}
-
+		if quotes.count == 1 {
+			index = 0
+		}
 		guard let transactiondatewithgranularity = calendar.date(from: components) else {
 			print("Error in ", #function, "with getting date from dateComponents.")
 			return
 		}
 		//		print(transaction.dateTime)
 		print(transactiondatewithgranularity)
+		let currency = quotes[index]
 		if transaction.transactionType == "Deposit" {
 			if let currentdepositbalance = dateWithdrawDeposit[transactiondatewithgranularity] {
-				guard let currency = currencies1[transaction.currency] else { return }
-				dateWithdrawDeposit.updateValue((currentdepositbalance.0 + transaction.amount * currency, 0), forKey: transactiondatewithgranularity)
+				dateWithdrawDeposit.updateValue((currentdepositbalance.0 + transaction.amount * currency.exchangeRate, 0), forKey: transactiondatewithgranularity)
 			} else {
 //				print(transactiondatewithgranularity)
 //				print(transaction.dateTime)
-				guard let currency = currencies1[transaction.currency] else { return }
-				dateWithdrawDeposit.updateValue((transaction.amount * currency, 0), forKey: transactiondatewithgranularity)
+				dateWithdrawDeposit.updateValue((transaction.amount * currency.exchangeRate, 0), forKey: transactiondatewithgranularity)
 			}
 		} else if transaction.transactionType == "Withdraw" {
 			if let currentwithdrawbalance = dateWithdrawDeposit[transactiondatewithgranularity] {
-				guard let currency = currencies1[transaction.currency] else { return }
 				dateWithdrawDeposit.updateValue((0,
-												 currentwithdrawbalance.1 + transaction.amount * currency),
+												 currentwithdrawbalance.1 + transaction.amount * currency.exchangeRate),
 												forKey: transactiondatewithgranularity)
 			} else {
-				guard let currency = currencies1[transaction.currency] else { return }
-				dateWithdrawDeposit.updateValue((0, transaction.amount * currency), forKey: transactiondatewithgranularity)
+				dateWithdrawDeposit.updateValue((0, transaction.amount * currency.exchangeRate), forKey: transactiondatewithgranularity)
 			}
 		}
 	}

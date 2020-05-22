@@ -135,7 +135,7 @@ class TransactionTests: XCTestCase {
 		let start = formatter.date(from: "2019-01-31T23:59:59Z")
 		let end = formatter.date(from: "2019-12-20T00:59:59Z")
 
-		let computedresult = api.getDatafromTransactions(transactions: &transactions, interval: .month, start: start ?? Date(), end: end ?? Date())
+		let computedresult = api.getDatafromTransactions(transactions: &transactions, quotes: [:], interval: .month, start: start ?? Date(), end: end ?? Date())
 		print(computedresult)
 //		var i = 0
 //		assets.forEach({ (_, value) in

@@ -291,18 +291,31 @@ extension LineChartVCCharts {
 
 				self.formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
 
-				let (assetsMonthly, currencies) = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCost(trades: &self.trades,
+				let (assetsInDuration, currencies) = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCost(trades: &self.trades,
 																							 transactions: &self.transactions,
 																							 start: start,
 																							 end: end,
 																							 duration: self.duration)
-				self.syncCoordinator.getAndSyncQuotesInPeriod(assets: Array(currencies),
-															  start: self.formatter.date(from: start) ?? Date(),
-															  end: self.formatter.date(from: end) ?? Date(),
-															  duration: "monthly") { (quotes) in
-					let assetsMonthlyWithQuotes = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCostWithQuotes(assets: assetsMonthly, quotes: quotes ?? [:])
+				switch self.duration {
+				case .day:
 					DispatchQueue.main.async {
-						self.assetsInPortfolio = assetsMonthlyWithQuotes
+						self.assetsInPortfolio = assetsInDuration
+						self.setDataCount(asset: self.asset)
+					}
+				case .month:
+					self.syncCoordinator.getAndSyncQuotesInPeriod(assets: Array(currencies),
+																  start: self.formatter.date(from: start) ?? Date(),
+																  end: self.formatter.date(from: end) ?? Date(),
+																  duration: "monthly") { (quotes) in
+						let assetsMonthlyWithQuotes = ActiveCostAndPieApi.sharedManager.getAssetsForActiveCostWithQuotes(assets: assetsInDuration, quotes: quotes ?? [:])
+						DispatchQueue.main.async {
+							self.assetsInPortfolio = assetsMonthlyWithQuotes
+							self.setDataCount(asset: self.asset)
+						}
+					}
+				case.year:
+					DispatchQueue.main.async {
+						self.assetsInPortfolio = assetsInDuration
 						self.setDataCount(asset: self.asset)
 					}
 				}
